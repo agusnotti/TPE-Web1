@@ -1,8 +1,6 @@
 /* -----------------------------------------------HEADER--------------------------------------------------- */
 .HEADER{   
     border: 5px solid black;
-    width: 1000px;
-    height: 200px;
     color:black; 
     margin-bottom: 5px;
     background-color: lightgray;
@@ -49,8 +47,6 @@
 {
     display: flex;
     border: 5px solid black;
-    width: 1000px;
-    height:1000px;
     color:black; 
     margin-bottom: 5px;
     background-color:  lightgray;
@@ -59,8 +55,6 @@
 .filtros{
     display: flex;
     border: 5px solid black;
-    width: 190px;
-    height: 980px;
     color:black; 
     margin: 5px 2.5px 5px 5px;
     background-color:  lightblue;
@@ -69,8 +63,6 @@
 .imagenes{
     display: flex;
     border: 5px solid black;
-    width: 790px;
-    height: 980px;
     color:black; 
     margin: 5px 2.5px 5px 5px;
     background-color:  lightblue;
@@ -83,8 +75,6 @@
 .FOOTER
 {
     border: 5px solid black;
-    width: 1000px;
-    height: 200px;
     color:black; 
     margin-bottom: 5px;
     background-color:  lightgray;
