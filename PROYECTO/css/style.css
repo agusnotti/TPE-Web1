@@ -1,0 +1,93 @@
+/* -----------------------------------------------HEADER--------------------------------------------------- */
+.HEADER{   
+    border: 5px solid black;
+    width: 1000px;
+    height: 200px;
+    color:black; 
+    margin-bottom: 5px;
+    background-color: lightgray;
+}
+
+.logo{
+    display: flex;
+    justify-content: space-between;
+    border: 5px solid black;
+    padding: 32px;
+    margin: 5px;
+
+}
+
+.linav{                   /* Margen entre botones del nav */
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.nav{
+    border: 5px solid black;
+    margin: 5px;
+}
+
+.navizquierdo{              /* Botonera Izquierda */
+    display: flex;                 
+    align-items: flex-end;
+}
+.navderecho{               /* Botonera Derecha */
+    display: flex;
+    align-items: flex-end;
+}
+
+.listanoordenada{
+    display: flex;
+    justify-content: space-between;
+    
+}
+/* ------------------------------------------FIN HEADER--------------------------------------------------------- */
+
+
+/* -----------------------------------------CONTENT------------------------------------------------------------- */
+.CONTENT
+{
+    display: flex;
+    border: 5px solid black;
+    width: 1000px;
+    height:1000px;
+    color:black; 
+    margin-bottom: 5px;
+    background-color:  lightgray;
+}
+
+.filtros{
+    display: flex;
+    border: 5px solid black;
+    width: 190px;
+    height: 980px;
+    color:black; 
+    margin: 5px 2.5px 5px 5px;
+    background-color:  lightblue;
+}
+
+.imagenes{
+    display: flex;
+    border: 5px solid black;
+    width: 790px;
+    height: 980px;
+    color:black; 
+    margin: 5px 2.5px 5px 5px;
+    background-color:  lightblue;
+}
+
+/* ----------------------------------------FIN CONTENT--------------------------------------------------------------- */
+
+
+/* ----------------------------------------FOOTER-------------------------------------------------------------------- */
+.FOOTER
+{
+    border: 5px solid black;
+    width: 1000px;
+    height: 200px;
+    color:black; 
+    margin-bottom: 5px;
+    background-color:  lightgray;
+}
+
+/* ---------------------------------------FIN FOOTER------------------------------------------------------------------ */
