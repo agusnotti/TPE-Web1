@@ -110,7 +110,7 @@ body{
     margin: 8px;
 }
 
-.tabla-categoria, .tabla-categoria td, .tabla-categoria tr{
+.tabla-categoria, .tabla-categoria td{
     border: 1px solid black;
     border-collapse: collapse;
 }
