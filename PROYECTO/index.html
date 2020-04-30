@@ -46,69 +46,91 @@
 
     <!---------------------------------------------CONTENT--------------------------------->
     <div class="content">
-        <div class="container-filtros">
-            <h2>Filtrar</h2>
-            <div>
-                    <h4>Categoria 1</h4>
-                    <input type="checkbox" name="Checkbox 1" id="Checkbox1">
-                    <label for="Checkbox 1"> Checkbox 1</label><br>
-                    <input type="checkbox" name="Checkbox 2" id="Checkbox2">
-                    <label for="Checkbox 2"> Checkbox 2</label><br>
-                    <input type="checkbox" name="Checkbox 3" id="Checkbox3">
-                    <label for="Checkbox 3"> Checkbox 3</label><br>
-                    <input type="checkbox" name="Checkbox 4" id="Checkbox4">
-                    <label for="Checkbox 4"> Checkbox 4</label><br>
-            </div>
-            <div>
-                    <h4>Categoria 2</h4>
-                    <input type="checkbox" name="Checkbox 5" id="Checkbox5">
-                    <label for="Checkbox 5"> Checkbox 1</label><br>
-                    <input type="checkbox" name="Checkbox 6" id="Checkbox6">
-                    <label for="Checkbox 6"> Checkbox 2</label><br>
-                    <input type="checkbox" name="Checkbox 7" id="Checkbox7">
-                    <label for="Checkbox 7"> Checkbox 3</label><br>
-                    <input type="checkbox" name="Checkbox 8" id="Checkbox8">
-                    <label for="Checkbox 8"> Checkbox 4</label><br>
-            </div>
-        </div>
-        <div class="container-imagenes">
-            <div>
-                <img src="images/img_index1.png" alt="Aromaterapia">
-                <img src="images/img_index2.png" alt="Cuidado del cabello">
-                <img src="images/img_index3.png" alt="Cuidado del cuerpo">
-                <img src="images/img_index4.png" alt="Cuidado del rostro">
-                <img src="images/img_index5.png" alt="Cuidado de labios">
-                <img src="images/img_index6.png" alt="Cuidado de piernas">
-            </div>
+        <div class="filtros-imagenes">
+            <div class="container-filtros">
+                <h3>Filtrar</h3>
 
+                <h4>Aromaterapia</h4>
+                <ul>
+                    <li><input type="checkbox">Aceites esenciales</li>
+                    <li><input type="checkbox">Aroma Blends</li>
+                </ul>
+                <h4>Bienestar Fisico</h4>
+                <ul>
+                    <li><input type="checkbox">Uso Frecuente</li>
+                    <li><input type="checkbox">Cuidados femeninos</li>
+                    <li><input type="checkbox">Respiración</li>
+                    <li><input type="checkbox">Relajacion muscular</li>
+                </ul>
+                <h4>Bienestar Emocional</h4>
+                <ul>
+                    <li><input type="checkbox">Relajacion</li>
+                    <li><input type="checkbox">Concentracion</li>
+                    <li><input type="checkbox">Armonia</li>
+                    <li><input type="checkbox">Relajacion muscular</li>
+                </ul>
+            </div>    
+            <div class="container-imagenes">
+                <a href="./html/categoria.html">
+                    <h2>Aromaterapia</h2>
+                    <img src="images/img_index1.png" alt="Aromaterapia">
+                </a>
+                <a href="./html/categoria.html">
+                    <h2>Cuidado del cabello</h2>
+                    <img src="images/img_index2.png" alt="Cuidado del cabello">
+                </a>
+                <a href="./html/categoria.html">
+                    <h2>Cuidado del cuerpo</h2>
+                    <img src="images/img_index3.png" alt="Cuidado del cuerpo">
+                </a>
+                <a href="./html/categoria.html">
+                    <h2>Cuidado del rostro</h2>
+                    <img src="images/img_index4.png" alt="Cuidado del rostro">
+                </a>
+                <a href="./html/categoria.html">
+                    <h2>Cuidado de labios</h2>
+                    <img src="images/img_index5.png" alt="Cuidado de labios">
+                </a>
+                <a href="./html/categoria.html">
+                    <h2>Cuidado de piernas</h2>
+                    <img src="images/img_index6.png" alt="Cuidado de piernas">
+                </a>
+                
+            </div>
         </div>
+
+        <div class="empresa">
+            <h2>¿Quienes somos?</h2>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Recusandae quaerat sed perspiciatis quas corrupti amet perferendis minus vel aut blanditiis tenetur sit, in pariatur? Velit voluptate debitis facere suscipit? A!</p>
+        </div>
+        
         <div class= "container-formulario">
-            <h2>Contactenos</h2>
+            <h2>Contáctenos</h2>
             <p>
                 Para realizar una consulta, adquirir u obtener información acerca de nuestros productos completa este formulario
                 y un/a representante se contactará a la brevedad. Gracias!
             </p>
-            <form action="">
-                <label for="nombreformulario">Nombre*</label>
+            <form class="formulario" action="">
+                <label for="#nombreformulario">Nombre*</label>
                 <input type="text" name="nombre" id="nombreformulario">
-                <label for="apellidoformulario">Apellido*</label>
+                <label for="#apellidoformulario">Apellido*</label>
                 <input type="text" name="apellido" id="apellidoformulario">
-                <label for="provinciaformulario">Provincia*</label>
+                <label for="#provinciaformulario">Provincia*</label>
                 <input type="text" name="provincia" id="provinciaformulario">
-                <label for="localidadformulario">Localidad*</label>
+                <label for="#localidadformulario">Localidad*</label>
                 <input type="text" name="localidad" id="localidadformulario">
-                <label for="correoformulario">Correo Electrónico*</label>
+                <label for="#correoformulario">Correo Electrónico*</label>
                 <input type="text" name="correo" id="correoformulario">
-                <label for="codAreaformulario">Cod.Area*</label>
+                <label for="#codAreaformulario">Cod.Area*</label>
                 <input type="text" name="codArea" id="codAreaformulario">
-                <label for="telefonoformulario">Telefono*</label>
+                <label for="#telefonoformulario">Telefono*</label>
                 <input type="text" name="telefono" id="telefonoformulario">
-                <label for="mensajeformulario">Mensaje</label>
+                <label for="#mensajeformulario">Mensaje</label>
                 <input type="text" name="mensaje" id="mensajeformulario">
-            </form>
-
+            </form>    
         </div>
-
+        
+        
     </div>
     <!-----------------------------------------FIN CONTENT--------------------------------->
 
