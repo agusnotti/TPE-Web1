@@ -29,7 +29,7 @@
             <div class="nav-derecho">
                 <ul class="nav-items">
                     <li>Nosotros</li>
-                    <li>Contacto</li>
+                    <li><a href="#formulario-contacto">Contacto</a></li>
                     <li>
                         <i class="fas fa-search"></i> <input class="input-busqueda" type="text" placeholder="Buscar">
                     </li>
@@ -110,26 +110,30 @@
                 Para realizar una consulta, adquirir u obtener información acerca de nuestros productos completa este formulario
                 y un/a representante se contactará a la brevedad. Gracias!
             </p>
-            <form class="formulario" action="">
-                <label for="#nombreformulario">Nombre*</label>
-                <input type="text" name="nombre" id="nombreformulario">
-                <label for="#apellidoformulario">Apellido*</label>
-                <input type="text" name="apellido" id="apellidoformulario">
-                <label for="#provinciaformulario">Provincia*</label>
-                <input type="text" name="provincia" id="provinciaformulario">
-                <label for="#localidadformulario">Localidad*</label>
-                <input type="text" name="localidad" id="localidadformulario">
-                <label for="#correoformulario">Correo Electrónico*</label>
-                <input type="text" name="correo" id="correoformulario">
-                <label for="#codAreaformulario">Cod.Area*</label>
-                <input type="text" name="codArea" id="codAreaformulario">
-                <label for="#telefonoformulario">Telefono*</label>
-                <input type="text" name="telefono" id="telefonoformulario">
-                <label for="#mensajeformulario">Mensaje</label>
-                <input type="text" name="mensaje" id="mensajeformulario">
-            </form>    
+            
+            <form id="formulario-contacto">
+                <div class="formulario">
+                    <input type="text" name="nombre" placeholder="Nombre" id="nombreformulario">
+                    <input type="text" name="apellido" placeholder="Apellido" id="apellidoformulario">
+                </div>
+                <div class="formulario">                    
+                    <input type="text" name="codArea" placeholder="Cod. Área" id="codAreaformulario">
+                    <input type="text" name="telefono" placeholder="Teléfono" id="telefonoformulario">
+                </div>
+                <div class="formulario">
+                    <input type="text" class="correo-formulario" name="correo" placeholder="Email" id="correoformulario">
+                </div>
+                <div class="formulario">
+                    <textarea name="textarea" id="mensajeformulario" rows="6" cols="100" placeholder="Dejenos su mensaje"></textarea>
+                </div>
+                <div class="formulario">
+                    <p>CAPTCHA</p>
+                </div>
+                <div class="formulario">
+                    <input id="boton-formulario" class="boton-formulario" type="button" value="Enviar" />
+                </div>
+            </form>              
         </div>
-        
         
     </div>
     <!-----------------------------------------FIN CONTENT--------------------------------->
