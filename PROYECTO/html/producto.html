@@ -17,42 +17,47 @@
         <div class="nav">
             <div class="nav-izquierdo">
                 <ul class="nav-items">
-                    <li>Aromaterapia</li>
-                    <li>Manos</li>
-                    <li>Cuerpo</li>
-                    <li>Labios</li>
-                    <li>Piernas</li>
-                    <li>Rostro</li>
+                    <li><a href="categoria.html">Aromaterapia</a></li>
+                    <li><a href="categoria.html">Rostro</a></li>
+                    <li><a href="categoria.html">Manos</a></li>
+                    <li><a href="categoria.html">Cuerpo</a></li>
+                    <li><a href="categoria.html">Labios</a></li>
+                    <li><a href="categoria.html">Piernas</a></li>
                 </ul>
             </div>
-                
+
             <div class="nav-derecho">
                 <ul class="nav-items">
-                    <li>Nosotros</li>
-                    <li>Contacto</li>
                     <li>
-                        <i class="fas fa-search"></i> <input class="input-busqueda" type="text" placeholder="Buscar">
+                        <i class="fas fa-search"></i><input class="input-busqueda" type="search" placeholder="Buscar">
                     </li>
                 </ul>
             </div>
         </div>
-       
-
     </div>
     <!---------------------------------------------FIN HEADER------------------------------>
 
     <!---------------------------------------------CONTENT--------------------------------->
-    <div class="content categoria">
-        <H1>HTML PRODUCTO</H1>
-        
-        <div class="container-imagenes-categoria">
-            <h1>IMAGENES</h1>
+    <ul class="breadcrumb">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="categoria.html">Aromaterapia</a></li>
+        <li>Aceite de Geranio</li>
+    </ul>
+
+    
+    <div class="container-producto">
+        <img  src="../images/producto.jpg" alt="Geranio">
+        <div class="descripcion-producto">
+            <h2>Aceite de Geranio</h2>
+            <p>Posee un efecto armonizante general que ayuda a evocar sentimientos de paz y serenidad. 
+            Ayuda a transitar los ciclos de la mujer, los sentimientos encontrados y esa extrema e 
+            inexplicable sensibilidad que suele abatirnos en esos períodos. Los cambios de la mujer 
+            dejarán de ser un estorbo y nos permitirán continuar con nuestro camino viviendo en plenitud.</p>
+            <button>Agregar al carrito</button>
         </div>
-        <div class="tabla-precios">
-            <h1>tabla de precios</h1>
-        </div>
-        
     </div>
+        
+    
     <!-----------------------------------------FIN CONTENT--------------------------------->
 
     <!-----------------------------------------FOOTER-------------------------------------->
@@ -70,7 +75,7 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
-
+    <script src="../js/proyecto.js"></script>
 </body>
 
 </html>

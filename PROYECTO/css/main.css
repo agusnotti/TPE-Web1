@@ -1,6 +1,7 @@
 html{
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    color:#026278;
+    color:#03829E;
+    scroll-behavior: smooth;
 }
 
 body{
@@ -10,6 +11,11 @@ body{
 }
 
 /* -----------------------------------------------HEADER--------------------------------------------------- */
+.header{
+    position: sticky;
+    top: 0;
+}
+
 .banner{
     display: flex;
     justify-content: space-between;
@@ -25,10 +31,9 @@ body{
     display: flex;
     justify-content: space-between;
     background-color:  #FDF7FF;
-    position: sticky;
-    top: 0;
     height: 85px;
 }
+
 
 .nav-items{
     display: flex;
@@ -37,8 +42,8 @@ body{
 }
 
 .nav-items li, .nav-items li a {                   
-    margin: 5px;
-    padding: 5px;
+    margin: 3px;
+    padding: 3px;
     color:#03829E;
     font-size: large;
     font-weight: bold;
@@ -58,42 +63,67 @@ body{
 .input-busqueda{
     border-radius: 5px;
     height: 30px;
-    border: 1px solid black;
 }
-
-
 
 /* ------------------------------------------FIN HEADER--------------------------------------------------------- */
 
 
 /* -----------------------------------------CONTENT------------------------------------------------------------- */
 
+/* Recorrido por la web*/
+ul.breadcrumb {
+    padding: 5px 10px;
+    list-style: none;
+    background-color: rgb(194, 129, 162);
+}
+  
+ul.breadcrumb li {
+    display: inline;
+    font-size: 18px;
+    color: #FDF7FF;
+}
+  
+ul.breadcrumb li+li:before {
+    padding: 8px;
+    color: #FDF7FF;
+    content: "/\00a0";
+}
+  
+ul.breadcrumb li a {
+    color: #FDF7FF;
+    text-decoration: none;
+}
+  
+ul.breadcrumb li a:hover {
+    color: #FDF7FF;
+    font-weight:bold;
+    text-decoration: underline;
+}
 .container-filtros{
-    width: 250px; 
-    border: 1px solid black;
-    background-color:    #FDF7FF;
+    width: 300px; 
+    background-color:#FDF7FF;
+    padding: 10px;
 }
 
 .container-filtros ul{
     list-style: none;
+    padding: 0;
 }
 
 .container-filtros h4, .container-filtros h3{
     text-align: center;
+    text-decoration: underline;
 }
-
 
 .container-imagenes{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
-    border: 1px solid black;
-    width: 95%;
 }
 
 .container-imagenes img{
-    margin: 0 30px;
+    margin: 0 30px 30px 30px
 }
 
 .container-imagenes a{
@@ -102,54 +132,88 @@ body{
     color: #03829E;
 }
 
-a img:hover{
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+.container-imagenes a:hover{
+    box-shadow:  5px 10px 18px #888888;
     text-align: center;
 }
 
-.filtros-imagenes{
+.container-filtros-imagenes{
     display: flex;
-    border: 1px solid black;
+}
+
+.container-empresa{
+    background-image: url('../images/banner1.jpeg');
+    background-size: cover;
+    padding: 20px;
 }
 
 .empresa{
-    padding: 20px;
-    border: 1px solid black;
+    padding: 40px;
+    margin: 20px;
     background-color:  #FDF7FF;
+    text-align: justify;
 }
 
 .container-formulario{
-    border: 1px solid black;
+    background-color:#FDF7FF;
     width: 40%;
     height: auto;
     padding: 20px;
     margin: 20px auto 20px auto;
 }
 
-.formulario{
+.container-formulario h2{
+    background-color: #03829E;
+    color: #FDF7FF;
+    height: 50px;
+    width: 100%;
+    margin: 0;
+    padding-top: 20px;
+    text-align: center;
+}
+
+.formulario, .captcha, .container-producto{
     display: flex;
-    align-items: center;
+    align-items: center; 
+}
+
+.captcha{
+    justify-content: space-around;   
+}
+
+.captcha h1{
+    border: 1px solid #03829E;
+    background-color: white;
+    padding: 5px 15px;
+    margin: 10px;
 }
 
 input[type=text],textarea{
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     width: 50%;
     padding: 5px 10px;
-    margin: 10px;
-    /*box-sizing: border-box;*/
+    margin: 5px;
     border: 0;
-    border-bottom: 2px solid #026278;
+    border-bottom: 2px solid #03829E;
 }
 
 input[type=button] {
-    background-color: #F39C94;
+    background-color: rgb(194, 129, 162);
     border: none;
     color: white;
     padding: 16px 32px;
     text-decoration: none;
     margin: 10px;
-    cursor: pointer;
-    width: 100%;
+    cursor: pointer; 
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button,
+input[type=number] { 
+  -webkit-appearance: none; 
+  margin: 0; 
+  height: 20px;
+  width: 40%;
 }
 
 .formulario .correo-formulario{
@@ -161,29 +225,75 @@ textarea{
     height: 40px;
 }
 
+.validacion-captcha{
+    display: none;
+    border: 2px solid rgb(11, 173, 65);
+    background-color: rgb(158, 243, 186);
+    text-align: center;
+    color:rgb(11, 173, 65);
+}
 
 /* ----------------------------------------CONTENT CATEGORIA--------------------------------------------------------------- */
-
-.content.categoria{
-    display: inherit;
-    border: 2px solid black;
-    margin: 8px;
-    height: 800px;
+.titulo-categoria{
+    padding-left: 30px;
 }
-
 .tabla-precios{
-    border: 2px solid black;
-    margin: 8px;
-}
-
-.container-imagenes-categoria{
-    border: 2px solid black;
-    margin: 8px;
-}
-
-.tabla-categoria, .tabla-categoria td{
-    border: 1px solid black;
     border-collapse: collapse;
+    width: 60%;
+    margin-bottom: 50px;
+}
+
+.tabla-categoria{
+    display: flex;
+    justify-content: center;
+}
+
+th, td {
+    width: 25%;
+    border-bottom: 1px solid rgb(214, 156, 185);
+    padding: 10px;
+    text-align: center;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: white;
+}
+  
+tbody tr:nth-child(even) {
+    background-color: #FDF7FF;
+}
+
+th{
+    background-color: rgb(194, 129, 162);
+    color:#FDF7FF;
+}
+
+/* ----------------------------------------CONTENT PRODUCTO---------------------------------------------------------- */
+
+.container-producto{
+    width: 800px;
+    margin: 50px auto; 
+}
+.container-producto img{
+    width: 450px;
+}
+.descripcion-producto{
+    text-align: center;
+    padding: 20px;
+}
+
+.descripcion-producto p{
+    text-align: justify;
+}
+
+.descripcion-producto button{
+    background-color: rgb(194, 129, 162);
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
 /* ----------------------------------------FIN CONTENT--------------------------------------------------------------- */
@@ -204,7 +314,7 @@ textarea{
 }
 
 .items-footer li{
-    margin: 8px 20px;
+    margin: 8px 30px;
     padding: 5px;
     color:  #026278;
     font-size: 30px;
