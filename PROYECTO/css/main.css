@@ -232,6 +232,20 @@ textarea{
     text-align: center;
     color:rgb(11, 173, 65);
 }
+.validacion-captcha-correcto{
+    display: block;
+    border: 2px solid rgb(11, 173, 65);
+    background-color: rgb(158, 243, 186);
+    text-align: center;
+    color:rgb(11, 173, 65);
+}
+.validacion-captcha-incorrecto{
+    display: block;
+    border: 2px solid red;
+    background-color: rgb(204, 163, 163);
+    text-align: center;
+    color:red;
+}
 
 /* ----------------------------------------CONTENT CATEGORIA--------------------------------------------------------------- */
 .titulo-categoria{
