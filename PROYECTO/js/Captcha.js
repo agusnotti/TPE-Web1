@@ -36,8 +36,9 @@ function validar() {
         mensajeCaptcha.classList.add("validacion-captcha-incorrecto");
         mensajeCaptcha.classList.remove("validacion-captcha-correcto");
         textocaptcha.innerHTML = "Captcha Incorrecto";
+        event.preventDefault();
     }
-    event.preventDefault();
+    
 }
 
 
