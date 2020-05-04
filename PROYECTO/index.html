@@ -137,15 +137,15 @@
 
             <form id="formulario-contacto">
                 <div class="formulario">
-                    <input type="text" name="nombre" placeholder="Nombre" id="nombreformulario">
-                    <input type="text" name="apellido" placeholder="Apellido" id="apellidoformulario">
+                    <input type="text" name="nombre" required placeholder="Nombre" id="nombreformulario">
+                    <input type="text" name="apellido" required placeholder="Apellido" id="apellidoformulario">
                 </div>
                 <div class="formulario">
                     <input type="text" name="codArea" placeholder="Cod. Área" id="codAreaformulario">
-                    <input type="text" name="telefono" placeholder="Teléfono" id="telefonoformulario">
+                    <input type="text" name="telefono" required placeholder="Teléfono" id="telefonoformulario">
                 </div>
                 <div class="formulario">
-                    <input type="text" class="correo-formulario" name="correo" placeholder="Email"
+                    <input type="text" class="correo-formulario" required name="correo" placeholder="Email"
                         id="correoformulario">
                 </div>
                 <div class="formulario">
@@ -158,7 +158,7 @@
                 <div class="captcha">
                     <h1 id="captcha-codigo"></h1>
                     <input type="number" name="captcha" id="input-captcha">
-                    <input id="boton-formulario" class="boton-formulario" type="button" value="Enviar"/>
+                    <input type="submit" input id="boton-formulario" class="boton-formulario" value="Enviar" />
                 </div>
                 <!-- DIV OCULTO -->
                 <div class="validacion-captcha" id="mensajeCaptcha">
