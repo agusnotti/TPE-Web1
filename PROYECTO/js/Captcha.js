@@ -41,8 +41,7 @@ function validar() {
     
 }
 
-
-document.getElementById("boton-formulario").addEventListener("click", validar);
+document.getElementById("formulario-contacto").addEventListener("submit", validar);
 document.getElementById("nombreformulario").addEventListener("keydown", bloquearEspacio);
 document.getElementById("apellidoformulario").addEventListener("keydown", bloquearEspacio);
 document.getElementById("codAreaformulario").addEventListener("keydown", bloquearEspacio);
