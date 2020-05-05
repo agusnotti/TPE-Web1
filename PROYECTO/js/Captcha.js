@@ -24,6 +24,7 @@ captcha.innerHTML = (Math.round(Math.random() * 9000 + 1000));
 let inputUsuario = document.querySelector("#input-captcha");
 
 function validar() {
+    event.preventDefault();
     let textocaptcha = document.querySelector("#captcha-mensaje")
     if (captcha.innerHTML === inputUsuario.value) {
         mensajeCaptcha.classList.remove("validacion-captcha");
@@ -35,9 +36,9 @@ function validar() {
         mensajeCaptcha.classList.remove("validacion-captcha");
         mensajeCaptcha.classList.add("validacion-captcha-incorrecto");
         mensajeCaptcha.classList.remove("validacion-captcha-correcto");
-        textocaptcha.innerHTML = "Captcha Incorrecto";
-        event.preventDefault();
+        textocaptcha.innerHTML = "Captcha Incorrecto"; 
     }
+    
     
 }
 
