@@ -1,7 +1,7 @@
 html{
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     color:#03829E;
-    scroll-behavior: smooth;
+    scroll-behavior: smooth; 
 }
 
 body{
@@ -27,14 +27,15 @@ body{
 
 }
 
+/*-----Barra de navegacion-----*/
+
 .nav{
     display: flex;
     justify-content: space-between;
     background-color:  #FDF7FF;
     height: 85px;
 }
-
-
+  /*estilo ul*/
 .nav-items{
     display: flex;
     list-style: none;
@@ -47,6 +48,7 @@ body{
     color:#03829E;
     font-size: large;
     font-weight: bold;
+    text-decoration: none;
     
 }
 
@@ -54,10 +56,6 @@ body{
     text-decoration: underline;
     color: #026278;
     font-size: larger;
-}
-
-.nav-items li a{
-    text-decoration: none;
 }
 
 .input-busqueda{
@@ -70,35 +68,42 @@ body{
 
 /* -----------------------------------------CONTENT------------------------------------------------------------- */
 
-/* Recorrido por la web*/
-ul.breadcrumb {
+/*----Recorrido por la web----*/
+ul.rutaExploracion {
     padding: 5px 10px;
     list-style: none;
     background-color: rgb(194, 129, 162);
 }
   
-ul.breadcrumb li {
+ul.rutaExploracion li {
     display: inline;
     font-size: 18px;
     color: #FDF7FF;
 }
   
-ul.breadcrumb li+li:before {
+ul.rutaExploracion li+li:before {
     padding: 8px;
     color: #FDF7FF;
     content: "/\00a0";
 }
   
-ul.breadcrumb li a {
+ul.rutaExploracion li a {
     color: #FDF7FF;
     text-decoration: none;
 }
   
-ul.breadcrumb li a:hover {
+ul.rutaExploracion li a:hover {
     color: #FDF7FF;
     font-weight:bold;
     text-decoration: underline;
 }
+
+/*----Contenedor de contenedor de filtros y contenedor de imagenes---*/
+.container-filtros-imagenes{
+    display: flex;
+}
+
+/*----Contenedor de lista de filtros----*/
 .container-filtros{
     width: 300px; 
     background-color:#FDF7FF;
@@ -115,6 +120,7 @@ ul.breadcrumb li a:hover {
     text-decoration: underline;
 }
 
+/*----Contenedor de imagenes----*/
 .container-imagenes{
     display: flex;
     flex-wrap: wrap;
@@ -137,10 +143,7 @@ ul.breadcrumb li a:hover {
     text-align: center;
 }
 
-.container-filtros-imagenes{
-    display: flex;
-}
-
+/*----Contenedor de informacion de la empresa----*/
 .container-empresa{
     background-image: url('../images/banner1.jpeg');
     background-size: cover;
@@ -154,6 +157,7 @@ ul.breadcrumb li a:hover {
     text-align: justify;
 }
 
+/*----Contenedor formulario----*/
 .container-formulario{
     background-color:#FDF7FF;
     width: 40%;
@@ -177,16 +181,6 @@ ul.breadcrumb li a:hover {
     align-items: center; 
 }
 
-.captcha{
-    justify-content: space-around;   
-}
-
-.captcha h1{
-    border: 1px solid #03829E;
-    background-color: white;
-    padding: 5px 15px;
-    margin: 10px;
-}
 
 input[type=text],textarea{
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
@@ -207,6 +201,7 @@ input[type=submit] {
     cursor: pointer; 
 }
 
+/*---modifica la apariencia del input number---*/
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button,
 input[type=number] { 
@@ -215,7 +210,6 @@ input[type=number] {
   height: 20px;
   width: 40%;
 }
-
 
 .formulario .correo-formulario{
     width: 100%;
@@ -226,6 +220,19 @@ textarea{
     height: 40px;
 }
 
+/*----Ccntenedor captcha----*/
+.captcha{
+    justify-content: space-around;   
+}
+
+.captcha h1{
+    border: 1px solid #03829E;
+    background-color: white;
+    padding: 5px 15px;
+    margin: 10px;
+}
+
+/*----div donde aparece la validacion del captcha*/
 .validacion-captcha{
     display: none;
     border: 2px solid rgb(11, 173, 65);
@@ -243,7 +250,7 @@ textarea{
 .validacion-captcha-incorrecto{
     display: block;
     border: 2px solid red;
-    background-color: rgb(204, 163, 163);
+    background-color: rgb(255, 175, 175);
     text-align: center;
     color:red;
 }
@@ -252,6 +259,8 @@ textarea{
 .titulo-categoria{
     padding-left: 30px;
 }
+
+/**---tabla de precios----*/
 .tabla-precios{
     border-collapse: collapse;
     width: 60%;
@@ -270,6 +279,13 @@ th, td {
     text-align: center;
 }
 
+th{
+    background-color: rgb(194, 129, 162);
+    color:#FDF7FF;
+}
+
+/*---intercala los colores de las filas*/
+
 tbody tr:nth-child(odd) {
     background-color: white;
 }
@@ -278,13 +294,10 @@ tbody tr:nth-child(even) {
     background-color: #FDF7FF;
 }
 
-th{
-    background-color: rgb(194, 129, 162);
-    color:#FDF7FF;
-}
 
 /* ----------------------------------------CONTENT PRODUCTO---------------------------------------------------------- */
 
+/*----contenedor del producto*/
 .container-producto{
     width: 800px;
     margin: 50px auto; 
