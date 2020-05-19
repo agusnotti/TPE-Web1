@@ -37,9 +37,7 @@ function validar() {
         mensajeCaptcha.classList.add("validacion-captcha-incorrecto");
         mensajeCaptcha.classList.remove("validacion-captcha-correcto");
         textocaptcha.innerHTML = "Captcha Incorrecto"; 
-    }
-    
-    
+    }  
 }
 
 document.getElementById("formulario-contacto").addEventListener("submit", validar);
