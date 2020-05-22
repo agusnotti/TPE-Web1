@@ -12,8 +12,8 @@
 
 <body>
     <!---------------------------------------------HEADER------------------------------>
-    <div class="header">
-        <div class="nav">
+    <header class="header">
+        <nav class="nav">
             <div class="nav-izquierdo">
                 <ul class="nav-items">
                     <li><a href="./html/categoria.html">Aromaterapia</a></li>
@@ -34,8 +34,8 @@
                     </li>
                 </ul>
             </div>
-        </div>
-    </div>
+        </nav>
+    </header>
 
     <div class="banner">
         <img src="./images/justrojo.png" alt="Just Logo">
@@ -43,9 +43,9 @@
     <!---------------------------------------------FIN HEADER------------------------------>
 
     <!---------------------------------------------CONTENT--------------------------------->
-    <div class="content">
+    <article class="content">
         <div class="container-filtros-imagenes">
-            <div class="container-filtros">
+            <aside class="container-filtros">
                 <h3>Filtrar</h3>
 
                 <h4>Aromaterapia</h4>
@@ -84,8 +84,8 @@
                     <li><input type="checkbox">$1000 - $1500</li>
                     <li><input type="checkbox">$1500 - $2000</li>
                 </ul>
-            </div>
-            <div class="container-imagenes">
+            </aside>
+            <section class="container-imagenes">
                 <a href="./html/categoria.html">
                     <h3>Aromaterapia</h3>
                     <img src="images/img_index1.png" alt="Aromaterapia">
@@ -110,11 +110,10 @@
                     <h3>Cuidado de piernas</h3>
                     <img src="images/img_index6.png" alt="Cuidado de piernas">
                 </a>
-
-            </div>
+            </section>
         </div>
 
-        <div id="sobre-nosotros" class="container-empresa">
+        <section id="sobre-nosotros" class="container-empresa">
             <div class="empresa">
                 <h2>¿Quienes somos?</h2>
                 <p>Desde sus principios, Just fue creada para liberar la excelencia de la naturaleza
@@ -127,37 +126,37 @@
                     de la ciencia y la innovación para la creación de sus productos a base de aceites esenciales
                     y extractos de plantas naturales.</p>
             </div>
-        </div>
+        </section>
 
 
-        <div class="container-formulario">
+        <section class="container-formulario">
             <h2>Contáctenos</h2>
             <p>Para realizar una consulta, adquirir u obtener información acerca de nuestros productos completa
                 este formulario y un/a representante se contactará a la brevedad. Gracias!</p>
 
             <form id="formulario-contacto">
                 <div class="formulario">
-                    <input type="text" name="nombre"  placeholder="Nombre" id="nombreformulario" required>
-                    <input type="text" name="apellido"  placeholder="Apellido" id="apellidoformulario" required>
+                    <input type="text" name="nombre" placeholder="Nombre" id="nombreformulario" required>
+                    <input type="text" name="apellido" placeholder="Apellido" id="apellidoformulario" required>
                 </div>
                 <div class="formulario">
                     <input type="text" name="codArea" placeholder="Cod. Área" id="codAreaformulario">
-                    <input type="text" name="telefono"  placeholder="Teléfono" id="telefonoformulario" required>
+                    <input type="text" name="telefono" placeholder="Teléfono" id="telefonoformulario" required>
                 </div>
                 <div class="formulario">
-                    <input type="text" class="correo-formulario"  name="correo" placeholder="Email"
-                        id="correoformulario" required>
+                    <input type="text" class="correo-formulario" name="correo" placeholder="Email" id="correoformulario"
+                        required>
                 </div>
                 <div class="formulario">
                     <textarea name="textarea" id="mensajeformulario" rows="6" cols="100"
-                        placeholder="Dejenos su mensaje" ></textarea>
+                        placeholder="Dejenos su mensaje"></textarea>
                 </div>
                 <div class="formulario">
                     <p>Ingrese el siguiente número:</p>
                 </div>
                 <div class="captcha">
                     <h1 id="captcha-codigo"></h1>
-                    <input type="number" name="captcha" id="input-captcha" required >
+                    <input type="number" name="captcha" id="input-captcha" required>
                     <input type="submit" input id="boton-formulario" class="boton-formulario" value="Enviar" />
                 </div>
                 <!-- DIV OCULTO -->
@@ -165,20 +164,19 @@
                     <p id="captcha-mensaje"></p>
                 </div>
             </form>
-        </div>
-
-    </div>
+        </section>
+    </article>
     <!-----------------------------------------FIN CONTENT--------------------------------->
 
     <!-----------------------------------------FOOTER-------------------------------------->
-    <div class="footer">
+    <footer class="footer">
         <ul class="items-footer">
             <li><i class="fab fa-instagram"></i></li>
             <li><i class="fab fa-facebook-f"></i></li>
             <li><i class="fab fa-twitter"></i></li>
             <li><i class="fab fa-whatsapp"></i></li>
         </ul>
-    </div>
+    </footer>
 
     <!-------------------------------------FIN FOOTER-------------------------------------->
 
