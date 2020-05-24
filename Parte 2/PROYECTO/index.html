@@ -8,51 +8,60 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="shortcut icon" href="./images/icon.png" type="image/x-icon">
+    <script src="./js/captcha.js"></script>
+
 </head>
 
 <body>
     <!---------------------------------------------HEADER------------------------------>
     <header class="header">
+        <div class="btn_menu">
+            <a href="#"><i class="fas fa-bars"></i></a>
+            <div><i class="fas fa-search"></i><input type="search" placeholder="Buscar"></div>
+        </div>
         <nav class="nav">
-            <div class="nav-izquierdo">
-                <ul class="nav-items">
-                    <li><a href="./html/categoria.html">Aromaterapia</a></li>
-                    <li><a href="./html/categoria.html">Rostro</a></li>
-                    <li><a href="./html/categoria.html">Manos</a></li>
-                    <li><a href="./html/categoria.html">Cuerpo</a></li>
-                    <li><a href="./html/categoria.html">Labios</a></li>
-                    <li><a href="./html/categoria.html">Piernas</a></li>
-                </ul>
-            </div>
+            <ul class="nav-items nav-izquierdo">
+                <li><a href="./html/categoria.html">Aromaterapia</a></li>
+                <li><a href="./html/categoria.html">Rostro</a></li>
+                <li><a href="./html/categoria.html">Manos</a></li>
+                <li><a href="./html/categoria.html">Cuerpo</a></li>
+                <li><a href="./html/categoria.html">Labios</a></li>
+                <li><a href="./html/categoria.html">Piernas</a></li>
+            </ul>
 
-            <div class="nav-derecho">
-                <ul class="nav-items">
-                    <li><a href="#sobre-nosotros">Nosotros</a></li>
-                    <li><a href="#formulario-contacto">Contacto</a></li>
-                    <li>
-                        <i class="fas fa-search"></i><input class="input-busqueda" type="search" placeholder="Buscar">
-                    </li>
-                </ul>
-            </div>
+            <ul class="nav-items nav-derecho">
+                <li><a href="#sobre-nosotros">Nosotros</a></li>
+                <li><a href="#formulario-contacto">Contacto</a></li>
+                <li class="input-busqueda">
+                    <i class="fas fa-search"></i><input type="search" placeholder="Buscar">
+                </li>
+            </ul>
         </nav>
     </header>
 
     <div class="banner">
         <img src="./images/justrojo.png" alt="Just Logo">
     </div>
+
+    <div class="btn-filtros-mobile">
+        <a href="#">Filtros <i class="fas fa-sliders-h"></i></a>
+    </div>
     <!---------------------------------------------FIN HEADER------------------------------>
 
     <!---------------------------------------------CONTENT--------------------------------->
-    <article class="content">
-        <div class="container-filtros-imagenes">
-            <aside class="container-filtros">
-                <h3>Filtrar</h3>
 
+    <div class="container">
+        <aside class="container-filtros">
+            <h3>Filtrar</h3>
+
+            <div class="categoria-filtros">
                 <h4>Aromaterapia</h4>
                 <ul>
                     <li><input type="checkbox">Aceites esenciales</li>
                     <li><input type="checkbox">Aroma Blends</li>
                 </ul>
+            </div>
+            <div class="categoria-filtros">
                 <h4>Bienestar Fisico</h4>
                 <ul>
                     <li><input type="checkbox">Uso Frecuente</li>
@@ -60,6 +69,8 @@
                     <li><input type="checkbox">Respiración</li>
                     <li><input type="checkbox">Relajacion muscular</li>
                 </ul>
+            </div>
+            <div class="categoria-filtros">
                 <h4>Bienestar Emocional</h4>
                 <ul>
                     <li><input type="checkbox">Relajacion</li>
@@ -67,6 +78,8 @@
                     <li><input type="checkbox">Armonia</li>
                     <li><input type="checkbox">Relajacion muscular</li>
                 </ul>
+            </div>
+            <div class="categoria-filtros">
                 <h4>Aroma</h4>
                 <ul>
                     <li><input type="checkbox">Malva</li>
@@ -77,6 +90,8 @@
                     <li><input type="checkbox">Tomillo</li>
                     <li><input type="checkbox">Manzanilla</li>
                 </ul>
+            </div>
+            <div class="categoria-filtros">
                 <h4>Precio</h4>
                 <ul>
                     <li><input type="checkbox">$0 - $500</li>
@@ -84,11 +99,20 @@
                     <li><input type="checkbox">$1000 - $1500</li>
                     <li><input type="checkbox">$1500 - $2000</li>
                 </ul>
-            </aside>
-            <section class="container-imagenes">
+            </div>
+
+            <button class="btn-aplicar-filtros">Aplicar filtros</button>
+        </aside>
+
+        <article class="container-imagenes">
+
                 <a href="./html/categoria.html">
                     <h3>Aromaterapia</h3>
                     <img src="images/img_index1.png" alt="Aromaterapia">
+                </a>
+                <a href="./html/categoria.html">
+                    <h3>Cuidado de labios</h3>
+                    <img src="images/img_index5.png" alt="Cuidado de labios">
                 </a>
                 <a href="./html/categoria.html">
                     <h3>Cuidado del cabello</h3>
@@ -103,87 +127,86 @@
                     <img src="images/img_index4.png" alt="Cuidado del rostro">
                 </a>
                 <a href="./html/categoria.html">
-                    <h3>Cuidado de labios</h3>
-                    <img src="images/img_index5.png" alt="Cuidado de labios">
-                </a>
-                <a href="./html/categoria.html">
                     <h3>Cuidado de piernas</h3>
                     <img src="images/img_index6.png" alt="Cuidado de piernas">
                 </a>
+
+        </article>
+
+        <article class="contacto">
+            <section id="sobre-nosotros" class="container-empresa">
+                <div class="empresa">
+                    <h2>¿Quienes somos?</h2>
+                    <p>Desde sus principios, Just fue creada para liberar la excelencia de la naturaleza
+                        -y sus poderes restauradores- buscando llegar a miles de personas alrededor del mundo. <a class="ver-mas">Leer mas <i class="far fa-plus-square"></i></a> </p>
+                    <p class="mobile-hidden" id="parrafo-adicional">Los productos Just se basan en recetas de bienestar que utilizan prácticas ancestrales
+                        con hierbas medicinales para atender necesidades cotidianas. En el corazón de cada una de
+                        nuestras fórmulas se encuentran los poderes restauradores de plantas oriundas de los Alpes
+                        Suizos con potentes componentes activos que brindan propiedades de bienestar y belleza
+                        extraordinarias. Mediante técnicas avanzadas de investigación y desarrollo, Just se vale
+                        de la ciencia y la innovación para la creación de sus productos a base de aceites esenciales
+                        y extractos de plantas naturales.</p>
+                </div>
             </section>
-        </div>
+            <section class="container-formulario">
+                <h2>Contáctenos</h2>
+                <p>Para realizar una consulta, adquirir u obtener información acerca de nuestros productos completa
+                    este formulario y un/a representante se contactará a la brevedad. Gracias!</p>
 
-        <section id="sobre-nosotros" class="container-empresa">
-            <div class="empresa">
-                <h2>¿Quienes somos?</h2>
-                <p>Desde sus principios, Just fue creada para liberar la excelencia de la naturaleza
-                    -y sus poderes restauradores- buscando llegar a miles de personas alrededor del mundo. </p>
-                <p>Los productos Just se basan en recetas de bienestar que utilizan prácticas ancestrales
-                    con hierbas medicinales para atender necesidades cotidianas. En el corazón de cada una de
-                    nuestras fórmulas se encuentran los poderes restauradores de plantas oriundas de los Alpes
-                    Suizos con potentes componentes activos que brindan propiedades de bienestar y belleza
-                    extraordinarias. Mediante técnicas avanzadas de investigación y desarrollo, Just se vale
-                    de la ciencia y la innovación para la creación de sus productos a base de aceites esenciales
-                    y extractos de plantas naturales.</p>
-            </div>
-        </section>
+                <form id="formulario-contacto">
+                    <div class="formulario">
+                        <input type="text" name="nombre" placeholder="Nombre" id="nombreformulario" required>
+                        <input type="text" name="apellido" placeholder="Apellido" id="apellidoformulario" required>
+                    </div>
+                    <div class="formulario">
+                        <input type="text" name="codArea" placeholder="Cod. Área" id="codAreaformulario">
+                        <input type="text" name="telefono" placeholder="Teléfono" id="telefonoformulario" required>
+                    </div>
+                    <div class="formulario">
+                        <input type="text" class="correo-formulario" name="correo" placeholder="Email"
+                            id="correoformulario" required>
+                    </div>
+                    <div class="formulario">
+                        <textarea name="textarea" id="mensajeformulario" rows="6" cols="25"
+                            placeholder="Dejenos su mensaje"></textarea>
+                    </div>
+                    <div class="formulario">
+                        <p>Ingrese el siguiente número:</p>
+                    </div>
+                    <div class="captcha">
+                        <h1 id="captcha-codigo"></h1>
+                        <input type="number" name="captcha" id="input-captcha" required>
+                        <input type="submit" input id="boton-formulario" class="boton-formulario" value="Enviar" />
+                    </div>
+
+                    <div class="validacion-captcha" id="mensajeCaptcha">
+                        <p id="captcha-mensaje"></p>
+                    </div>
+                </form>
+            </section>
+
+        </article>
 
 
-        <section class="container-formulario">
-            <h2>Contáctenos</h2>
-            <p>Para realizar una consulta, adquirir u obtener información acerca de nuestros productos completa
-                este formulario y un/a representante se contactará a la brevedad. Gracias!</p>
+    </div>
 
-            <form id="formulario-contacto">
-                <div class="formulario">
-                    <input type="text" name="nombre" placeholder="Nombre" id="nombreformulario" required>
-                    <input type="text" name="apellido" placeholder="Apellido" id="apellidoformulario" required>
-                </div>
-                <div class="formulario">
-                    <input type="text" name="codArea" placeholder="Cod. Área" id="codAreaformulario">
-                    <input type="text" name="telefono" placeholder="Teléfono" id="telefonoformulario" required>
-                </div>
-                <div class="formulario">
-                    <input type="text" class="correo-formulario" name="correo" placeholder="Email" id="correoformulario"
-                        required>
-                </div>
-                <div class="formulario">
-                    <textarea name="textarea" id="mensajeformulario" rows="6" cols="100"
-                        placeholder="Dejenos su mensaje"></textarea>
-                </div>
-                <div class="formulario">
-                    <p>Ingrese el siguiente número:</p>
-                </div>
-                <div class="captcha">
-                    <h1 id="captcha-codigo"></h1>
-                    <input type="number" name="captcha" id="input-captcha" required>
-                    <input type="submit" input id="boton-formulario" class="boton-formulario" value="Enviar" />
-                </div>
-                <!-- DIV OCULTO -->
-                <div class="validacion-captcha" id="mensajeCaptcha">
-                    <p id="captcha-mensaje"></p>
-                </div>
-            </form>
-        </section>
-    </article>
     <!-----------------------------------------FIN CONTENT--------------------------------->
 
     <!-----------------------------------------FOOTER-------------------------------------->
-    <footer class="footer">
+    <!-- <footer class="footer">
         <ul class="items-footer">
             <li><i class="fab fa-instagram"></i></li>
             <li><i class="fab fa-facebook-f"></i></li>
             <li><i class="fab fa-twitter"></i></li>
             <li><i class="fab fa-whatsapp"></i></li>
         </ul>
-    </footer>
+    </footer> -->
 
     <!-------------------------------------FIN FOOTER-------------------------------------->
 
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
-    <script src="./js/captcha.js"></script>
 </body>
 
 </html>
