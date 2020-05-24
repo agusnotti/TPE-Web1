@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="shortcut icon" href="./images/icon.png" type="image/x-icon">
-    <script src="./js/captcha.js"></script>
+    <script src="./js/nav.js"></script>
+    <script src="./js/main.js"></script>
 
 </head>
 
@@ -30,8 +31,8 @@
             </ul>
 
             <ul class="nav-items nav-derecho">
-                <li><a href="#sobre-nosotros">Nosotros</a></li>
-                <li><a href="#formulario-contacto">Contacto</a></li>
+                <li><a href="#sobre-nosotros" class="link-sobre-nosotros">Nosotros</a></li>
+                <li><a href="#formulario-contacto" class="link-contacto">Contacto</a></li>
                 <li class="input-busqueda">
                     <i class="fas fa-search"></i><input type="search" placeholder="Buscar">
                 </li>
@@ -105,32 +106,30 @@
         </aside>
 
         <article class="container-imagenes">
-
-                <a href="./html/categoria.html">
-                    <h3>Aromaterapia</h3>
-                    <img src="images/img_index1.png" alt="Aromaterapia">
-                </a>
-                <a href="./html/categoria.html">
-                    <h3>Cuidado de labios</h3>
-                    <img src="images/img_index5.png" alt="Cuidado de labios">
-                </a>
-                <a href="./html/categoria.html">
-                    <h3>Cuidado del cabello</h3>
-                    <img src="images/img_index2.png" alt="Cuidado del cabello">
-                </a>
-                <a href="./html/categoria.html">
-                    <h3>Cuidado del cuerpo</h3>
-                    <img src="images/img_index3.png" alt="Cuidado del cuerpo">
-                </a>
-                <a href="./html/categoria.html">
-                    <h3>Cuidado del rostro</h3>
-                    <img src="images/img_index4.png" alt="Cuidado del rostro">
-                </a>
-                <a href="./html/categoria.html">
-                    <h3>Cuidado de piernas</h3>
-                    <img src="images/img_index6.png" alt="Cuidado de piernas">
-                </a>
-
+            <a href="./html/categoria.html">
+                <h3>Aromaterapia</h3>
+                <img src="images/img_index1.png" alt="Aromaterapia">
+            </a>
+            <a href="./html/categoria.html">
+                <h3>Cuidado de labios</h3>
+                <img src="images/img_index5.png" alt="Cuidado de labios">
+            </a>
+            <a href="./html/categoria.html">
+                <h3>Cuidado del cabello</h3>
+                <img src="images/img_index2.png" alt="Cuidado del cabello">
+            </a>
+            <a href="./html/categoria.html">
+                <h3>Cuidado del cuerpo</h3>
+                <img src="images/img_index3.png" alt="Cuidado del cuerpo">
+            </a>
+            <a href="./html/categoria.html">
+                <h3>Cuidado del rostro</h3>
+                <img src="images/img_index4.png" alt="Cuidado del rostro">
+            </a>
+            <a href="./html/categoria.html">
+                <h3>Cuidado de piernas</h3>
+                <img src="images/img_index6.png" alt="Cuidado de piernas">
+            </a>
         </article>
 
         <article class="contacto">
@@ -138,14 +137,17 @@
                 <div class="empresa">
                     <h2>¿Quienes somos?</h2>
                     <p>Desde sus principios, Just fue creada para liberar la excelencia de la naturaleza
-                        -y sus poderes restauradores- buscando llegar a miles de personas alrededor del mundo. <a class="ver-mas">Leer mas <i class="far fa-plus-square"></i></a> </p>
-                    <p class="mobile-hidden" id="parrafo-adicional">Los productos Just se basan en recetas de bienestar que utilizan prácticas ancestrales
+                        -y sus poderes restauradores- buscando llegar a miles de personas alrededor del mundo. </p>
+                    <a class="ver-mas">Leer mas <i class="far fa-plus-square"></i></a>
+                    <p class="mobile-hidden" id="parrafo-adicional">Los productos Just se basan en recetas de bienestar
+                        que utilizan prácticas ancestrales
                         con hierbas medicinales para atender necesidades cotidianas. En el corazón de cada una de
                         nuestras fórmulas se encuentran los poderes restauradores de plantas oriundas de los Alpes
                         Suizos con potentes componentes activos que brindan propiedades de bienestar y belleza
                         extraordinarias. Mediante técnicas avanzadas de investigación y desarrollo, Just se vale
                         de la ciencia y la innovación para la creación de sus productos a base de aceites esenciales
                         y extractos de plantas naturales.</p>
+                    <a class="ver-menos mobile-hidden">Leer menos <i class="far fa-minus-square"></i></a>
                 </div>
             </section>
             <section class="container-formulario">
@@ -167,7 +169,7 @@
                             id="correoformulario" required>
                     </div>
                     <div class="formulario">
-                        <textarea name="textarea" id="mensajeformulario" rows="6" cols="25"
+                        <textarea name="textarea" id="mensajeformulario" rows="" cols="20"
                             placeholder="Dejenos su mensaje"></textarea>
                     </div>
                     <div class="formulario">
@@ -193,14 +195,14 @@
     <!-----------------------------------------FIN CONTENT--------------------------------->
 
     <!-----------------------------------------FOOTER-------------------------------------->
-    <!-- <footer class="footer">
+    <footer class="footer">
         <ul class="items-footer">
             <li><i class="fab fa-instagram"></i></li>
             <li><i class="fab fa-facebook-f"></i></li>
             <li><i class="fab fa-twitter"></i></li>
             <li><i class="fab fa-whatsapp"></i></li>
         </ul>
-    </footer> -->
+    </footer>
 
     <!-------------------------------------FIN FOOTER-------------------------------------->
 

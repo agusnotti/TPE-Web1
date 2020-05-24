@@ -7,43 +7,46 @@
     <title>Just - Cosmetica Natural</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <link rel="stylesheet" href="../css/main.css">
+    <script src="../js/nav.js"></script>
     <link rel="shortcut icon" href="../images/icon.png" type="image/x-icon">
 </head>
 
 <body>
     <!---------------------------------------------HEADER------------------------------>
-    <div class="header">
-        <div class="nav">
-            <div class="nav-izquierdo">
-                <ul class="nav-items">
-                    <li><a href="./categoria.html">Aromaterapia</a></li>
-                    <li><a href="./categoria.html">Rostro</a></li>
-                    <li><a href="./categoria.html">Manos</a></li>
-                    <li><a href="./categoria.html">Cuerpo</a></li>
-                    <li><a href="./categoria.html">Labios</a></li>
-                    <li><a href="./categoria.html">Piernas</a></li>
-                </ul>
-            </div>
-
-            <div class="nav-derecho">
-                <ul class="nav-items">
-                    <li>
-                        <i class="fas fa-search"></i><input class="input-busqueda" type="search" placeholder="Buscar">
-                    </li>
-                </ul>
-            </div>
+    <header class="header">
+        <div class="btn_menu">
+            <a href="#"><i class="fas fa-bars"></i></a>
+            <div><i class="fas fa-search"></i><input type="search" placeholder="Buscar"></div>
         </div>
-    </div>
+        <nav class="nav">
+            <ul class="nav-items nav-izquierdo">
+                <li><a href="./html/categoria.html">Aromaterapia</a></li>
+                <li><a href="./html/categoria.html">Rostro</a></li>
+                <li><a href="./html/categoria.html">Manos</a></li>
+                <li><a href="./html/categoria.html">Cuerpo</a></li>
+                <li><a href="./html/categoria.html">Labios</a></li>
+                <li><a href="./html/categoria.html">Piernas</a></li>
+            </ul>
+
+            <ul class="nav-items nav-derecho">
+                <li><a href="#sobre-nosotros" class="link-sobre-nosotros">Nosotros</a></li>
+                <li><a href="#formulario-contacto" class="link-contacto">Contacto</a></li>
+                <li class="input-busqueda">
+                    <i class="fas fa-search"></i><input type="search" placeholder="Buscar">
+                </li>
+            </ul>
+        </nav>
+    </header>
     <!---------------------------------------------FIN HEADER------------------------------>
 
     <!---------------------------------------------CONTENT--------------------------------->
-    <ul class="rutaExploracion">
-        <li><a href="../index.html">Home</a></li>
+    <ul class="breadcrumb">
+        <li><a href="../index.html"><i class="fas fa-home"></i></a></li>
         <li>Aromaterapia</li>
     </ul>
-    
-    <h1 class="titulo-categoria">Aromaterapia</h1>
-    <div class="container-imagenes">
+
+    <article class="container-imagenes categoria">
+        <h1 class="titulo-categoria">Aromaterapia</h1>
         <a href="producto.html">
             <h3>Aceite de Bergamota</h3>
             <img src="../images/categoria/Bergamota.png" alt="Bergamota">
@@ -57,12 +60,12 @@
             <img src="../images/categoria/Geranio.png" alt="Geranio">
         </a>
         <a href="producto.html">
-            <h3>Aceite de Lavanda</h3>
-            <img src="../images/categoria/Lavanda.png" alt="Lavanda">
-        </a>
-        <a href="producto.html">
             <h3>Aceite de Limon</h3>
             <img src="../images/categoria/Limon.png" alt="Limon">
+        </a>
+        <a href="producto.html">
+            <h3>Aceite de Lavanda</h3>
+            <img src="../images/categoria/Lavanda.png" alt="Lavanda">
         </a>
         <a href="producto.html">
             <h3>Aceite de Manzanilla</h3>
@@ -76,82 +79,66 @@
             <h3>Aceite de Naranja</h3>
             <img src="../images/categoria/Naranja.png" alt="Naranja">
         </a>
-    </div>
-    <h2 class="titulo-categoria">Lista de precios</h2>
-    <div class="tabla-categoria">
-        <table class= "tabla-precios">
-            <thead>
+    </article>
+
+    <article class="productos">
+        <section class="tabla-productos">
+            <h2 class="titulo-categoria">Lista de productos</h2>
+            <table >
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Descripción</th>
+                        <th>Tamaño</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
                 <tr>
-                    <th>Producto</th>
-                    <th>Descripción</th>
-                    <th>Tamaño</th>
-                    <th>Precio</th>
+                    <td>Aceite de Bergamota</td>
+                    <td>Gotas de felicidad</td>
+                    <td>10 ml</td>
+                    <td>$500</td>
                 </tr>
-            </thead>
-            <tr>
-                <td>Aceite de Bergamota</td>
-                <td>Gotas de felicidad</td>
-                <td>10 ml</td>
-                <td>$500</td>
-            </tr>
-            <tr>
-                <td>Aceite de Eucalipto</td>
-                <td>Beneficios respiratorios</td>
-                <td>10 ml</td>
-                <td>$320</td>
-            </tr>
-            <tr>
-                <td>Aceite de Geranio</td>
-                <td>Mujer plena</td>
-                <td>10 ml</td>
-                <td>$700</td>
-            </tr>
-            <tr>
-                <td>Aceite de Lavanda</td>
-                <td>Relajación</td>
-                <td>10 ml</td>
-                <td>$700</td>
-            </tr>
-            <tr>
-                <td>Aceite de Limón</td>
-                <td>Inspiración</td>
-                <td>10 ml</td>
-                <td>$600</td>
-            </tr>
-            <tr>
-                <td>Aceite de Manzanilla</td>
-                <td>Reconfortante natural</td>
-                <td>10 ml</td>
-                <td>$700</td>
-            </tr>
-            <tr>
-                <td>Aceite de Menta</td>
-                <td>Concentración</td>
-                <td>10 ml</td>
-                <td>$500</td>
-            </tr>
-            <tr>
-                <td>Aceite de Naranja</td>
-                <td>Armonía</td>
-                <td>10 ml</td>
-                <td>$700</td>
-            </tr>
-        </table>
-    </div>
-        
-    
+                <tr>
+                    <td>Aceite de Eucalipto</td>
+                    <td>Beneficios respiratorios</td>
+                    <td>10 ml</td>
+                    <td>$320</td>
+                </tr>
+                <tr>
+                    <td>Aceite de Geranio</td>
+                    <td>Mujer plena</td>
+                    <td>10 ml</td>
+                    <td>$700</td>
+                </tr>
+            </table>
+        </section>
+
+        <section class="form-productos">
+            <h2 class="titulo-categoria">Agregar productos</h2>
+            <form>
+                <input type="text" name="Nombre producto" placeholder="Nombre producto">
+                <input type="text" name="Descripcion" placeholder="Descripcion">
+                <input type="text" name="Tamaño" placeholder="Tamaño">
+                <input type="text" name="Precio" placeholder="Precio">
+                <button class="btn-form-productos">Agregar producto</button>
+            </form>
+        </section>
+
+    </article>
+
     <!-----------------------------------------FIN CONTENT--------------------------------->
 
     <!-----------------------------------------FOOTER-------------------------------------->
-    <div class="footer">
+    <footer class="footer">
         <ul class="items-footer">
             <li><i class="fab fa-instagram"></i></li>
             <li><i class="fab fa-facebook-f"></i></li>
             <li><i class="fab fa-twitter"></i></li>
             <li><i class="fab fa-whatsapp"></i></li>
         </ul>
-    </div>
-    
+    </footer>
+
     <!-------------------------------------FIN FOOTER-------------------------------------->
 
 
