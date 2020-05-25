@@ -100,15 +100,12 @@ document.addEventListener("DOMContentLoaded", function () {
         table.innerHTML = "";
     }
 
-    function vaciarTabla() {
-
-        limpiarTabla();
-        tabla = [];
-    }
-
     cargarTabla();
     
-    document.getElementById("btn-vaciar-tabla").addEventListener("click", vaciarTabla);
+    document.getElementById("btn-vaciar-tabla").addEventListener("click", function(){
+        limpiarTabla();
+        tabla = [];
+    });
    
     document.getElementById("btn-agregar-tabla").addEventListener("click", function () {
         event.preventDefault();
