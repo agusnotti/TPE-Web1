@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <link rel="stylesheet" href="../css/main.css">
     <script src="../js/nav.js"></script>
+    <script src="../js/tabladinamica.js"></script>
     <link rel="shortcut icon" href="../images/icon.png" type="image/x-icon">
 </head>
 
@@ -84,7 +85,7 @@
     <article class="productos">
         <section class="tabla-productos">
             <h2 class="titulo-categoria">Lista de productos</h2>
-            <table >
+            <table>
                 <thead>
                     <tr>
                         <th>Producto</th>
@@ -93,36 +94,22 @@
                         <th>Precio</th>
                     </tr>
                 </thead>
-                <tr>
-                    <td>Aceite de Bergamota</td>
-                    <td>Gotas de felicidad</td>
-                    <td>10 ml</td>
-                    <td>$500</td>
-                </tr>
-                <tr>
-                    <td>Aceite de Eucalipto</td>
-                    <td>Beneficios respiratorios</td>
-                    <td>10 ml</td>
-                    <td>$320</td>
-                </tr>
-                <tr>
-                    <td>Aceite de Geranio</td>
-                    <td>Mujer plena</td>
-                    <td>10 ml</td>
-                    <td>$700</td>
-                </tr>
+                <tbody id="body-tabla">
+                </tbody>
             </table>
         </section>
 
         <section class="form-productos">
             <h2 class="titulo-categoria">Agregar productos</h2>
             <form class="formulario-agregar-producto">
-                <input type="text" name="Nombre producto" placeholder="Nombre producto">
-                <input type="text" name="Descripcion" placeholder="Descripcion">
-                <input type="text" name="Tamaño" placeholder="Tamaño">
-                <input type="text" name="Precio" placeholder="Precio">
-                <button class="btn-form-productos">Agregar producto</button>
+                <input type="text" id="nombre-tabla" name="Nombre producto" placeholder="Nombre producto" required>
+                <input type="text" id="descripcion-tabla" name="Descripcion" placeholder="Descripcion" required>
+                <input type="text" id="tamaño-tabla" name="Tamaño" placeholder="Tamaño" required>
+                <input type="text" id="precio-tabla" name="Precio" placeholder="Precio" required>
+                <button id ="btn-agregar-tabla" class="btn-form-productos">Agregar producto</button>
             </form>
+            <button id="btn-agregar-varios-tabla" class="btn-form-productos">Agregar Varios</button>
+            <button id="btn-vaciar-tabla" class="btn-form-productos">Vaciar Tabla</button>
         </section>
 
     </article>
