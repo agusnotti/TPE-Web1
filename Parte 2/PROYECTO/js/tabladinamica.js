@@ -102,8 +102,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function vaciarTabla() {
 
-        let table = document.getElementById("body-tabla");
-        table.innerHTML = "";
+        limpiarTabla();
         tabla = [];
     }
 
