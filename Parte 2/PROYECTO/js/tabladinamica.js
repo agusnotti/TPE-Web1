@@ -1,6 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
-
-
+    
+    let nombreProducto = document.getElementById("nombre-tabla");
+    let descripcionProducto = document.getElementById("descripcion-tabla");
+    let tamañoProducto = document.getElementById("tamaño-tabla");
+    let precioProducto = document.getElementById("precio-tabla");
+    let table = document.getElementById("body-tabla");
 
     let tabla = [
         {
@@ -65,8 +69,6 @@ document.addEventListener("DOMContentLoaded", function () {
     function cargarTabla() {
         limpiarTabla();
 
-        let table = document.getElementById("body-tabla");
-
         for (i = 0; i < tabla.length; i++) {
 
             let tr = document.createElement("tr");
@@ -88,16 +90,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
             table.appendChild(tr);
         }
-
-
-
     }
 
-
-
     function limpiarTabla() {
-        let table = document.getElementById("body-tabla");
         table.innerHTML = "";
+    }
+
+    function limpiarCamposFormulario() {
+        nombreProducto.value = "";
+        descripcion = descripcionProducto.value = "";
+        tamañoProducto.value = "";
+        precioProducto.value = "";
     }
 
     cargarTabla();
@@ -115,14 +118,15 @@ document.addEventListener("DOMContentLoaded", function () {
             "tamaño": "",
             "precio": ""
         }
-        nuevoproducto.nombre = document.getElementById("nombre-tabla").value;
-        nuevoproducto.descripcion = document.getElementById("descripcion-tabla").value;
-        nuevoproducto.tamaño = document.getElementById("tamaño-tabla").value;
-        nuevoproducto.precio = document.getElementById("precio-tabla").value;
+
+        nuevoproducto.nombre = nombreProducto.value;
+        nuevoproducto.descripcion = descripcionProducto.value;
+        nuevoproducto.tamaño = tamañoProducto.value;
+        nuevoproducto.precio = precioProducto.value;
 
         tabla.push(nuevoproducto);
         cargarTabla();
-
+        limpiarCamposFormulario()
 
     });
 
