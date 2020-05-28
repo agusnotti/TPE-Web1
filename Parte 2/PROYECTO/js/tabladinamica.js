@@ -76,6 +76,8 @@ document.addEventListener("DOMContentLoaded", function () {
             let td2 = document.createElement("td");
             let td3 = document.createElement("td");
             let td4 = document.createElement("td");
+            let tdboton= document.createElement("td");
+            let btn = document.createElement("button");
 
 
             td1.innerText = tabla[i].nombre;
@@ -83,14 +85,30 @@ document.addEventListener("DOMContentLoaded", function () {
             td3.innerText = tabla[i].tamaño;
             td4.innerText = tabla[i].precio;
 
+            tr.id= i;
+            btn.id= i;
+            btn.innerText="Borrar";
+            btn.classList.add("btn-tabla-borrar");
+            tdboton.appendChild(btn);
+
             tr.appendChild(td1);
             tr.appendChild(td2);
             tr.appendChild(td3);
             tr.appendChild(td4);
+            tr.appendChild(tdboton);
+            
 
             table.appendChild(tr);
         }
+
+        let botonestabla = document.querySelectorAll(".btn-tabla-borrar");
+        for(let i = 0; i< botonestabla.length; i++){
+            botonestabla[i].addEventListener("click", function(){
+            eliminarElem(botonestabla[i].id);
+          });
+        }
     }
+
 
     function limpiarTabla() {
         table.innerHTML = "";
@@ -102,8 +120,14 @@ document.addEventListener("DOMContentLoaded", function () {
         tamañoProducto.value = "";
         precioProducto.value = "";
     }
-
+    
     cargarTabla();
+   
+    function eliminarElem(idboton){
+        tabla.splice(idboton, 1);
+        cargarTabla();
+      }
+
     
     document.getElementById("btn-vaciar-tabla").addEventListener("click", function(){
         limpiarTabla();
