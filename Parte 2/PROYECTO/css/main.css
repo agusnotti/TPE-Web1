@@ -26,11 +26,11 @@ body {
   background-size: cover;
 }
 
-.banner img{
+.banner img {
   width: 70%;
 }
 
-.mobile-hidden {
+.mobile-hidden, .oculto {
   display: none;
 }
 
@@ -143,13 +143,22 @@ input[type="search"] {
   display: none;
 }
 
-.btn-aplicar-filtros, .btn-form-productos , .btn-tabla-borrar{
+.btn-aplicar-filtros,
+.btn-form-productos {
   background-color: rgb(194, 129, 162);
   border: none;
   color: white;
   padding: 10px 15px;
   text-decoration: none;
   margin: 10px;
+  cursor: pointer;
+}
+
+.btn-tabla-borrar {
+  background-color: rgb(194, 129, 162);
+  border: none;
+  color: white;
+  text-decoration: none;
   cursor: pointer;
 }
 
@@ -196,13 +205,14 @@ input[type="search"] {
 }
 
 /* --------------------------------------------- FORMULARIO --------------------------------------------- */
-.container-formulario, .form-productos{
+.container-formulario,
+.form-productos {
   background-color: #fdf7ff;
   padding: 20px;
   margin: 20px auto 20px auto;
 }
 
-.form-productos{
+.form-productos {
   text-align: center;
 }
 
@@ -224,7 +234,8 @@ input[type="search"] {
   align-items: center;
 }
 
-.formulario .correo-formulario, textarea {
+.formulario .correo-formulario,
+textarea {
   width: 100%;
 }
 
@@ -233,7 +244,7 @@ input[type="search"] {
   justify-content: space-around;
 }
 
-.captcha-mensaje{
+.captcha-mensaje {
   text-align: center;
 }
 
@@ -274,7 +285,7 @@ textarea {
   border-bottom: 2px solid #03829e;
 }
 
-input[type="text"]{
+input[type="text"] {
   width: 50%;
 }
 
@@ -299,13 +310,13 @@ input[type="number"] {
 }
 
 /* --------------------------------------------- FOOTER --------------------------------------------- */
-.footer{
+.footer {
   margin: 0;
   background-image: url("../images/banner1.jpeg");
   background-size: cover;
 }
 
-.items-footer{
+.items-footer {
   display: flex;
   justify-content: center;
   list-style: none;
@@ -313,10 +324,10 @@ input[type="number"] {
   margin: 0;
 }
 
-.items-footer li{
+.items-footer li {
   margin: 8px 15px;
   padding: 5px;
-  color:  #026278;
+  color: #026278;
   font-size: 30px;
 }
 
@@ -330,49 +341,52 @@ ul.breadcrumb {
 ul.breadcrumb li {
   display: inline;
   font-size: 15px;
-  color: #FDF7FF;
+  color: #fdf7ff;
 }
 
-ul.breadcrumb li+li:before {
+ul.breadcrumb li + li:before {
   padding: 8px;
-  color: #FDF7FF;
+  color: #fdf7ff;
   content: "/\00a0";
 }
 
 ul.breadcrumb li a {
-  color: #FDF7FF;
+  color: #fdf7ff;
   text-decoration: none;
 }
 
 ul.breadcrumb li a:hover {
-  color: #FDF7FF;
-  font-weight:bold;
+  color: #fdf7ff;
+  font-weight: bold;
   text-decoration: underline;
 }
 
 /* ============================================== HTML CATEGORIA ============================================== */
-.titulo-categoria{
+.titulo-categoria {
   margin: 0;
-  padding:20px 0px;
+  padding: 20px 0px;
   text-align: center;
   width: 100%;
 }
 
 /*---------------------------------------------- TABLA DE PRECIOS ---------------------------------------------*/
-.tabla-productos, .form-productos{
-  margin: 0px; 
+.tabla-productos,
+.form-productos {
+  margin: 0px;
 }
 
-.tabla-productos th, .tabla-productos td {
-  width: 25%;
+.tabla-productos th,
+.tabla-productos td {
+  width: 22%;
   border-bottom: 1px solid rgb(214, 156, 185);
   padding: 10px 0;
   text-align: center;
+  font-size: 15px;
 }
 
-.tabla-productos th{
+.tabla-productos th {
   background-color: rgb(194, 129, 162);
-  color:#FDF7FF;
+  color: #fdf7ff;
 }
 
 /*---intercala los colores de las filas*/
@@ -382,30 +396,44 @@ ul.breadcrumb li a:hover {
 }
 
 .tabla-productos tbody tr:nth-child(even) {
-  background-color: #FDF7FF;
+  background-color: #fdf7ff;
 }
 
+.tabla-productos tbody tr.resaltar-fila{
+  color: #e675ca;
+  font-weight: bold;
+}
+
+.ofertas-aclaracion{
+  font-weight: bold;
+  color: #e675ca;
+}
+
+.ofertas{
+  font-size: 12px;
+  text-align: center;
+}
 /* ============================================== HTML PRODUCTO ============================================== */
 
 /*---------------------------------------------- CONTAINER PRODUCTO ---------------------------------------------*/
-.container-producto{
+.container-producto {
   display: flex;
   flex-direction: column;
 }
-.container-producto img{
+.container-producto img {
   width: 80%;
 }
 
-.descripcion-producto{
+.descripcion-producto {
   text-align: center;
   padding: 20px;
 }
 
-.descripcion-producto p{
+.descripcion-producto p {
   text-align: justify;
 }
 
-.descripcion-producto button{
+.descripcion-producto button {
   background-color: rgb(194, 129, 162);
   border: none;
   color: white;
@@ -414,11 +442,9 @@ ul.breadcrumb li a:hover {
   cursor: pointer;
 }
 
-
 /*  ################################################   DESKTOP   ############################################  */
 
 @media only screen and (min-width: 600px) {
-
   /*---------------------------------------------- HEADER ---------------------------------------------*/
   .header {
     background-color: #fbefff;
@@ -427,8 +453,8 @@ ul.breadcrumb li a:hover {
   .banner {
     height: 200px;
   }
-  
-  .banner img{
+
+  .banner img {
     width: 30%;
   }
 
@@ -502,67 +528,67 @@ ul.breadcrumb li a:hover {
   .container-imagenes a {
     width: 40%;
   }
-  
+
   /*---------------------------------------------- EMPRESA  ---------------------------------------------*/
   .ver-mas,
   .ver-menos {
     display: none;
   }
-  
+
   p.mobile-hidden {
     display: initial;
   }
-  
+
   /*---------------------------------------------- FORMULARIO ---------------------------------------------*/
   .container-formulario {
     width: 40%;
     height: auto;
   }
-  
-  .formulario-agregar-producto{
+
+  .formulario-agregar-producto {
     display: flex;
     flex-direction: column;
-    align-items: center;    
-  }  
-  
-  /*---------------------------------------------- CATEGORA ---------------------------------------------*/  
-  .categoria{
+    align-items: center;
+  }
+
+  /*---------------------------------------------- CATEGORA ---------------------------------------------*/
+  .categoria {
     width: 100%;
   }
-  
+
   .categoria a {
     width: 25%;
   }
 
-  /*---------------------------------------------- TABLA DE PRODUCTOS ---------------------------------------------*/  
-  .productos{
+  /*---------------------------------------------- TABLA DE PRODUCTOS ---------------------------------------------*/
+  .productos {
     display: flex;
     margin-bottom: 20px;
     padding: 50px;
   }
 
-  .tabla-productos, .form-productos{
-    width: 50%; 
+  .tabla-productos,
+  .form-productos {
+    width: 50%;
     margin: 0;
   }
 
-  .form-productos{    
+  .form-productos {
     background-color: inherit;
     padding: 0;
   }
 
-  /*---------------------------------------------- PRODUCTO ---------------------------------------------*/  
-  .container-producto{
+  /*---------------------------------------------- PRODUCTO ---------------------------------------------*/
+  .container-producto {
     display: flex;
     flex-direction: row;
   }
 
-  .container-producto img{
+  .container-producto img {
     width: 50%;
   }
 
-  .descripcion-producto{
+  .descripcion-producto {
     padding: 50px;
   }
-  
 }

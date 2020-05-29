@@ -9,24 +9,19 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector(".btn-aplicar-filtros").addEventListener("click", toggleFiltros);
     document.querySelector(".ver-mas").addEventListener("click", mostrarInformacion);
     document.querySelector(".ver-menos").addEventListener("click", mostrarInformacion);
-    
 
     
-
     function toggleFiltros() {
       document.querySelector(".container-filtros").classList.toggle("show");
     }
 
     function mostrarInformacion() {
       document.querySelector(".ver-mas").classList.toggle("mobile-hidden");
-      document
-        .querySelector("#parrafo-adicional")
-        .classList.toggle("mobile-hidden");
+      document.querySelector("#parrafo-adicional").classList.toggle("mobile-hidden");
       document.querySelector(".ver-menos").classList.toggle("mobile-hidden");
     }
 
     // Captcha Limitado a 4 valores
-
     let input = document.getElementById("input-captcha");
 
     input.addEventListener("input", function () {
@@ -34,7 +29,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     //Prevenir el uso de barra espaciadora
-
     function bloquearEspacio() {
       if (event.keyCode == 32) {
         event.returnValue = false;
@@ -43,7 +37,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Validación del captcha
-
     let captcha = document.querySelector("#captcha-codigo");
     captcha.innerHTML = Math.round(Math.random() * 9000 + 1000);
     let inputUsuario = document.querySelector("#input-captcha");

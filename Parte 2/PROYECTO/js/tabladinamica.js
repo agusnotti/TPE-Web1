@@ -6,134 +6,78 @@ document.addEventListener("DOMContentLoaded", function () {
     let precioProducto = document.getElementById("precio-tabla");
     let table = document.getElementById("body-tabla");
 
+    //ARREGLO DE PRODUCTOS
     let tabla = [
         {
             "nombre": "Aceite de Bergamota",
             "descripcion": "Gotas de felicidad",
             "tamaño": "15 ml",
-            "precio": "$500"
+            "precio": "500"
         },
         {
             "nombre": "Aceite de Eucalipto",
             "descripcion": "Beneficios respiratorios",
             "tamaño": "10 ml",
-            "precio": "$320"
+            "precio": "320"
         },
         {
             "nombre": "Aceite de Geranio",
             "descripcion": "Mujer plena",
             "tamaño": "25 ml",
-            "precio": "$700"
+            "precio": "700"
         }
     ]
 
+    // CREA EL ARREGLO PARA CARGAR PRODUCTOS RANDOM
     let tablacompleta = [
         {
             "nombre": "Aceite de Bergamota",
             "descripcion": "Gotas de felicidad",
             "tamaño": "15 ml",
-            "precio": "$500"
+            "precio": "500"
         },
         {
             "nombre": "Aceite de Eucalipto",
             "descripcion": "Beneficios respiratorios",
             "tamaño": "10 ml",
-            "precio": "$320"
+            "precio": "320"
         },
         {
             "nombre": "Aceite de Geranio",
             "descripcion": "Mujer plena",
             "tamaño": "25 ml",
-            "precio": "$700"
+            "precio": "700"
         },
         {
             "nombre": "Aceite de Lavanda",
             "descripcion": "Relajación",
             "tamaño": "20 ml",
-            "precio": "$700"
+            "precio": "700"
         },
         {
             "nombre": "Aceite de Limón",
             "descripcion": "Inspiración",
             "tamaño": "15 ml",
-            "precio": "$600"
+            "precio": "600"
         },
         {
             "nombre": "Aceite de Manzanilla",
             "descripcion": "Reconfortante Natural",
             "tamaño": "15 ml",
-            "precio": "$400"
+            "precio": "400"
         }
     ];
 
-    function cargarTabla() {
-        limpiarTabla();
-
-        for (i = 0; i < tabla.length; i++) {
-
-            let tr = document.createElement("tr");
-            let td1 = document.createElement("td");
-            let td2 = document.createElement("td");
-            let td3 = document.createElement("td");
-            let td4 = document.createElement("td");
-            let tdboton= document.createElement("td");
-            let btn = document.createElement("button");
-
-
-            td1.innerText = tabla[i].nombre;
-            td2.innerText = tabla[i].descripcion;
-            td3.innerText = tabla[i].tamaño;
-            td4.innerText = tabla[i].precio;
-
-            tr.id= i;
-            btn.id= i;
-            btn.innerText="Borrar";
-            btn.classList.add("btn-tabla-borrar");
-            tdboton.appendChild(btn);
-
-            tr.appendChild(td1);
-            tr.appendChild(td2);
-            tr.appendChild(td3);
-            tr.appendChild(td4);
-            tr.appendChild(tdboton);
-            
-
-            table.appendChild(tr);
-        }
-
-        let botonestabla = document.querySelectorAll(".btn-tabla-borrar");
-        for(let i = 0; i< botonestabla.length; i++){
-            botonestabla[i].addEventListener("click", function(){
-            eliminarElem(botonestabla[i].id);
-          });
-        }
-    }
-
-
-    function limpiarTabla() {
-        table.innerHTML = "";
-    }
-
-    function limpiarCamposFormulario() {
-        nombreProducto.value = "";
-        descripcion = descripcionProducto.value = "";
-        tamañoProducto.value = "";
-        precioProducto.value = "";
-    }
-    
+    //LLAMADA A LA FUNCION PARA CARGAR LA TABLA
     cargarTabla();
-   
-    function eliminarElem(idboton){
-        tabla.splice(idboton, 1);
-        cargarTabla();
-      }
 
-    
-    document.getElementById("btn-vaciar-tabla").addEventListener("click", function(){
-        limpiarTabla();
+    //VACIAR TABLA AL APRETAR EL BOTON 'VACIAR TABLA'
+    document.getElementById("btn-vaciar-tabla").addEventListener("click", function(){  
         tabla = [];
+        limpiarTabla();
     });
    
+    //CARGA LA TABLA AL APRETAR EL BOTON 'AGREGAR PRODUCTO'
     document.getElementById("btn-agregar-tabla").addEventListener("click", function () {
         event.preventDefault();
         let nuevoproducto = {
@@ -153,7 +97,8 @@ document.addEventListener("DOMContentLoaded", function () {
         limpiarCamposFormulario()
 
     });
-
+    
+    //AGRAGAR VARIOS PRODUCTOS AL APRETAR EL BOTON 'AGREGAR VARIOS'
     document.getElementById("btn-agregar-varios-tabla").addEventListener("click", function () {
 
         let random = Math.round(Math.random() * 2 + 2);
@@ -175,4 +120,80 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         cargarTabla();
     });
+
+    // FUNCION PARA CARGAR LA TABLA EN EL HTML
+    function cargarTabla() {
+        limpiarTabla();
+
+        for (i = 0; i < tabla.length; i++) {
+
+            let tr = document.createElement("tr");
+            let td1 = document.createElement("td");
+            let td2 = document.createElement("td");
+            let td3 = document.createElement("td");
+            let td4 = document.createElement("td");
+            let tdboton= document.createElement("td");
+            let btn = document.createElement("button");
+
+
+            td1.innerText = tabla[i].nombre;
+            td2.innerText = tabla[i].descripcion;
+            td3.innerText = tabla[i].tamaño;
+            td4.innerText = '$ '+tabla[i].precio;
+
+            tr.id= i;
+            btn.id= i;
+            btn.innerHTML='<i class="fas fa-times"></i>';
+            btn.classList.add("btn-tabla-borrar");
+            tdboton.appendChild(btn);
+
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+            tr.appendChild(td4);
+            tr.appendChild(tdboton);
+            
+            //AGREGA RESALTADO A LAS OFERTAS
+            if(tabla[i].precio <= 500){
+                tr.classList.add("resaltar-fila");
+            }
+
+            table.appendChild(tr);
+
+        }
+
+
+        let botonestabla = document.querySelectorAll(".btn-tabla-borrar");
+        for(let i = 0; i< botonestabla.length; i++){
+            botonestabla[i].addEventListener("click", function(){
+            eliminarElem(botonestabla[i].id);
+          });
+        }
+    }
+
+    //FUNCION PARA 'VACIAR TABLA'
+    function limpiarTabla() {
+        table.innerHTML = "";
+
+        // OCULTA EL * DE LA TABLA
+        if(tabla.length == 0){
+            document.querySelector(".ofertas").classList.add("oculto");
+        } else {
+            document.querySelector(".ofertas").classList.remove("oculto");
+        }
+    }
+
+    //FUNCION PARA LIMPIAR LOS INPUT DEL FORMULARIO DE PRODUCTOS
+    function limpiarCamposFormulario() {
+        nombreProducto.value = "";
+        descripcion = descripcionProducto.value = "";
+        tamañoProducto.value = "";
+        precioProducto.value = "";
+    }
+    
+    //FUNCION PARA BORRAR FILA DE LA TABLA
+    function eliminarElem(idboton){
+        tabla.splice(idboton, 1);
+        cargarTabla();
+    }
 });
