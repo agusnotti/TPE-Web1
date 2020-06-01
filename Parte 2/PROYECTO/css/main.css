@@ -162,6 +162,8 @@ input[type="search"] {
   cursor: pointer;
 }
 
+
+
 /* --------------------------------------------- IMAGENES --------------------------------------------- */
 .container-imagenes {
   display: flex;
@@ -399,15 +401,29 @@ ul.breadcrumb li a:hover {
   background-color: #fdf7ff;
 }
 
-.tabla-productos tbody tr.resaltar-fila{
+.tabla-productos tbody 
+
+{
   color: #e675ca;
   font-weight: bold;
 }
 
-.ofertas-aclaracion{
-  font-weight: bold;
-  color: #e675ca;
+.color-resaltado-1{
+  color: red;
 }
+.color-resaltado-2{
+  color:blue;
+}
+.color-resaltado-3{
+  color: green;
+}
+.color-resaltado-4{
+  color:violet;
+}
+.color-resaltado-5{
+  color:orange;
+}
+
 
 .ofertas{
   font-size: 12px;

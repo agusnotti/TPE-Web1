@@ -1,11 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
-    
+
     let nombreProducto = document.getElementById("nombre-tabla");
     let descripcionProducto = document.getElementById("descripcion-tabla");
     let tamañoProducto = document.getElementById("tamaño-tabla");
     let precioProducto = document.getElementById("precio-tabla");
     let table = document.getElementById("body-tabla");
-
+    let colores = ["color-resaltado-1", "color-resaltado-2", "color-resaltado-3", "color-resaltado-4", "color-resaltado-5"];
+    setInterval(resaltado, 80); // CAMBIA COLORES EN UN INTERVALO 
     //ARREGLO DE PRODUCTOS
     let tabla = [
         {
@@ -72,11 +73,11 @@ document.addEventListener("DOMContentLoaded", function () {
     cargarTabla();
 
     //VACIAR TABLA AL APRETAR EL BOTON 'VACIAR TABLA'
-    document.getElementById("btn-vaciar-tabla").addEventListener("click", function(){  
+    document.getElementById("btn-vaciar-tabla").addEventListener("click", function () {
         tabla = [];
         limpiarTabla();
     });
-   
+
     //CARGA LA TABLA AL APRETAR EL BOTON 'AGREGAR PRODUCTO'
     document.getElementById("btn-agregar-tabla").addEventListener("click", function () {
         event.preventDefault();
@@ -97,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
         limpiarCamposFormulario()
 
     });
-    
+
     //AGRAGAR VARIOS PRODUCTOS AL APRETAR EL BOTON 'AGREGAR VARIOS'
     document.getElementById("btn-agregar-varios-tabla").addEventListener("click", function () {
 
@@ -132,18 +133,18 @@ document.addEventListener("DOMContentLoaded", function () {
             let td2 = document.createElement("td");
             let td3 = document.createElement("td");
             let td4 = document.createElement("td");
-            let tdboton= document.createElement("td");
+            let tdboton = document.createElement("td");
             let btn = document.createElement("button");
 
 
             td1.innerText = tabla[i].nombre;
             td2.innerText = tabla[i].descripcion;
             td3.innerText = tabla[i].tamaño;
-            td4.innerText = '$ '+tabla[i].precio;
+            td4.innerText = '$ ' + tabla[i].precio;
 
-            tr.id= i;
-            btn.id= i;
-            btn.innerHTML='<i class="fas fa-times"></i>';
+            tr.id = i;
+            btn.id = i;
+            btn.innerHTML = '<i class="fas fa-times"></i>';
             btn.classList.add("btn-tabla-borrar");
             tdboton.appendChild(btn);
 
@@ -152,10 +153,11 @@ document.addEventListener("DOMContentLoaded", function () {
             tr.appendChild(td3);
             tr.appendChild(td4);
             tr.appendChild(tdboton);
-            
+
             //AGREGA RESALTADO A LAS OFERTAS
-            if(tabla[i].precio <= 500){
-                tr.classList.add("resaltar-fila");
+            if (tabla[i].precio <= 500) {
+                tr.classList.add("intermitente");
+                tr.classList.add(colores[colores.length - 1]);
             }
 
             table.appendChild(tr);
@@ -164,10 +166,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         let botonestabla = document.querySelectorAll(".btn-tabla-borrar");
-        for(let i = 0; i< botonestabla.length; i++){
-            botonestabla[i].addEventListener("click", function(){
-            eliminarElem(botonestabla[i].id);
-          });
+        for (let i = 0; i < botonestabla.length; i++) {
+            botonestabla[i].addEventListener("click", function () {
+                eliminarElem(botonestabla[i].id);
+            });
         }
     }
 
@@ -176,7 +178,7 @@ document.addEventListener("DOMContentLoaded", function () {
         table.innerHTML = "";
 
         // OCULTA EL * DE LA TABLA
-        if(tabla.length == 0){
+        if (tabla.length == 0) {
             document.querySelector(".ofertas").classList.add("oculto");
         } else {
             document.querySelector(".ofertas").classList.remove("oculto");
@@ -190,10 +192,33 @@ document.addEventListener("DOMContentLoaded", function () {
         tamañoProducto.value = "";
         precioProducto.value = "";
     }
-    
+
     //FUNCION PARA BORRAR FILA DE LA TABLA
-    function eliminarElem(idboton){
+    function eliminarElem(idboton) {
         tabla.splice(idboton, 1);
         cargarTabla();
     }
+
+
+    //FUNCION PARA RESALTAR LAS OFERTAS
+    let cantcolores = 0;
+    function resaltado() {
+        let intermitentes = document.getElementsByClassName("intermitente");
+        let i = 0;
+        for (i = 0; i < intermitentes.length; i++) {
+            if (cantcolores == 0) {
+                intermitentes[i].classList.add(colores[cantcolores]);
+                intermitentes[i].classList.remove(colores[colores.length - 1]);
+            } else {
+                intermitentes[i].classList.add(colores[cantcolores]);
+                intermitentes[i].classList.remove(colores[cantcolores - 1]);
+            }
+        }
+        cantcolores = (cantcolores + 1) % (colores.length);
+    }
+
+
+
+
+
 });
