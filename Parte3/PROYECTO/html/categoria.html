@@ -1,0 +1,82 @@
+
+
+<!---------------------------------------------CONTENT--------------------------------->
+<ul class="breadcrumb">
+    <li><a href="html/home.html"><i class="fas fa-home"></i></a></li>
+    <li>Aromaterapia</li>
+</ul>
+
+<article class="container-imagenes categoria">
+    <h1 class="titulo-categoria">Aromaterapia</h1>
+    <a href="html/producto.html">
+        <h3>Aceite de Bergamota</h3>
+        <img src="images/categoria/Bergamota.png" alt="Bergamota">
+    </a>
+    <a href="html/producto.html">
+        <h3>Aceite de Eucalipto</h3>
+        <img src="images/categoria/Eucalipto.png" alt="Eucalipto">
+    </a>
+    <a href="html/producto.html">
+        <h3>Aceite de Geranio</h3>
+        <img src="images/categoria/Geranio.png" alt="Geranio">
+    </a>
+    <a href="html/producto.html">
+        <h3>Aceite de Limon</h3>
+        <img src="images/categoria/Limon.png" alt="Limon">
+    </a>
+    <a href="html/producto.html">
+        <h3>Aceite de Lavanda</h3>
+        <img src="images/categoria/Lavanda.png" alt="Lavanda">
+    </a>
+    <a href="html/producto.html">
+        <h3>Aceite de Manzanilla</h3>
+        <img src="images/categoria/Manzanilla.png" alt="Manzanilla">
+    </a>
+    <a href="html/producto.html">
+        <h3>Aceite de Menta</h3>
+        <img src="images/categoria/Menta.png" alt="Menta">
+    </a>
+    <a href="html/producto.html">
+        <h3>Aceite de Naranja</h3>
+        <img src="images/categoria/Naranja.png" alt="Naranja">
+    </a>
+</article>
+
+<article class="productos">
+    <section class="tabla-productos">
+        <h2 class="titulo-categoria">Lista de productos</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Descripción</th>
+                    <th>Tamaño</th>
+                    <th>Precio</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="body-tabla">
+            </tbody>
+        </table>
+        <p class="ofertas">* Los articulos resaltados con <span class="intermitente"> este color</span> son las ofertas
+            semanales.</p>
+    </section>
+
+    <section class="form-productos">
+        <h2 class="titulo-categoria">Agregar productos</h2>
+        <form class="formulario-agregar-producto">
+            <input type="text" id="nombre-tabla" name="Nombre producto" placeholder="Nombre producto" required>
+            <input type="text" id="descripcion-tabla" name="Descripcion" placeholder="Descripcion" required>
+            <input type="text" id="tamaño-tabla" name="Tamaño" placeholder="Tamaño" required>
+            <input type="text" id="precio-tabla" name="Precio" placeholder="Precio" required>
+            <button id="btn-agregar-tabla" class="btn-form-productos">Agregar producto</button>
+        </form>
+        <button id="btn-agregar-varios-tabla" class="btn-form-productos">Agregar Varios</button>
+        <button id="btn-vaciar-tabla" class="btn-form-productos">Vaciar Tabla</button>
+    </section>
+
+</article>
+
+<!-----------------------------------------FIN CONTENT--------------------------------->
+
+<!-- <script src="./js/tabladinamica.js"></script> -->

@@ -1,0 +1,610 @@
+/*  #############################################   GENERAL   #############################################  */
+
+html {
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  color: #03829e;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+/* --------------------------------------------- HEADER --------------------------------------------- */
+.header {
+  position: sticky;
+  top: 0;
+  background-color: #f5d6ff;
+}
+
+.banner {
+  display: flex;
+  height: 150px;
+  align-items: center;
+  justify-content: center;
+  background-image: url("../images/banner1.jpeg");
+  background-size: cover;
+}
+
+.banner img {
+  width: 70%;
+}
+
+.mobile-hidden, .oculto {
+  display: none;
+}
+
+/* --------------------------------------------- NAV --------------------------------------------- */
+ul.nav-items {
+  list-style: none;
+  padding: 0;
+}
+
+.nav.show {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav {
+  display: none;
+  border-bottom: 4px solid #f5d6ff;
+  background-color: #fbefff;
+}
+
+.nav-items li,
+.nav-items li a,
+.btn-filtros-mobile a {
+  margin: 3px;
+  padding: 3px;
+  color: #03829e;
+  font-size: large;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.ver-mas,
+.ver-menos {
+  font-weight: bold;
+}
+
+.ver-mas .fa-plus-square,
+.ver-menos .fa-minus-square {
+  font-size: 10px;
+}
+
+.nav-items li:hover,
+.nav-items li a:hover {
+  color: #026278;
+  font-size: larger;
+}
+
+.btn_menu {
+  display: flex;
+  justify-content: space-between;
+  color: #026278;
+  padding: 15px;
+}
+
+.btn_menu a {
+  color: #026278;
+  text-decoration: none;
+}
+
+.input-busqueda {
+  display: none;
+}
+
+input[type="search"] {
+  border-radius: 5px;
+  height: 30px;
+}
+
+/* --------------------------------------------- FILTROS --------------------------------------------- */
+.btn-filtros-mobile {
+  text-align: center;
+  font-size: 20px;
+  padding: 6px 15px;
+  background-color: #fdf7ff;
+}
+
+.btn-filtros-mobile:hover {
+  background-color: #fdf7ff;
+}
+
+.container-filtros {
+  display: none;
+  background-color: #fdf7ff;
+  align-items: center;
+}
+
+.container-filtros.show {
+  display: flex;
+  flex-direction: column;
+}
+
+.container-filtros ul li {
+  flex-wrap: wrap;
+}
+
+.container-filtros ul {
+  list-style: none;
+  padding: 0;
+}
+
+.container-filtros h4,
+.container-filtros h3 {
+  text-align: center;
+  text-decoration: underline;
+  margin: 0;
+  width: 100%;
+}
+
+.container-filtros h3 {
+  display: none;
+}
+
+.btn-aplicar-filtros,
+.btn-form-productos {
+  background-color: rgb(194, 129, 162);
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  text-decoration: none;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.btn-tabla-borrar {
+  background-color: rgb(194, 129, 162);
+  border: none;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+
+/* --------------------------------------------- IMAGENES --------------------------------------------- */
+.container-imagenes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px 0 20px 0;
+}
+
+.container-imagenes h3 {
+  margin: 0;
+  padding: 5px;
+}
+.container-imagenes img {
+  width: 70%;
+}
+
+.container-imagenes a {
+  width: 45%;
+  text-align: center;
+  text-decoration: none;
+  color: #03829e;
+}
+
+.container-imagenes a:hover {
+  box-shadow: 5px 10px 18px #888888;
+  text-align: center;
+}
+
+/* --------------------------------------------- EMPRESA --------------------------------------------- */
+.container-empresa {
+  background-image: url("../images/banner1.jpeg");
+  background-size: cover;
+  padding: 20px;
+}
+
+.empresa {
+  padding: 20px;
+  margin: 20px;
+  background-color: #fdf7ff;
+  text-align: justify;
+}
+
+/* --------------------------------------------- FORMULARIO --------------------------------------------- */
+.container-formulario,
+.form-productos {
+  background-color: #fdf7ff;
+  padding: 20px;
+  margin: 20px auto 20px auto;
+}
+
+.form-productos {
+  text-align: center;
+}
+
+.container-formulario h2 {
+  background-color: #03829e;
+  color: #fdf7ff;
+  padding: 10px;
+  text-align: center;
+}
+
+.container-formulario > p {
+  text-align: justify;
+}
+
+.formulario,
+.captcha,
+.container-producto {
+  display: flex;
+  align-items: center;
+}
+
+.formulario .correo-formulario,
+textarea {
+  width: 100%;
+}
+
+/*----Contenedor captcha----*/
+.captcha {
+  justify-content: space-around;
+}
+
+.captcha-mensaje {
+  text-align: center;
+}
+
+.captcha h1 {
+  border: 1px solid #03829e;
+  background-color: white;
+  padding: 5px 15px;
+  margin: 10px;
+}
+
+/*----div donde aparece la validacion del captcha*/
+.validacion-captcha {
+  display: none;
+}
+
+.validacion-captcha-correcto,
+.validacion-captcha-incorrecto {
+  text-align: center;
+}
+
+.validacion-captcha-correcto {
+  border: 2px solid rgb(11, 173, 65);
+  background-color: rgb(158, 243, 186);
+  color: rgb(11, 173, 65);
+}
+.validacion-captcha-incorrecto {
+  border: 2px solid red;
+  background-color: rgb(255, 175, 175);
+  color: red;
+}
+
+input[type="text"],
+textarea {
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  padding: 5px 10px;
+  margin: 5px;
+  border: 0;
+  border-bottom: 2px solid #03829e;
+}
+
+input[type="text"] {
+  width: 50%;
+}
+
+input[type="submit"] {
+  background-color: rgb(194, 129, 162);
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  margin: 10px;
+  cursor: pointer;
+}
+
+/*---modifica la apariencia del input number---*/
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"] {
+  -webkit-appearance: none;
+  margin: 0;
+  width: 40%;
+  padding: 5px 15px;
+}
+
+/* --------------------------------------------- FOOTER --------------------------------------------- */
+.footer {
+  margin: 0;
+  background-image: url("../images/banner1.jpeg");
+  background-size: cover;
+}
+
+.items-footer {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.items-footer li {
+  margin: 8px 15px;
+  padding: 5px;
+  color: #026278;
+  font-size: 30px;
+}
+
+/* --------------------------------------------- BREADCRUMBS --------------------------------------------- */
+ul.breadcrumb {
+  padding: 5px 10px;
+  list-style: none;
+  background-color: rgb(194, 129, 162);
+}
+
+ul.breadcrumb li {
+  display: inline;
+  font-size: 15px;
+  color: #fdf7ff;
+}
+
+ul.breadcrumb li + li:before {
+  padding: 8px;
+  color: #fdf7ff;
+  content: "/\00a0";
+}
+
+ul.breadcrumb li a {
+  color: #fdf7ff;
+  text-decoration: none;
+}
+
+ul.breadcrumb li a:hover {
+  color: #fdf7ff;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+/* ============================================== HTML CATEGORIA ============================================== */
+.titulo-categoria {
+  margin: 0;
+  padding: 20px 0px;
+  text-align: center;
+  width: 100%;
+}
+
+/*---------------------------------------------- TABLA DE PRECIOS ---------------------------------------------*/
+.tabla-productos,
+.form-productos {
+  margin: 0px;
+}
+
+.tabla-productos th,
+.tabla-productos td {
+  width: 22%;
+  border-bottom: 1px solid rgb(214, 156, 185);
+  padding: 10px 0;
+  text-align: center;
+  font-size: 15px;
+}
+
+.tabla-productos th {
+  background-color: rgb(194, 129, 162);
+  color: #fdf7ff;
+}
+
+/*---intercala los colores de las filas*/
+
+.tabla-productos tbody tr:nth-child(odd) {
+  background-color: white;
+}
+
+.tabla-productos tbody tr:nth-child(even) {
+  background-color: #fdf7ff;
+}
+
+.tabla-productos tbody 
+
+{
+  color: #e675ca;
+  font-weight: bold;
+}
+
+.color-resaltado-1{
+  color: red;
+}
+.color-resaltado-2{
+  color:blue;
+}
+.color-resaltado-3{
+  color: green;
+}
+.color-resaltado-4{
+  color:violet;
+}
+.color-resaltado-5{
+  color:orange;
+}
+
+
+.ofertas{
+  font-size: 12px;
+  text-align: center;
+}
+/* ============================================== HTML PRODUCTO ============================================== */
+
+/*---------------------------------------------- CONTAINER PRODUCTO ---------------------------------------------*/
+.container-producto {
+  display: flex;
+  flex-direction: column;
+}
+.container-producto img {
+  width: 80%;
+}
+
+.descripcion-producto {
+  text-align: center;
+  padding: 20px;
+}
+
+.descripcion-producto p {
+  text-align: justify;
+}
+
+.descripcion-producto button {
+  background-color: rgb(194, 129, 162);
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+/*  ################################################   DESKTOP   ############################################  */
+
+@media only screen and (min-width: 600px) {
+  /*---------------------------------------------- HEADER ---------------------------------------------*/
+  .header {
+    background-color: #fbefff;
+  }
+
+  .banner {
+    height: 200px;
+  }
+
+  .banner img {
+    width: 30%;
+  }
+
+  /*---------------------------------------------- NAV ---------------------------------------------*/
+
+  .nav {
+    flex-direction: row;
+    justify-content: space-between;
+    border: none;
+    display: flex;
+  }
+
+  .nav.show {
+    flex-direction: row;
+  }
+
+  .nav-items {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .btn_menu {
+    display: none;
+  }
+
+  .input-busqueda {
+    display: flex;
+    align-items: center;
+  }
+
+  .banner.mobile-hidden {
+    display: flex;
+  }
+
+  /*---------------------------------------------- CONTEINER GENERAL ---------------------------------------------*/
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  /*---------------------------------------------- FILTROS  ---------------------------------------------*/
+
+  .btn-filtros-mobile {
+    display: none;
+  }
+
+  .container-filtros {
+    display: flex;
+    flex-direction: column;
+    padding: 5px 10px;
+    width: 18%;
+  }
+
+  .container-filtros h3 {
+    display: flex;
+    padding: 15px 0;
+    justify-content: center;
+  }
+
+  /*---------------------------------------------- IMAGENES ---------------------------------------------*/
+  .container-imagenes {
+    justify-content: space-around;
+    align-items: center;
+    width: 80%;
+  }
+
+  .container-imagenes img {
+    margin: 0 30px 30px 30px;
+  }
+
+  .container-imagenes a {
+    width: 40%;
+  }
+
+  /*---------------------------------------------- EMPRESA  ---------------------------------------------*/
+  .ver-mas,
+  .ver-menos {
+    display: none;
+  }
+
+  p.mobile-hidden {
+    display: initial;
+  }
+
+  /*---------------------------------------------- FORMULARIO ---------------------------------------------*/
+  .container-formulario {
+    width: 40%;
+    height: auto;
+  }
+
+  .formulario-agregar-producto {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /*---------------------------------------------- CATEGORA ---------------------------------------------*/
+  .categoria {
+    width: 100%;
+  }
+
+  .categoria a {
+    width: 25%;
+  }
+
+  /*---------------------------------------------- TABLA DE PRODUCTOS ---------------------------------------------*/
+  .productos {
+    display: flex;
+    margin-bottom: 20px;
+    padding: 50px;
+  }
+
+  .tabla-productos,
+  .form-productos {
+    width: 50%;
+    margin: 0;
+  }
+
+  .form-productos {
+    background-color: inherit;
+    padding: 0;
+  }
+
+  /*---------------------------------------------- PRODUCTO ---------------------------------------------*/
+  .container-producto {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .container-producto img {
+    width: 50%;
+  }
+
+  .descripcion-producto {
+    padding: 50px;
+  }
+}
