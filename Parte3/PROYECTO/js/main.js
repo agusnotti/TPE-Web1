@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let container = document.querySelector("#use-ajax");
 
-  let btnsNav = document.querySelectorAll("ul.nav-items > li > a");
+  let btnsNav = document.querySelectorAll("ul.nav-izquierdo > li > a");
   btnsNav.forEach((e) => e.addEventListener("click", renderPage));
 
   let btnsBreadcrumb, btnsCategorias, btnsProductos;
