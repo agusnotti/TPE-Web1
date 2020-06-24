@@ -13,21 +13,29 @@ document.addEventListener("DOMContentLoaded", function () {
   callAjax("html/home.html");
 
   function callAjax(url) {
-    container.innerHTML = "<h1>Loading...</h1>";
-    fetch(url, {
-      headers: {
-        "Content-Type": "text/html",
-      },
-    })
+    let mensajeCargando = "Loading...";
+    let mensajeError = "Error - Failed URL!";
+    let mensajeErrorConexion = "Connection error";
+
+    let pMensaje = document.createElement('p');
+    
+    pMensaje.innerHTML = mensajeCargando;
+    container.appendChild(pMensaje);
+
+    fetch(url)
       .then(function (response) {
         if (response.ok) {
           response.text().then(processText);
-        } else container.innerHTML = "<h1>Error - Failed URL!</h1>";
+        } else {
+          pMensaje.innerHTML= mensajeError;
+          container.appendChild(pMensaje);
+        }
       })
       .catch(function (response) {
-        container.innerHTML = "<h1>Connection error</h1>";
+        pMensaje.innerHTML = mensajeErrorConexion;
+        container.appendChild(pMensaje);
       });
-  }
+    }
 
   function renderPage(event) {
     event.preventDefault();
