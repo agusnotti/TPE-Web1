@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   /*--------------------------------------------  PARTIAL RENDER ------------------------------*/
   let coleccion = "productos";
-  let grupo = "Aceto-Test";
+  let grupo = "044-Aceto-Notti";
   let urlgrupo = "https://web-unicen.herokuapp.com/api/groups/" + grupo + "/" + coleccion;
   let container = document.querySelector("#use-ajax");
 
@@ -14,23 +14,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   callAjax("html/home.html");
 
-<<<<<<< HEAD
-  async function callAjax(url) {
-
-    container.innerHTML = "<h1>Loading...</h1>";
-    try {
-      let response = await fetch(url);
-      if (response.ok) {
-        let texto = processText(await response.text());
-      } else {
-        container.innerHTML = urlgrupo;
-      }
-    }
-    catch (response) {
-      container.innerHTML = "<h1>Connection error</h1>";
-    };
-  }
-=======
   function callAjax(url) {
     let mensajeCargando = "Loading...";
     let mensajeError = "Error - Failed URL!";
@@ -55,7 +38,6 @@ document.addEventListener("DOMContentLoaded", function () {
         container.appendChild(pMensaje);
       });
     }
->>>>>>> 93f562e747286e5d86b47c8b9887ed7335e347d2
 
   function renderPage(event) {
     event.preventDefault();
