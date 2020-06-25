@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   /*--------------------------------------------  PARTIAL RENDER ------------------------------*/
   let coleccion = "productos";
-  let grupo = "044-Aceto-Notti";
+  let grupo = "Aceto-Test";
   let urlgrupo = "https://web-unicen.herokuapp.com/api/groups/" + grupo + "/" + coleccion;
   let container = document.querySelector("#use-ajax");
 
