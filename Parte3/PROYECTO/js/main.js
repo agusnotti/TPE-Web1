@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   callAjax("html/home.html");
 
+<<<<<<< HEAD
   async function callAjax(url) {
 
     container.innerHTML = "<h1>Loading...</h1>";
@@ -29,6 +30,32 @@ document.addEventListener("DOMContentLoaded", function () {
       container.innerHTML = "<h1>Connection error</h1>";
     };
   }
+=======
+  function callAjax(url) {
+    let mensajeCargando = "Loading...";
+    let mensajeError = "Error - Failed URL!";
+    let mensajeErrorConexion = "Connection error";
+
+    let pMensaje = document.createElement('p');
+    
+    pMensaje.innerHTML = mensajeCargando;
+    container.appendChild(pMensaje);
+
+    fetch(url)
+      .then(function (response) {
+        if (response.ok) {
+          response.text().then(processText);
+        } else {
+          pMensaje.innerHTML= mensajeError;
+          container.appendChild(pMensaje);
+        }
+      })
+      .catch(function (response) {
+        pMensaje.innerHTML = mensajeErrorConexion;
+        container.appendChild(pMensaje);
+      });
+    }
+>>>>>>> 93f562e747286e5d86b47c8b9887ed7335e347d2
 
   function renderPage(event) {
     event.preventDefault();
