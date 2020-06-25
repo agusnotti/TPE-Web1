@@ -1,9 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   /*--------------------------------------------  PARTIAL RENDER ------------------------------*/
-  let coleccion = "productos";
-  let grupo = "044-Aceto-Notti";
-  let urlgrupo =
-    "https://web-unicen.herokuapp.com/api/groups/" + grupo + "/" + coleccion;
+
   let container = document.querySelector("#use-ajax");
 
   let btnsNav = document.querySelectorAll("ul.nav-izquierdo > li > a");
@@ -52,12 +49,11 @@ document.addEventListener("DOMContentLoaded", function () {
     addEvents();
 
     if (document.getElementById("formulario-contacto")) {
-      //si encuentra el elemento
+      //si encuentra en la pagina este elemento....
       addEventsHome();
     }
-
     if (document.getElementById("nombre-tabla")) {
-      //si encuentra el elemento
+      //si encuentra en la pagina este elemento....
       addEventsTabla();
     }
   }
@@ -158,15 +154,17 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   //-------------------------------     FUNCIONALIDAD TABLA     --------------------------------------
+
+  let baseURL = "https://web-unicen.herokuapp.com/api/groups/";
+  let groupID = "044-Aceto-Notti";
+  let collectionID = "productos";
+
   let nombreProducto;
   let descripcionProducto;
-  let tamañoProducto;
+  let tamanioProducto;
   let precioProducto;
-  let editNombreProducto;
-  let editDescripcionProducto;
-  let editTamanioProducto;
-  let editPrecioProducto;
   let table;
+  let cantidadProductos = 0;
   let cantcolores = 0;
   let colores = [
     "color-resaltado-1",
@@ -174,6 +172,28 @@ document.addEventListener("DOMContentLoaded", function () {
     "color-resaltado-3",
     "color-resaltado-4",
     "color-resaltado-5",
+  ];
+
+  //ARREGLO DE PRODUCTOS
+  let tabla = [
+    {
+      nombre: "Aceite de Bergamota",
+      descripcion: "Gotas de felicidad",
+      tamanio: "15 ml",
+      precio: "500",
+    },
+    {
+      nombre: "Aceite de Eucalipto",
+      descripcion: "Beneficios respiratorios",
+      tamanio: "10 ml",
+      precio: "320",
+    },
+    {
+      nombre: "Aceite de Geranio",
+      descripcion: "Mujer plena",
+      tamanio: "25 ml",
+      precio: "700",
+    },
   ];
 
   // CREA EL ARREGLO PARA CARGAR PRODUCTOS RANDOM
@@ -216,148 +236,124 @@ document.addEventListener("DOMContentLoaded", function () {
     },
   ];
 
+  let producto = {
+    "thing": {
+      "nombre": "",
+      "descripcion": "",
+      "tamanio": "",
+      "precio": "",
+    },
+  };
+
+
+  // LLAMADA AJAX GET DATOS
+  function getDatos() {
+    fetch(baseURL + groupID + "/" + collectionID)
+    .then(function (r) {
+      if (!r.ok) {
+        console.log("ERROR!!");
+      }
+      return r.json();
+    })
+    .then(function (json) {
+      for (let elem of json.productos) {
+        if (elem.thing != null) {
+          crearFilaTabla(elem.thing, elem._id);
+        }
+      }  
+
+      cantidadProductos = json.productos.length;
+      mostrarInformacionOfertas(cantidadProductos);
+
+    })
+    .catch(function (e) {
+      console.log(e);
+    });
+  }
+
+
+  // LLAMADA AJAX POST DATOS
+  function postDatos(producto) {
+    fetch(baseURL + groupID + "/" + collectionID,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(producto),
+      }
+    )
+    .then(function (r) {
+      if (!r.ok) {
+        console.log("ERROR!!");
+      }
+      return r.json();
+    })
+    .then(function (json) {
+      crearFilaTabla(json.information.thing, json.information._id);
+      cantidadProductos++;
+      mostrarInformacionOfertas(cantidadProductos);
+      limpiarCamposFormulario();
+    })
+    .catch(function (e) {
+      console.log(e);
+    });
+  }
+
+  //ASIGNA EVENTOS DE LA TABLA
   function addEventsTabla() {
     nombreProducto = document.getElementById("nombre-tabla");
     descripcionProducto = document.getElementById("descripcion-tabla");
-    tamañoProducto = document.getElementById("tamaño-tabla");
+    tamanioProducto = document.getElementById("tamaño-tabla");
     precioProducto = document.getElementById("precio-tabla");
-    editNombreProducto = document.getElementById("js-edit-nombre-tabla");
-    editDescripcionProducto = document.getElementById("js-edit-descripcion-tabla");
-    editTamanioProducto = document.getElementById("js-edit-tamaño-tabla");
-    editPrecioProducto = document.getElementById("js-edit-precio-tabla");
     table = document.getElementById("body-tabla");
 
     setInterval(resaltado, 80); // CAMBIA COLORES EN UN INTERVALO
 
-    //LLAMADA A LA FUNCION PARA CARGAR LA TABLA
-    cargarTabla();
+    //LLAMADA A LA FUNCION PARA OBTENER DATOS
+    getDatos();  
+    
+    //ASIGNA EVENTO A BOTON 'AGREGAR PRODUCTO'
+    document.getElementById("btn-agregar-tabla").addEventListener("click", agregarProductoATabla);
 
     //VACIAR TABLA AL APRETAR EL BOTON 'VACIAR TABLA'
     document.getElementById("btn-vaciar-tabla").addEventListener("click", vaciarTabla);
+        
 
-    //CARGA LA TABLA AL APRETAR EL BOTON 'AGREGAR PRODUCTO'
-    document.getElementById("btn-agregar-tabla").addEventListener("click", postJson);
-
-    //AGRAGAR VARIOS PRODUCTOS AL APRETAR EL BOTON 'AGREGAR VARIOS'
+    // //AGRAGAR VARIOS PRODUCTOS AL APRETAR EL BOTON 'AGREGAR VARIOS'
     document.getElementById("btn-agregar-varios-tabla").addEventListener("click", agregarVariosTabla);
   }
 
 
-  //HACE UNA LLAMADA AJAX DELETE DENTRO DE OTRA GET...
-  //HAY QUE ABSTRAER FUNCIONALIDAD, PARA NO HACER MUCHAS LLAMADAS
-  function vaciarTabla() {
-    fetch(urlgrupo, {
-      method: "GET",
-      mode: "cors",
+  function vaciarTabla(){
+    fetch(baseURL + groupID + "/" + collectionID)
+    .then(function (r) {
+      if (!r.ok) {
+        console.log("ERROR!!");
+      }
+      return r.json();
     })
-      .then((response) => {
-        if (response.ok) {
-          console.log("Json Obtenido");
-        } else {
-          console.log("ERROR");
+    .then(function (json) {
+      for (let elem of json.productos) {
+        if (elem.thing != null) {
+          deleteDatos(elem._id);
         }
-        return response.json();
-      })
-      .then((json) => {
-        for (let i = 0; i < json.productos.length; i++) {
-          fetch(urlgrupo + "/" + json.productos[i]._id, {
-            method: "DELETE",
-            mode: "cors",
-          })
-            .then((response) => {
-              if (!response.ok) {
-                console.log("ERROR");
-              }
-              limpiarTabla();
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+      }
+    })
+    .catch(function (e) {
+      console.log(e);
+    });
+
   }
 
 
-  function deleteJson(id) {
-    fetch(urlgrupo + "/" + id, {
-      method: "DELETE",
-      mode: "cors",
-    })
-      .then((response) => {
-        if (response.ok) {
-          console.log("Eliminado");
-          cargarTabla();
-        } else {
-          console.log("ERROR");
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }
-
-  function cargarTabla(event) {
-    fetch(urlgrupo, {
-      method: "GET",
-      mode: "cors",
-    })
-      .then((response) => {
-        if (!response.ok) {
-          console.log("ERROR- Falló al obtener el Json");
-        }
-        return response.json();
-      })
-      .then((json) => {
-
-        //se puede modificar creando por fila, para no tener que borrar la tabla y volverla a cargar
-        //cuando se aprieta el boton de eliminar, se elimina la fila unicamente
-        limpiarTabla();   //no iria
-        procesarJsonaTabla(json);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }
-
-  function postJson(event) {
+  //CARGA LA TABLA AL APRETAR EL BOTON 'AGREGAR PRODUCTO'
+  function agregarProductoATabla(event) {
     event.preventDefault();
-    let nuevoproducto = {
-      thing: {
-        nombre: "",
-        descripcion: "",
-        tamanio: "",
-        precio: "",
-      },
-    };
-    nuevoproducto.thing.nombre = nombreProducto.value;
-    nuevoproducto.thing.descripcion = descripcionProducto.value;
-    nuevoproducto.thing.tamanio = tamañoProducto.value;
-    nuevoproducto.thing.precio = precioProducto.value;
 
-    //SE PUEDE ABSTRAER FUNCIONALIDAD
-    fetch(urlgrupo, {
-      method: "POST",
-      mode: "cors",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(nuevoproducto),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          console.log("ERROR- No se pudo agregar el dato");
-        }
-        limpiarCamposFormulario();
-        return response.json();
-      })
-      .then((json) => {
-        cargarTabla();
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    let nuevoproducto = crearProducto(nombreProducto.value, descripcionProducto.value, tamanioProducto.value, precioProducto.value);
+
+    postDatos(nuevoproducto);    
   }
+
 
   function agregarVariosTabla() {
     let random = Math.round(Math.random() * 2 + 2);
@@ -367,127 +363,90 @@ document.addEventListener("DOMContentLoaded", function () {
       let randomtamanio = Math.round(Math.random() * 5);
       let randomprecio = Math.round(Math.random() * 5);
 
-      let nuevoproducto = {
-        thing: {
-          nombre: tablacompleta[randomnombre].nombre,
-          descripcion: tablacompleta[randomnombre].descripcion,
-          tamanio: tablacompleta[randomtamanio].tamanio,
-          precio: tablacompleta[randomprecio].precio,
-        },
-      };
-
-
-      //SE PUEDE ABSTRAER FUNCIONLIDAD
-      fetch(urlgrupo, {
-        method: "POST",
-        mode: "cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(nuevoproducto),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            console.log("ERROR- No se pudo agregar el dato");
-          }
-          return response.json();
-        })
-        .then(cargarTabla())
-
-        .catch((e) => {
-          console.log(e);
-        });
+      let nuevoproducto = crearProducto(tablacompleta[randomnombre].nombre, tablacompleta[randomnombre].descripcion, tablacompleta[randomtamanio].tamanio, tablacompleta[randomprecio].precio)
+     
+      postDatos(nuevoproducto); 
     }
   }
 
 
-  //CREAR CADA FILA DEL ELEMENTO, Y CUANDO SE HACE LA LLAMADA GET, RECORRER EL ARREGLO Y CARGAR CADA FILA.
-  //PARA QUE AL ASIGNAR LA FUNCION ELIMINAR NO HAYA QUE VACIAR TODA LA TABLA
-  function procesarJsonaTabla(json) {
-    for (let i = 0; i < json.productos.length; i++) {
-      let tr = document.createElement("tr");
-      let td1 = document.createElement("td");
-      let td2 = document.createElement("td");
-      let td3 = document.createElement("td");
-      let td4 = document.createElement("td");
-      let tdboton = document.createElement("td");
-      let btn = document.createElement("button");
-      let btnedit = document.createElement("button");
+  //CREA PRODUCTO ASIGNANDO VALORES INGRESADOS POR USUARIO
+  function crearProducto(nombre, descripcion, tamanio, precio ) {
+    producto.thing.nombre = nombre;
+    producto.thing.descripcion = descripcion;
+    producto.thing.tamanio = tamanio;
+    producto.thing.precio = precio;
 
-      td1.innerText = json.productos[i].thing.nombre;
-      td2.innerText = json.productos[i].thing.descripcion;
-      td3.innerText = json.productos[i].thing.tamanio;
-      td4.innerText = "$ " + json.productos[i].thing.precio;
+    return producto;
+  }  
 
-      tr.id = json.productos[i]._id;
-      btn.innerHTML = '<i class="fas fa-times"></i>';
-      btn.classList.add("btn-tabla-borrar");
-      btnedit.innerHTML = '<i class="fas fa-edit"></i>';
-      btnedit.classList.add("btn-tabla-borrar");
-      btnedit.addEventListener("click", function () {
-        permitirEditar(json.productos[i]._id);
-      })
 
-      //se podria abstraer funcionalidad al llamar una funcion que asigne los eventos al boton de eliminar
-      btn.addEventListener("click", function () {
-        eliminarElem(tr.id); //aca se puede llamar directamente con el delete json
-      });
-      tdboton.appendChild(btn);
-      tdboton.appendChild(btnedit);
-
-      tr.appendChild(td1);
-      tr.appendChild(td2);
-      tr.appendChild(td3);
-      tr.appendChild(td4);
-      tr.appendChild(tdboton);
-
-      //AGREGA RESALTADO A LAS OFERTAS
-      if (json.productos[i].thing.precio <= 500) {
-        tr.classList.add("intermitente");
-        tr.classList.add(colores[colores.length - 1]);
-      }
-
-      table.appendChild(tr);
-    }
-  }
-
-  //FUNCION PARA 'VACIAR TABLA'
-  function limpiarTabla() {
-    fetch(urlgrupo, {
-      method: "GET",
-      mode: "cors",
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((json) => {
-        if (json.productos.length == 0) {
-          document.querySelector(".ofertas").classList.add("oculto");
-        } else {
-          document.querySelector(".ofertas").classList.remove("oculto");
-        }
-      });
-    table.innerHTML = "";
-  }
-
-  //FUNCION PARA LIMPIAR LOS INPUT DEL FORMULARIO DE PRODUCTOS
+  //FUNCION PARA LIMPIAR LOS INPUTS DEL FORMULARIO DE PRODUCTOS
   function limpiarCamposFormulario() {
     nombreProducto.value = "";
-    descripcionProducto.value = "";
-    tamañoProducto.value = "";
+    descripcion = descripcionProducto.value = "";
+    tamanioProducto.value = "";
     precioProducto.value = "";
-    editNombreProducto.value = "";
-    editDescripcionProducto.value = "";
-    editTamanioProducto.value = "";
-    editPrecioProducto.value = "";
-  }
-
-  //FUNCION PARA BORRAR FILA DE LA TABLA
-  //SE PUEDE EVITAR HACER OTRA FUNCION LLAMANDO DIRECTAMENTE DESDE EL DELETEJSON
-  function eliminarElem(id) {
-    deleteJson(id);
   }
 
 
-  function permitirEditar(id) {
+  // FUNCION PARA CREAR FILA LA TABLA DE TABLA
+  function crearFilaTabla(producto, id) {
+    let tr = document.createElement("tr");
+    let td1 = document.createElement("td");
+    let td2 = document.createElement("td");
+    let td3 = document.createElement("td");
+    let td4 = document.createElement("td");
+    let tdboton = document.createElement("td");
+    let btnBorrar = document.createElement("button");
+    let btnEdit = document.createElement("button");
+    addEventDelete(btnBorrar);
+    //addEventsEdit(btnEdit);
+
+    td1.innerText = producto.nombre;
+    td2.innerText = producto.descripcion;
+    td3.innerText = producto.tamanio;
+    td4.innerText = "$ " + producto.precio;
+
+    tr.id = id;
+    btnBorrar.innerHTML = '<i class="fas fa-times"></i>';
+    btnEdit.innerHTML = '<i class="fas fa-edit"></i>';
+    btnBorrar.classList.add("btn-tabla-borrar");
+    btnEdit.classList.add("btn-tabla-borrar");
+    tdboton.appendChild(btnBorrar);
+    tdboton.appendChild(btnEdit);
+
+    tr.appendChild(td1);
+    tr.appendChild(td2);
+    tr.appendChild(td3);
+    tr.appendChild(td4);
+    tr.appendChild(tdboton);
+
+    //AGREGA RESALTADO A LAS OFERTAS
+    if (producto.precio <= 500) {
+      tr.classList.add("intermitente");
+      tr.classList.add(colores[colores.length - 1]);
+    }
+
+    table.appendChild(tr);
+  }
+
+
+  function addEventDelete(btn){
+    //ASIGNA EVENTO BOTON BORRAR FILA
+      btn.addEventListener("click", function (event) {
+        let id = this.parentNode.parentNode.id;
+        deleteDatos(id);
+      });
+  } 
+
+  /* function addEventsEdit(btn){
+    //ASIGNA EVENTO BOTON EDITAR DATOS FILA
+    btn.addEventListener("click", function (event) {
+      let id = this.parentNode.parentNode.id;
+      putDatos(nuevoproducto, id);
+    })
+
     let formagregar = document.getElementById("js-form-agregar");
     let formedit = document.getElementById("js-form-edit");
     formagregar.classList.add("oculto");
@@ -505,50 +464,74 @@ document.addEventListener("DOMContentLoaded", function () {
           formedit.removeChild(btnCancelEdicion);
           limpiarCamposFormulario();
     })
+
     btnConfEdicion.addEventListener("click", function () {
-      let nuevoproducto = {
-        "thing": {
-          nombre: "",
-          descripcion: "",
-          tamanio: "",
-          precio: "",
-        }
-      };
-      nuevoproducto.thing.nombre = editNombreProducto.value;
-      nuevoproducto.thing.descripcion = editDescripcionProducto.value;
-      nuevoproducto.thing.tamanio = editTamanioProducto.value;
-      nuevoproducto.thing.precio = editPrecioProducto.value;
-      console.log(nuevoproducto.thing.nombre);
-      fetch(urlgrupo + "/" + id, {
-        "method": "PUT",
-        "mode": "cors",
-        "headers": { "Content-Type": "application/json" },
-        "body": JSON.stringify(nuevoproducto)
-      })
-        .then(response => {
-          if (!response.ok) {
-            console.log("ERROR- No se pudo editar el dato");
-          }
-          formagregar.classList.remove("oculto");
-          formedit.classList.add("oculto");
-          limpiarCamposFormulario();
-          return response.json();
-        })
-        .then(json => {
-          cargarTabla();
-        })
-        .catch(e => {
-          console.log(e);
-        })
-    })
+      let nuevoproducto = crearProducto(editNombreProducto.value, editDescripcionProducto.value, editTamanioProducto.value, editPrecioProducto.value);
+    
+
       //  SI EL BOTON YA EXISTE NO LO CREO
       if(formedit.getElementsByClassName("btn-form-productos").length==0){
         formedit.appendChild(btnConfEdicion);
         formedit.appendChild(btnCancelEdicion);
-      }
-      
+      } 
+    })
 
+  } */
+
+  /* function putDatos(producto, id){
+    fetch(urlgrupo + "/" + id, {
+      "method": "PUT",
+      "mode": "cors",
+      "headers": { "Content-Type": "application/json" },
+      "body": JSON.stringify(producto)
+    })
+      .then(response => {
+        if (!response.ok) {
+          console.log("ERROR- No se pudo editar el dato");
+        }
+        formagregar.classList.remove("oculto");
+        formedit.classList.add("oculto");
+        limpiarCamposFormulario();
+        return response.json();
+      })
+      .then(json => {
+        cargarTabla();
+      })
+      .catch(e => {
+        console.log(e);
+      })
+
+  } */
+
+  //LLAMADA AJAX DELETE
+  function deleteDatos(id) {    
+    fetch(baseURL + groupID + "/" + collectionID + "/" + id, {
+      method: "DELETE"
+    })
+    .then(function (r) {
+      return r.json();
+    })
+    .then(function (json) {
+      let fila = document.getElementById(id);
+      fila.remove();
+      cantidadProductos--;
+      mostrarInformacionOfertas(cantidadProductos);
+    })
+    .catch(function (e) {
+      console.log(e);
+    });
   }
+  
+  
+  // PARRAFO INFORMACION OFERTAS
+  function mostrarInformacionOfertas(cantidadProductos){
+    if (cantidadProductos == 0) {
+      document.querySelector(".ofertas").classList.add("oculto");
+    } else {
+      document.querySelector(".ofertas").classList.remove("oculto");
+    }
+  } 
+
 
   //FUNCION PARA RESALTAR LAS OFERTA
   function resaltado() {
@@ -564,5 +547,5 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
     cantcolores = (cantcolores + 1) % colores.length;
-  }
+  } 
 });
