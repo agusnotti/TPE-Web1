@@ -2,7 +2,8 @@ document.addEventListener("DOMContentLoaded", function () {
   /*--------------------------------------------  PARTIAL RENDER ------------------------------*/
   let coleccion = "productos";
   let grupo = "044-Aceto-Notti";
-  let urlgrupo = "https://web-unicen.herokuapp.com/api/groups/" + grupo + "/" + coleccion;
+  let urlgrupo =
+    "https://web-unicen.herokuapp.com/api/groups/" + grupo + "/" + coleccion;
   let container = document.querySelector("#use-ajax");
 
   let btnsNav = document.querySelectorAll("ul.nav-izquierdo > li > a");
@@ -19,8 +20,8 @@ document.addEventListener("DOMContentLoaded", function () {
     let mensajeError = "Error - Failed URL!";
     let mensajeErrorConexion = "Connection error";
 
-    let pMensaje = document.createElement('p');
-    
+    let pMensaje = document.createElement("p");
+
     pMensaje.innerHTML = mensajeCargando;
     container.appendChild(pMensaje);
 
@@ -29,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (response.ok) {
           response.text().then(processText);
         } else {
-          pMensaje.innerHTML= mensajeError;
+          pMensaje.innerHTML = mensajeError;
           container.appendChild(pMensaje);
         }
       })
@@ -37,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
         pMensaje.innerHTML = mensajeErrorConexion;
         container.appendChild(pMensaje);
       });
-    }
+  }
 
   function renderPage(event) {
     event.preventDefault();
@@ -224,130 +225,130 @@ document.addEventListener("DOMContentLoaded", function () {
     cargarTabla();
 
     //VACIAR TABLA AL APRETAR EL BOTON 'VACIAR TABLA'
-    document
-      .getElementById("btn-vaciar-tabla")
-      .addEventListener("click", function () {
-        fetch(urlgrupo, {
-          "method": "GET",
-          "mode": "cors",
-        }).then(response => {
-          if (response.ok) {
-            console.log("Json Obtenido");
-          } else {
-            console.log("ERROR");
-          }
-          return response.json();
-        })
-          .then(json => {
-            for (let i = 0; i < json.productos.length; i++) {
-              fetch(urlgrupo + "/" + json.productos[i]._id, {
-                "method": "DELETE",
-                "mode": "cors",
-              }).then(response => {
-                if (!response.ok) {
-                  console.log("ERROR");
-                }
-                limpiarTabla();
-              })
-                .catch(e => {
-                  console.log(e);
-                })
-            }
-          })
-          .catch(e => {
-            console.log(e);
-          })
-          
-      });
-
+    document.getElementById("btn-vaciar-tabla").addEventListener("click", vaciarTabla);
+    
     //CARGA LA TABLA AL APRETAR EL BOTON 'AGREGAR PRODUCTO'
-    document
-      .getElementById("btn-agregar-tabla")
-      .addEventListener("click", postJson);
+    document.getElementById("btn-agregar-tabla").addEventListener("click", postJson);
 
     //AGRAGAR VARIOS PRODUCTOS AL APRETAR EL BOTON 'AGREGAR VARIOS'
-    document
-      .getElementById("btn-agregar-varios-tabla")
-      .addEventListener("click", agregarVariosTabla);
+    document.getElementById("btn-agregar-varios-tabla").addEventListener("click", agregarVariosTabla);
+  }
+
+
+  //HACE UNA LLAMADA AJAX DELETE DENTRO DE OTRA GET...
+  //HAY QUE ABSTRAER FUNCIONALIDAD, PARA NO HACER MUCHAS LLAMADAS
+  function vaciarTabla() {  
+    fetch(urlgrupo, {
+      method: "GET",
+      mode: "cors",
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log("Json Obtenido");
+        } else {
+          console.log("ERROR");
+        }
+        return response.json();
+      })
+      .then((json) => {
+        for (let i = 0; i < json.productos.length; i++) {
+          fetch(urlgrupo + "/" + json.productos[i]._id, {
+            method: "DELETE",
+            mode: "cors",
+          })
+            .then((response) => {
+              if (!response.ok) {
+                console.log("ERROR");
+              }
+              limpiarTabla();
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 
 
   function deleteJson(id) {
     fetch(urlgrupo + "/" + id, {
-      "method": "DELETE",
-      "mode": "cors",
-    }).then(response => {
-      if (response.ok) {
-        console.log("Eliminado");
-        cargarTabla();
-      } else {
-        console.log("ERROR");
-      }
+      method: "DELETE",
+      mode: "cors",
     })
-      .catch(e => {
-        console.log(e);
+      .then((response) => {
+        if (response.ok) {
+          console.log("Eliminado");
+          cargarTabla();
+        } else {
+          console.log("ERROR");
+        }
       })
-
+      .catch((e) => {
+        console.log(e);
+      });
   }
 
   function cargarTabla(event) {
     fetch(urlgrupo, {
-      "method": "GET",
-      "mode": "cors",
-    }).then(response => {
-      if (!response.ok) {
-        console.log("ERROR- Falló al obtener el Json");
-      }
-      return response.json();
+      method: "GET",
+      mode: "cors",
     })
-      .then(json => {
-        limpiarTabla();
-        procesarJsonaTabla(json);
-      }).catch(e => {
-        console.log(e);
+      .then((response) => {
+        if (!response.ok) {
+          console.log("ERROR- Falló al obtener el Json");
+        }
+        return response.json();
       })
+      .then((json) => {
 
-
+        //se puede modificar creando por fila, para no tener que borrar la tabla y volverla a cargar
+        //cuando se aprieta el boton de eliminar, se elimina la fila unicamente
+        limpiarTabla();   //no iria
+        procesarJsonaTabla(json);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
-
-
-
 
   function postJson(event) {
     event.preventDefault();
     let nuevoproducto = {
-      "thing": {
+      thing: {
         nombre: "",
         descripcion: "",
         tamanio: "",
         precio: "",
-      }
+      },
     };
     nuevoproducto.thing.nombre = nombreProducto.value;
     nuevoproducto.thing.descripcion = descripcionProducto.value;
     nuevoproducto.thing.tamanio = tamañoProducto.value;
     nuevoproducto.thing.precio = precioProducto.value;
 
+    //SE PUEDE ABSTRAER FUNCIONALIDAD
     fetch(urlgrupo, {
-      "method": "POST",
-      "mode": "cors",
-      "headers": { "Content-Type": "application/json" },
-      "body": JSON.stringify(nuevoproducto)
-    }).then(response => {
-      if (!response.ok) {
-        console.log("ERROR- No se pudo agregar el dato");
-      }
-      limpiarCamposFormulario();
-      return response.json();
-
+      method: "POST",
+      mode: "cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(nuevoproducto),
     })
-      .then(json => {
+      .then((response) => {
+        if (!response.ok) {
+          console.log("ERROR- No se pudo agregar el dato");
+        }
+        limpiarCamposFormulario();
+        return response.json();
+      })
+      .then((json) => {
         cargarTabla();
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e);
-      })
-
+      });
   }
 
   function agregarVariosTabla() {
@@ -359,37 +360,40 @@ document.addEventListener("DOMContentLoaded", function () {
       let randomprecio = Math.round(Math.random() * 5);
 
       let nuevoproducto = {
-        "thing":
-        {
+        thing: {
           nombre: tablacompleta[randomnombre].nombre,
           descripcion: tablacompleta[randomnombre].descripcion,
           tamanio: tablacompleta[randomtamanio].tamanio,
           precio: tablacompleta[randomprecio].precio,
-        }
+        },
       };
+      
 
+      //SE PUEDE ABSTRAER FUNCIONLIDAD
       fetch(urlgrupo, {
-        "method": "POST",
-        "mode": "cors",
-        "headers": { "Content-Type": "application/json" },
-        "body": JSON.stringify(nuevoproducto)
-      }).then(response => {
-        if (!response.ok) {
-          console.log("ERROR- No se pudo agregar el dato");
-        }
-        return response.json();
-
-      }).then(cargarTabla())
-
-
-        .catch(e => {
-          console.log(e);
+        method: "POST",
+        mode: "cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(nuevoproducto),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            console.log("ERROR- No se pudo agregar el dato");
+          }
+          return response.json();
         })
+        .then(cargarTabla())
+
+        .catch((e) => {
+          console.log(e);
+        });
     }
-    
   }
 
-  function procesarJsonaTabla(json){
+
+  //CREAR CADA FILA DEL ELEMENTO, Y CUANDO SE HACE LA LLAMADA GET, RECORRER EL ARREGLO Y CARGAR CADA FILA.
+  //PARA QUE AL ASIGNAR LA FUNCION ELIMINAR NO HAYA QUE VACIAR TODA LA TABLA
+  function procesarJsonaTabla(json) { 
     for (let i = 0; i < json.productos.length; i++) {
       let tr = document.createElement("tr");
       let td1 = document.createElement("td");
@@ -407,8 +411,10 @@ document.addEventListener("DOMContentLoaded", function () {
       tr.id = json.productos[i]._id;
       btn.innerHTML = '<i class="fas fa-times"></i>';
       btn.classList.add("btn-tabla-borrar");
+
+      //se podria abstraer funcionalidad al llamar una funcion que asigne los eventos al boton de eliminar
       btn.addEventListener("click", function () {
-        eliminarElem(tr.id);
+        eliminarElem(tr.id); //aca se puede llamar directamente con el delete json
       });
       tdboton.appendChild(btn);
 
@@ -430,31 +436,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
   //FUNCION PARA 'VACIAR TABLA'
   function limpiarTabla() {
-
-    fetch(urlgrupo,{
-      "method":"GET",
-      "mode":"cors",
-    }).then(response =>{
+    fetch(urlgrupo, {
+      method: "GET",
+      mode: "cors",
+    })
+      .then((response) => {
         return response.json();
-    }).then (json => {
-        if (json.productos.length==0){
+      })
+      .then((json) => {
+        if (json.productos.length == 0) {
           document.querySelector(".ofertas").classList.add("oculto");
         } else {
           document.querySelector(".ofertas").classList.remove("oculto");
         }
-    })
+      });
     table.innerHTML = "";
   }
 
   //FUNCION PARA LIMPIAR LOS INPUT DEL FORMULARIO DE PRODUCTOS
   function limpiarCamposFormulario() {
     nombreProducto.value = "";
-    descripcionProducto.value ="";
+    descripcionProducto.value = "";
     tamañoProducto.value = "";
     precioProducto.value = "";
   }
 
   //FUNCION PARA BORRAR FILA DE LA TABLA
+  //SE PUEDE EVITAR HACER OTRA FUNCION LLAMANDO DIRECTAMENTE DESDE EL DELETEJSON
   function eliminarElem(id) {
     deleteJson(id);
   }
