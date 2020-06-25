@@ -162,6 +162,10 @@ document.addEventListener("DOMContentLoaded", function () {
   let descripcionProducto;
   let tamañoProducto;
   let precioProducto;
+  let editNombreProducto;
+  let editDescripcionProducto;
+  let editTamanioProducto;
+  let editPrecioProducto;
   let table;
   let cantcolores = 0;
   let colores = [
@@ -217,6 +221,10 @@ document.addEventListener("DOMContentLoaded", function () {
     descripcionProducto = document.getElementById("descripcion-tabla");
     tamañoProducto = document.getElementById("tamaño-tabla");
     precioProducto = document.getElementById("precio-tabla");
+    editNombreProducto = document.getElementById("js-edit-nombre-tabla");
+    editDescripcionProducto = document.getElementById("js-edit-descripcion-tabla");
+    editTamanioProducto = document.getElementById("js-edit-tamaño-tabla");
+    editPrecioProducto = document.getElementById("js-edit-precio-tabla");
     table = document.getElementById("body-tabla");
 
     setInterval(resaltado, 80); // CAMBIA COLORES EN UN INTERVALO
@@ -226,7 +234,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //VACIAR TABLA AL APRETAR EL BOTON 'VACIAR TABLA'
     document.getElementById("btn-vaciar-tabla").addEventListener("click", vaciarTabla);
-    
+
     //CARGA LA TABLA AL APRETAR EL BOTON 'AGREGAR PRODUCTO'
     document.getElementById("btn-agregar-tabla").addEventListener("click", postJson);
 
@@ -237,7 +245,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   //HACE UNA LLAMADA AJAX DELETE DENTRO DE OTRA GET...
   //HAY QUE ABSTRAER FUNCIONALIDAD, PARA NO HACER MUCHAS LLAMADAS
-  function vaciarTabla() {  
+  function vaciarTabla() {
     fetch(urlgrupo, {
       method: "GET",
       mode: "cors",
@@ -367,7 +375,7 @@ document.addEventListener("DOMContentLoaded", function () {
           precio: tablacompleta[randomprecio].precio,
         },
       };
-      
+
 
       //SE PUEDE ABSTRAER FUNCIONLIDAD
       fetch(urlgrupo, {
@@ -393,7 +401,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   //CREAR CADA FILA DEL ELEMENTO, Y CUANDO SE HACE LA LLAMADA GET, RECORRER EL ARREGLO Y CARGAR CADA FILA.
   //PARA QUE AL ASIGNAR LA FUNCION ELIMINAR NO HAYA QUE VACIAR TODA LA TABLA
-  function procesarJsonaTabla(json) { 
+  function procesarJsonaTabla(json) {
     for (let i = 0; i < json.productos.length; i++) {
       let tr = document.createElement("tr");
       let td1 = document.createElement("td");
@@ -402,6 +410,7 @@ document.addEventListener("DOMContentLoaded", function () {
       let td4 = document.createElement("td");
       let tdboton = document.createElement("td");
       let btn = document.createElement("button");
+      let btnedit = document.createElement("button");
 
       td1.innerText = json.productos[i].thing.nombre;
       td2.innerText = json.productos[i].thing.descripcion;
@@ -411,12 +420,18 @@ document.addEventListener("DOMContentLoaded", function () {
       tr.id = json.productos[i]._id;
       btn.innerHTML = '<i class="fas fa-times"></i>';
       btn.classList.add("btn-tabla-borrar");
+      btnedit.innerHTML = '<i class="fas fa-edit"></i>';
+      btnedit.classList.add("btn-tabla-borrar");
+      btnedit.addEventListener("click", function () {
+        permitirEditar(json.productos[i]._id);
+      })
 
       //se podria abstraer funcionalidad al llamar una funcion que asigne los eventos al boton de eliminar
       btn.addEventListener("click", function () {
         eliminarElem(tr.id); //aca se puede llamar directamente con el delete json
       });
       tdboton.appendChild(btn);
+      tdboton.appendChild(btnedit);
 
       tr.appendChild(td1);
       tr.appendChild(td2);
@@ -459,12 +474,80 @@ document.addEventListener("DOMContentLoaded", function () {
     descripcionProducto.value = "";
     tamañoProducto.value = "";
     precioProducto.value = "";
+    editNombreProducto.value = "";
+    editDescripcionProducto.value = "";
+    editTamanioProducto.value = "";
+    editPrecioProducto.value = "";
   }
 
   //FUNCION PARA BORRAR FILA DE LA TABLA
   //SE PUEDE EVITAR HACER OTRA FUNCION LLAMANDO DIRECTAMENTE DESDE EL DELETEJSON
   function eliminarElem(id) {
     deleteJson(id);
+  }
+
+
+  function permitirEditar(id) {
+    let formagregar = document.getElementById("js-form-agregar");
+    let formedit = document.getElementById("js-form-edit");
+    formagregar.classList.add("oculto");
+    formedit.classList.remove("oculto");
+    let btnConfEdicion = document.createElement("button");
+    btnConfEdicion.innerText = "Confirmar Edición";
+    btnConfEdicion.classList.add("btn-form-productos");
+    let btnCancelEdicion = document.createElement("button");
+    btnCancelEdicion.innerText = "Cancelar Edicion";
+    btnCancelEdicion.classList.add("btn-form-productos");
+    btnCancelEdicion.addEventListener("click",function(){
+          formagregar.classList.remove("oculto");
+          formedit.classList.add("oculto");
+          formedit.removeChild(btnConfEdicion);
+          formedit.removeChild(btnCancelEdicion);
+          limpiarCamposFormulario();
+    })
+    btnConfEdicion.addEventListener("click", function () {
+      let nuevoproducto = {
+        "thing": {
+          nombre: "",
+          descripcion: "",
+          tamanio: "",
+          precio: "",
+        }
+      };
+      nuevoproducto.thing.nombre = editNombreProducto.value;
+      nuevoproducto.thing.descripcion = editDescripcionProducto.value;
+      nuevoproducto.thing.tamanio = editTamanioProducto.value;
+      nuevoproducto.thing.precio = editPrecioProducto.value;
+      console.log(nuevoproducto.thing.nombre);
+      fetch(urlgrupo + "/" + id, {
+        "method": "PUT",
+        "mode": "cors",
+        "headers": { "Content-Type": "application/json" },
+        "body": JSON.stringify(nuevoproducto)
+      })
+        .then(response => {
+          if (!response.ok) {
+            console.log("ERROR- No se pudo editar el dato");
+          }
+          formagregar.classList.remove("oculto");
+          formedit.classList.add("oculto");
+          limpiarCamposFormulario();
+          return response.json();
+        })
+        .then(json => {
+          cargarTabla();
+        })
+        .catch(e => {
+          console.log(e);
+        })
+    })
+      //  SI EL BOTON YA EXISTE NO LO CREO
+      if(formedit.getElementsByClassName("btn-form-productos").length==0){
+        formedit.appendChild(btnConfEdicion);
+        formedit.appendChild(btnCancelEdicion);
+      }
+      
+
   }
 
   //FUNCION PARA RESALTAR LAS OFERTA
