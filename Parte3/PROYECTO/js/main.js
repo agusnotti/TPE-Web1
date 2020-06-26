@@ -571,10 +571,12 @@ document.addEventListener("DOMContentLoaded", function () {
       "mode": "cors"
     })
       .then(function (r) {
-        let fila = document.getElementById(id);
-        fila.remove();
-        cantidadProductos--;
-        mostrarInformacionOfertas(cantidadProductos);
+        if (r.ok){
+          let fila = document.getElementById(id);
+          fila.remove();
+          cantidadProductos--;
+          mostrarInformacionOfertas(cantidadProductos);
+        }
       })
       .catch(function (e) {
         console.log(e);
