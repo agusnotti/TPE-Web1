@@ -571,9 +571,6 @@ document.addEventListener("DOMContentLoaded", function () {
       "mode": "cors"
     })
       .then(function (r) {
-        return r.json();
-      })
-      .then(function (json) {
         let fila = document.getElementById(id);
         fila.remove();
         cantidadProductos--;
