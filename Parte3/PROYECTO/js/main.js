@@ -649,18 +649,13 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function comprobarColumnas(elem){
-    if (elem.thing.nombre == inputFiltro.value) {
+    if ((elem.thing.nombre == inputFiltro.value)||
+    (elem.thing.descripcion == inputFiltro.value)||
+    (elem.thing.tamanio == inputFiltro.value)||
+    (elem.thing.precio == inputFiltro.value)) {
       document.getElementById(elem.id).classList.remove("oculto");
     }
-    if (elem.thing.descripcion == inputFiltro.value) {
-      document.getElementById(elem.id).classList.remove("oculto");
-    }
-    if (elem.thing.tamanio == inputFiltro.value) {
-      document.getElementById(elem.id).classList.remove("oculto");
-    }
-    if (elem.thing.precio == inputFiltro.value) {
-      document.getElementById(elem.id).classList.remove("oculto");
-    }
+
   }
 
   function ocultarTabla() {
