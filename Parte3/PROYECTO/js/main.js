@@ -219,14 +219,27 @@ document.addEventListener("DOMContentLoaded", function () {
     },
   ];
 
-  let producto = {
-    "thing": {
-      "nombre": "",
-      "descripcion": "",
-      "tamanio": "",
-      "precio": "",
-    },
-  };
+
+
+
+  function crearProductoLocal(elem) {
+    let objetoJsonLocal = {
+      "id": "",
+      "thing": {
+        "nombre": "",
+        "descripcion": "",
+        "tamanio": "",
+        "precio": ""
+      }
+    }
+    objetoJsonLocal.id = elem._id;
+    objetoJsonLocal.thing.nombre = elem.thing.nombre;
+    objetoJsonLocal.thing.descripcion = elem.thing.descripcion;
+    objetoJsonLocal.thing.tamanio = elem.thing.tamanio;
+    objetoJsonLocal.thing.precio = elem.thing.precio;
+
+    return objetoJsonLocal;
+  }
 
 
   // LLAMADA AJAX GET DATOS
@@ -245,18 +258,9 @@ document.addEventListener("DOMContentLoaded", function () {
       .then(function (json) {
         for (let elem of json.productos) {
           if (elem.thing != null) {
-            let prod = {
-              "id": elem._id,
-              "thing": {
-                "nombre": elem.thing.nombre,
-                "descripcion": elem.thing.descripcion,
-                "tamanio": elem.thing.tamanio,
-                "precio": elem.thing.precio
-              }
-            };
+            let prod = crearProductoLocal(elem);
             productosLocal.push(prod);
             crearFilaTabla(prod.thing, prod.id);
-            
           }
         }
         console.log(productosLocal);
@@ -269,7 +273,6 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(e);
       });
   }
-
 
   // LLAMADA AJAX POST DATOS
   function postDatos(producto) {
@@ -288,17 +291,9 @@ document.addEventListener("DOMContentLoaded", function () {
         return r.json();
       })
       .then(function (json) {
-        let prod = {
-          "id": json.information._id,
-          "thing": {
-            "nombre": json.information.thing.nombre,
-            "descripcion": json.information.thing.descripcion,
-            "tamanio": json.information.thing.tamanio,
-            "precio": json.information.thing.precio
-          }
-        };
+
+        let prod = crearProductoLocal(json.information);
         productosLocal.push(prod);
-               
         crearFilaTabla(prod.thing, prod.id);
         cantidadProductos++;
         mostrarInformacionOfertas(cantidadProductos);
@@ -308,6 +303,8 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(e);
       });
   }
+
+
 
   //ASIGNA EVENTOS DE LA TABLA
   function addEventsTabla() {
@@ -372,6 +369,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
   //CREA PRODUCTO ASIGNANDO VALORES INGRESADOS POR USUARIO
   function crearProducto(nombre, descripcion, tamanio, precio) {
+    let producto = {
+      "thing": {
+        "nombre": "",
+        "descripcion": "",
+        "tamanio": "",
+        "precio": "",
+      },
+    };
+
     producto.thing.nombre = nombre;
     producto.thing.descripcion = descripcion;
     producto.thing.tamanio = tamanio;
@@ -387,32 +393,28 @@ document.addEventListener("DOMContentLoaded", function () {
     descripcion = descripcionProducto.value = "";
     tamanioProducto.value = "";
     precioProducto.value = "";
-    editNombreProducto.value="";
-    editDescripcionProducto.value="";
-    editTamanioProducto.value="";
-    editPrecioProducto.value="";
+    editNombreProducto.value = "";
+    editDescripcionProducto.value = "";
+    editTamanioProducto.value = "";
+    editPrecioProducto.value = "";
   }
 
-
-  // FUNCION PARA CREAR FILA LA TABLA DE TABLA
-  function crearFilaTabla(producto, id) {
-    let tr = document.createElement("tr");
+  function cargarContenidoFilas(tr,producto){
     let td1 = document.createElement("td");
     let td2 = document.createElement("td");
     let td3 = document.createElement("td");
     let td4 = document.createElement("td");
     let tdboton = document.createElement("td");
+    
     let btnBorrar = document.createElement("button");
     let btnEdit = document.createElement("button");
     addEventDelete(btnBorrar);
     addEventsEdit(btnEdit);
-
     td1.innerText = producto.nombre;
     td2.innerText = producto.descripcion;
     td3.innerText = producto.tamanio;
     td4.innerText = "$ " + producto.precio;
 
-    tr.id = id;
     btnBorrar.innerHTML = '<i class="fas fa-times"></i>';
     btnEdit.innerHTML = '<i class="fas fa-edit"></i>';
     btnBorrar.classList.add("btn-tabla-borrar");
@@ -431,7 +433,14 @@ document.addEventListener("DOMContentLoaded", function () {
       tr.classList.add("intermitente");
       tr.classList.add(colores[colores.length - 1]);
     }
+  }
 
+
+  // FUNCION PARA CREAR FILA LA TABLA DE TABLA
+  function crearFilaTabla(producto, id) {
+    let tr = document.createElement("tr");
+    tr.id = id;
+    cargarContenidoFilas(tr,producto);
     table.appendChild(tr);
   }
 
@@ -447,14 +456,14 @@ document.addEventListener("DOMContentLoaded", function () {
   function addEventsEdit(btn) {
     btn.addEventListener("click", function (event) {
       let id = this.parentNode.parentNode.id;
-      
+
       permitirEditar(id);
     })
   }
-  
+
   //AGREGA UN ADDEVENTLISTENER AL BOTON CANCELAR EDICION PARA
   // OCULTAR EL FORMULARIO DEL EDIT Y MOSTRAR EL DE AGREGAR
-  function addEventCancel(btncancel,btnconf){
+  function addEventCancel(btncancel, btnconf) {
     btncancel.addEventListener("click", function () {
       mostrarFormAgregar();
       formedit.removeChild(btnconf);
@@ -462,22 +471,11 @@ document.addEventListener("DOMContentLoaded", function () {
       limpiarCamposFormulario();
     })
   }
-// AGREGA UN ADDEVENTLISTENER AL BOTON CONFIRMAR EL CUAL PERMITE
-// EDITAR UN DATO DE LA API Y REFLEJARLO EN LA TABLA DE LA WEB
-  function addEventConf(btncancel,btnconf,id){
+  // AGREGA UN ADDEVENTLISTENER AL BOTON CONFIRMAR EL CUAL PERMITE
+  // EDITAR UN DATO DE LA API Y REFLEJARLO EN LA TABLA DE LA WEB
+  function addEventConf(btncancel, btnconf, id) {
     btnconf.addEventListener("click", function () {
-      let nuevoproducto = {
-        "thing": {
-          nombre: "",
-          descripcion: "",
-          tamanio: "",
-          precio: "",
-        }
-      };
-      nuevoproducto.thing.nombre = editNombreProducto.value;
-      nuevoproducto.thing.descripcion = editDescripcionProducto.value;
-      nuevoproducto.thing.tamanio = editTamanioProducto.value;
-      nuevoproducto.thing.precio = editPrecioProducto.value;
+      let nuevoproducto = crearProducto(editNombreProducto.value,editDescripcionProducto.value,editTamanioProducto.value,editPrecioProducto.value);
       fetch(baseURL + groupID + "/" + collectionID + "/" + id, {
         "method": "PUT",
         "mode": "cors",
@@ -487,12 +485,14 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => {
           if (!response.ok) {
             console.log("ERROR- No se pudo editar el dato");
+          } else if (response.ok) {
+            editarEnTabla(nuevoproducto, id);
+            editarEnJsonLocal(nuevoproducto, id);
           }
           mostrarFormAgregar();
           formedit.removeChild(btnconf);
           formedit.removeChild(btncancel);
           limpiarCamposFormulario();
-          editarEnTabla(nuevoproducto, id);
         })
         .catch(e => {
           console.log(e);
@@ -504,20 +504,49 @@ document.addEventListener("DOMContentLoaded", function () {
       formedit.appendChild(btncancel);
     }
   }
-  // CREA EL BOTON CONFIRMAR Y CANCELAR DEL FORMULARIO Y LLAMA FUNCIONES
-  // PARA ASIGNARLE EVENTOS
-  function permitirEditar(id) {  
-    let i = 0;  
-    while( i < productosLocal.length){
-      if(productosLocal[i].id === id){
-        editNombreProducto.value = productosLocal[i].thing.nombre;
-        editDescripcionProducto.value = productosLocal[i].thing.descripcion;
-        editTamanioProducto.value = productosLocal[i].thing.tamanio;
-        editPrecioProducto.value = productosLocal[i].thing.precio;
-        i = productosLocal.length;
+
+  function editarEnJsonLocal(nuevoproducto, id) {
+    let posicion = buscarId(id);
+
+    if (posicion != -1) {
+
+      let prod = {
+        "id": id,
+        "thing": {
+          "nombre": nuevoproducto.thing.nombre,
+          "descripcion": nuevoproducto.thing.descripcion,
+          "tamanio": nuevoproducto.thing.tamanio,
+          "precio": nuevoproducto.thing.precio
+        }
+      }
+      productosLocal[posicion] = prod;
+      console.log(productosLocal);
+    }
+
+  }
+  // BUSCA UN ID EN EL ARREGLO DE PRODUCTOS LOCAL
+  function buscarId(id) {
+    let i = 0;
+    while (i < productosLocal.length) {
+      if (productosLocal[i].id === id) {
+        return i;
       } else {
         i++;
+        if (i == productosLocal.length) {
+          return -1;
+        }
       }
+    }
+  }
+  // CREA EL BOTON CONFIRMAR Y CANCELAR DEL FORMULARIO Y LLAMA FUNCIONES
+  // PARA ASIGNARLE EVENTOS
+  function permitirEditar(id) {
+    let posicion = buscarId(id);
+    if (posicion != -1) {
+      editNombreProducto.value = productosLocal[posicion].thing.nombre;
+      editDescripcionProducto.value = productosLocal[posicion].thing.descripcion;
+      editTamanioProducto.value = productosLocal[posicion].thing.tamanio;
+      editPrecioProducto.value = productosLocal[posicion].thing.precio;
     }
 
     let btnConfEdicion = document.createElement("button");
@@ -526,43 +555,38 @@ document.addEventListener("DOMContentLoaded", function () {
     btnConfEdicion.classList.add("btn-form-productos");
     btnCancelEdicion.innerText = "Cancelar Edicion";
     btnCancelEdicion.classList.add("btn-form-productos");
-    
+
     mostrarformEditar();
-    
-    addEventCancel(btnCancelEdicion,btnConfEdicion);
-    
-    addEventConf(btnCancelEdicion,btnConfEdicion,id);
-    
+
+    addEventCancel(btnCancelEdicion, btnConfEdicion);
+
+    addEventConf(btnCancelEdicion, btnConfEdicion, id);
+
   }
 
- // OCULTA EL FORM AGREGRAR Y MUESTRA EL DE EDITAR
-  function mostrarformEditar(){
+  // OCULTA EL FORM AGREGRAR Y MUESTRA EL DE EDITAR
+  function mostrarformEditar() {
     formagregar.classList.add("oculto");
     formedit.classList.remove("oculto");
   }
 
-// OCULTA EL FORM DE EDITAR Y MUESTRA EL DE AGREGAR
-  function mostrarFormAgregar(){
+  // OCULTA EL FORM DE EDITAR Y MUESTRA EL DE AGREGAR
+  function mostrarFormAgregar() {
     formagregar.classList.remove("oculto");
     formedit.classList.add("oculto");
   }
 
-  
-// BUSCA EN LA TABLA EL TR CON EL ID DESEADO Y EDITA SU CONTENIDO
+
+  // BUSCA EN LA TABLA EL TR CON EL ID DESEADO Y EDITA SU CONTENIDO
   function editarEnTabla(producto, id) {
     let trs = table.querySelectorAll("tr");
-    for (let i = 0; i <= trs.length-1; i++) {
+    for (let i = 0; i <= trs.length - 1; i++) {
       if (trs[i].id == id) {
         let tds = trs[i].querySelectorAll("td");
-          tds[0].innerHTML = producto.thing.nombre;
-          tds[1].innerHTML = producto.thing.descripcion;
-          tds[2].innerHTML = producto.thing.tamanio;
-          tds[3].innerHTML = "$ " +producto.thing.precio;
-          if (producto.thing.precio <= 500) {
-            trs[i].classList.add("intermitente");
-            trs[i].classList.add(colores[colores.length - 1]);
-          }
-      
+        for (let elem of tds){
+          elem.remove();
+        }
+        cargarContenidoFilas(trs[i],producto.thing);
       }
     }
   }
@@ -574,7 +598,7 @@ document.addEventListener("DOMContentLoaded", function () {
       "mode": "cors"
     })
       .then(function (r) {
-        if (r.ok){
+        if (r.ok) {
           let fila = document.getElementById(id);
           fila.remove();
           productosLocal.splice(id, 1);
