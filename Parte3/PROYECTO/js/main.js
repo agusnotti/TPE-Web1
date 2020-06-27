@@ -166,6 +166,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let table;
   let formagregar;
   let formedit;
+  let inputFiltro;
   let cantidadProductos = 0;
   let cantcolores = 0;
   let colores = [
@@ -317,6 +318,7 @@ document.addEventListener("DOMContentLoaded", function () {
     editTamanioProducto = document.getElementById("js-edit-tamaño-tabla");
     editPrecioProducto = document.getElementById("js-edit-precio-tabla");
     table = document.getElementById("body-tabla");
+    inputFiltro = document.getElementById("js-input-filter");
 
     setInterval(resaltado, 80); // CAMBIA COLORES EN UN INTERVALO
 
@@ -332,6 +334,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // //AGRAGAR VARIOS PRODUCTOS AL APRETAR EL BOTON 'AGREGAR VARIOS'
     document.getElementById("btn-agregar-varios-tabla").addEventListener("click", agregarVariosTabla);
+
+    document.getElementById("js-filter").addEventListener("click", filtrar);
+    document.getElementById("js-input-filter").addEventListener("click", cancelarFiltros);
   }
 
 
@@ -397,13 +402,13 @@ document.addEventListener("DOMContentLoaded", function () {
     editPrecioProducto.value = "";
   }
 
-  function cargarContenidoFilas(tr,producto){
+  function cargarContenidoFilas(tr, producto) {
     let td1 = document.createElement("td");
     let td2 = document.createElement("td");
     let td3 = document.createElement("td");
     let td4 = document.createElement("td");
     let tdboton = document.createElement("td");
-    
+
     let btnBorrar = document.createElement("button");
     let btnEdit = document.createElement("button");
     addEventDelete(btnBorrar);
@@ -438,7 +443,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function crearFilaTabla(producto, id) {
     let tr = document.createElement("tr");
     tr.id = id;
-    cargarContenidoFilas(tr,producto);
+    cargarContenidoFilas(tr, producto);
     table.appendChild(tr);
   }
 
@@ -473,7 +478,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // EDITAR UN DATO DE LA API Y REFLEJARLO EN LA TABLA DE LA WEB
   function addEventConf(btncancel, btnconf, id) {
     btnconf.addEventListener("click", function () {
-      let nuevoproducto = crearProducto(editNombreProducto.value,editDescripcionProducto.value,editTamanioProducto.value,editPrecioProducto.value);
+      let nuevoproducto = crearProducto(editNombreProducto.value, editDescripcionProducto.value, editTamanioProducto.value, editPrecioProducto.value);
       fetch(baseURL + groupID + "/" + collectionID + "/" + id, {
         "method": "PUT",
         "mode": "cors",
@@ -580,10 +585,10 @@ document.addEventListener("DOMContentLoaded", function () {
     for (let i = 0; i <= trs.length - 1; i++) {
       if (trs[i].id == id) {
         let tds = trs[i].querySelectorAll("td");
-        for (let elem of tds){
+        for (let elem of tds) {
           elem.remove();
         }
-        cargarContenidoFilas(trs[i],producto.thing);
+        cargarContenidoFilas(trs[i], producto.thing);
       }
     }
   }
@@ -634,4 +639,46 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     cantcolores = (cantcolores + 1) % colores.length;
   }
+
+  function filtrar() {
+
+    ocultarTabla();
+    for (let elem of productosLocal) {
+      comprobarColumnas(elem);
+    }
+  }
+
+  function comprobarColumnas(elem){
+    if (elem.thing.nombre == inputFiltro.value) {
+      document.getElementById(elem.id).classList.remove("oculto");
+    }
+    if (elem.thing.descripcion == inputFiltro.value) {
+      document.getElementById(elem.id).classList.remove("oculto");
+    }
+    if (elem.thing.tamanio == inputFiltro.value) {
+      document.getElementById(elem.id).classList.remove("oculto");
+    }
+    if (elem.thing.precio == inputFiltro.value) {
+      document.getElementById(elem.id).classList.remove("oculto");
+    }
+  }
+
+  function ocultarTabla() {
+    let trs = table.querySelectorAll("tr");
+    for (let elem of trs) {
+      elem.classList.add("oculto");
+    }
+  }
+
+  function cancelarFiltros() {
+    let trs = table.querySelectorAll("tr");
+    for (let elem of trs) {
+      elem.classList.remove("oculto");
+    }
+    inputFiltro.value="";
+  }
+
+
+
+
 });
