@@ -520,7 +520,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
       productosLocal[posicion] = prod;
-      console.log(productosLocal);
     }
 
   }
