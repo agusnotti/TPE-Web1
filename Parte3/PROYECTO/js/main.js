@@ -263,8 +263,6 @@ document.addEventListener("DOMContentLoaded", function () {
             crearFilaTabla(prod.thing, prod.id);
           }
         }
-        console.log(productosLocal);
-
         cantidadProductos = json.productos.length;
         mostrarInformacionOfertas(cantidadProductos);
 
