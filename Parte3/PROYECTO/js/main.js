@@ -649,9 +649,14 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function comprobarColumnas(elem){
-    if ((elem.thing.nombre == inputFiltro.value)||
-    (elem.thing.descripcion == inputFiltro.value)||
-    (elem.thing.tamanio == inputFiltro.value)||
+    let inputminuscula = inputFiltro.value.toLowerCase();
+    let nombreminuscula = elem.thing.nombre.toLowerCase();
+    let descripcionminuscula=elem.thing.descripcion.toLowerCase();
+    let tamaniominuscula= elem.thing.tamanio.toLowerCase();
+    
+    if ((nombreminuscula.includes(inputminuscula))||
+    (descripcionminuscula.includes(inputminuscula))||
+    (tamaniominuscula.includes(inputminuscula))||
     (elem.thing.precio == inputFiltro.value)) {
       document.getElementById(elem.id).classList.remove("oculto");
     }
