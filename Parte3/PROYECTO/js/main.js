@@ -432,7 +432,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
   //AGREGA RESALTADO A LAS OFERTAS
-  function aplicarResaltadoOferta(tr, producto){
+  function aplicarResaltadoOferta(tr, producto) {
     if (producto.precio <= 500) {
       tr.classList.add("intermitente");
       tr.classList.add(colores[colores.length - 1]);
@@ -485,9 +485,9 @@ document.addEventListener("DOMContentLoaded", function () {
   function addEventConf(btncancel, btnconf, id) {
     btnconf.addEventListener("click", function () {
       event.preventDefault();
-      
+
       let nuevoproducto = crearProducto(nombreProducto.value, descripcionProducto.value, tamanioProducto.value, precioProducto.value);
-      
+
       fetch(baseURL + groupID + "/" + collectionID + "/" + id, {
         "method": "PUT",
         "mode": "cors",
@@ -500,7 +500,7 @@ document.addEventListener("DOMContentLoaded", function () {
           } else if (response.ok) {
             editarEnTabla(nuevoproducto, id);
             editarEnJsonLocal(nuevoproducto, id);
-            
+
           }
           btnconf.remove();
           btncancel.remove();
@@ -548,7 +548,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  
+
   // CREA EL BOTON CONFIRMAR Y CANCELAR DEL FORMULARIO Y LLAMA FUNCIONES
   // PARA ASIGNARLE EVENTOS
   function permitirEditar(id) {
@@ -566,22 +566,31 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("btn-agregar-varios-tabla").classList.add("oculto");
     document.getElementById("btn-vaciar-tabla").classList.add("oculto");
 
-    let btnConfEdicion = document.createElement("button");
-    let btnCancelEdicion = document.createElement("button");
-    btnConfEdicion.innerText = "Confirmar Edición";
-    btnConfEdicion.classList.add("btn-form-productos");
-    btnCancelEdicion.innerText = "Cancelar Edicion";
-    btnCancelEdicion.classList.add("btn-form-productos");
+    if (!estanCreados(formProducto)) {
+      let btnConfEdicion = document.createElement("button");
+      let btnCancelEdicion = document.createElement("button");
+      btnConfEdicion.innerText = "Confirmar Edición";
+      btnConfEdicion.classList.add("btn-form-productos");
+      btnCancelEdicion.innerText = "Cancelar Edicion";
+      btnCancelEdicion.classList.add("btn-form-productos");
 
-    formProducto.appendChild(btnConfEdicion);
-    formProducto.appendChild(btnCancelEdicion);
-  
+      formProducto.appendChild(btnConfEdicion);
+      formProducto.appendChild(btnCancelEdicion);
 
-    addEventConf(btnCancelEdicion, btnConfEdicion, id);
-    addEventCancel(btnCancelEdicion, btnConfEdicion);
+      addEventConf(btnCancelEdicion, btnConfEdicion, id);
+      addEventCancel(btnCancelEdicion, btnConfEdicion);
+    }
   }
 
-
+  function estanCreados(formProducto) {
+    let cantidad = formProducto.querySelectorAll(".btn-form-productos");
+    if (cantidad.length == 1) {
+      console.log(cantidad);
+      return false;
+    } else {
+      return true;
+    }
+  }
   // BUSCA EN LA TABLA EL TR CON EL ID DESEADO Y EDITA SU CONTENIDO
   function editarEnTabla(producto, id) {
     let trs = table.querySelectorAll("tr");
@@ -646,28 +655,28 @@ document.addEventListener("DOMContentLoaded", function () {
   function filtrar() {
     document.querySelector('.btn-cancelar-filtro').classList.remove('oculto');
     ocultarTabla();
-    comprobarColumnas();    
+    comprobarColumnas();
   }
 
-  function comprobarColumnas(){    
+  function comprobarColumnas() {
     let existeProducto = false;
 
-    for (let elem of productosLocal){
+    for (let elem of productosLocal) {
       let inputminuscula = inputFiltro.value.toLowerCase();
       let nombreminuscula = elem.thing.nombre.toLowerCase();
-      let descripcionminuscula=elem.thing.descripcion.toLowerCase();
-      let tamaniominuscula= elem.thing.tamanio.toLowerCase();
+      let descripcionminuscula = elem.thing.descripcion.toLowerCase();
+      let tamaniominuscula = elem.thing.tamanio.toLowerCase();
 
-      if ((nombreminuscula.includes(inputminuscula))||
-      (descripcionminuscula.includes(inputminuscula))||
-      (tamaniominuscula.includes(inputminuscula))||
-      (elem.thing.precio == inputFiltro.value)) {
+      if ((nombreminuscula.includes(inputminuscula)) ||
+        (descripcionminuscula.includes(inputminuscula)) ||
+        (tamaniominuscula.includes(inputminuscula)) ||
+        (elem.thing.precio == inputFiltro.value)) {
         document.getElementById(elem.id).classList.remove("oculto");
         existeProducto = true;
-      } 
+      }
     }
 
-    if(!existeProducto){
+    if (!existeProducto) {
       document.querySelector('.no-coincidencias').classList.remove('oculto');
       cantidadProductos = 0;
       mostrarInformacionOfertas(cantidadProductos);
@@ -686,7 +695,7 @@ document.addEventListener("DOMContentLoaded", function () {
     for (let elem of trs) {
       elem.classList.remove("oculto");
     }
-    inputFiltro.value="";
+    inputFiltro.value = "";
     document.querySelector('.btn-cancelar-filtro').classList.add('oculto');
     document.querySelector('.no-coincidencias').classList.add('oculto');
   }
