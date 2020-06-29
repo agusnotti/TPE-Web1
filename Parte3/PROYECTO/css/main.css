@@ -154,12 +154,25 @@ input[type="search"] {
   cursor: pointer;
 }
 
-.btn-tabla-borrar {
+
+.btn-tabla-borrar{
+  background-color: #026278;
+}
+
+.btn-filtros-tabla, .btn-tabla-editar{
   background-color: rgb(194, 129, 162);
+}
+
+
+.btn-tabla-borrar, .btn-filtros-tabla, .btn-tabla-editar {  
   border: none;
   color: white;
   text-decoration: none;
   cursor: pointer;
+  height: 20px;
+  border-radius: 3px;
+  margin: 1px;
+
 }
 
 
@@ -379,7 +392,7 @@ ul.breadcrumb li a:hover {
 
 .tabla-productos th,
 .tabla-productos td {
-  width: 22%;
+  width: 20%;
   border-bottom: 1px solid rgb(214, 156, 185);
   padding: 10px 0;
   text-align: center;
@@ -424,6 +437,9 @@ ul.breadcrumb li a:hover {
   color:orange;
 }
 
+.no-coincidencias{
+  font-weight: bold;
+}
 
 .ofertas{
   font-size: 12px;

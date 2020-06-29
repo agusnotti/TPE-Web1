@@ -45,6 +45,10 @@
 <article class="productos">
     <section class="tabla-productos">
         <h2 class="titulo-categoria">Lista de productos</h2>
+        <label for="js-input-filter">Filtrar</label><input id="js-input-filter" type="text" placeholder="">
+        <button id="js-filter" class="btn-filtros-tabla">Filtros</button>
+        <button class="btn-cancelar-filtro btn-tabla-borrar oculto"> <i class="fas fa-times"></i> </button>
+        
         <table>
             <thead>
                 <tr>
@@ -52,15 +56,15 @@
                     <th>Descripción</th>
                     <th>Tamaño</th>
                     <th>Precio</th>
-                    <th><input id="js-input-filter" type="text" placeholder="FILTRAR">
-                    <button id="js-filter">FILTrAR</button></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody id="body-tabla">
             </tbody>
         </table>
-        <p class="ofertas">* Los articulos resaltados con <span class="intermitente"> este color</span> son las ofertas
-            semanales.</p>
+        <p class="no-coincidencias oculto">No hubo coincidencias</p>
+        <p class="ofertas">* Los articulos resaltados con <span class="intermitente"> este color</span> son las ofertas semanales.</p>
+        
     </section>
 
     <section class="form-productos" id="js-form-agregar">
@@ -74,16 +78,6 @@
         </form>
         <button id="btn-agregar-varios-tabla" class="btn-form-productos">Agregar Varios</button>
         <button id="btn-vaciar-tabla" class="btn-form-productos">Vaciar Tabla</button>
-    </section>
-
-    <section class="form-productos , oculto" id="js-form-edit">
-        <h2 class="titulo-categoria">Editar Producto</h2>
-        <form class="formulario-editar-producto">
-            <input type="text" id="js-edit-nombre-tabla" name="Nombre producto" placeholder="Nombre producto" required>
-            <input type="text" id="js-edit-descripcion-tabla" name="Descripcion" placeholder="Descripcion" required>
-            <input type="text" id="js-edit-tamaño-tabla" name="Tamaño" placeholder="Tamaño" required>
-            <input type="text" id="js-edit-precio-tabla" name="Precio" placeholder="Precio" required>
-        </form>
     </section>
 
 </article>

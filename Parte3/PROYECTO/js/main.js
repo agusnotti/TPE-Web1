@@ -336,7 +336,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("btn-agregar-varios-tabla").addEventListener("click", agregarVariosTabla);
 
     document.getElementById("js-filter").addEventListener("click", filtrar);
-    document.getElementById("js-input-filter").addEventListener("click", cancelarFiltros);
+    document.querySelector(".btn-cancelar-filtro").addEventListener("click", cancelarFiltros);
   }
 
 
@@ -396,10 +396,6 @@ document.addEventListener("DOMContentLoaded", function () {
     descripcion = descripcionProducto.value = "";
     tamanioProducto.value = "";
     precioProducto.value = "";
-    editNombreProducto.value = "";
-    editDescripcionProducto.value = "";
-    editTamanioProducto.value = "";
-    editPrecioProducto.value = "";
   }
 
   function cargarContenidoFilas(tr, producto) {
@@ -418,12 +414,12 @@ document.addEventListener("DOMContentLoaded", function () {
     td3.innerText = producto.tamanio;
     td4.innerText = "$ " + producto.precio;
 
-    btnBorrar.innerHTML = '<i class="fas fa-times"></i>';
     btnEdit.innerHTML = '<i class="fas fa-edit"></i>';
+    btnBorrar.innerHTML = '<i class="fas fa-times"></i>';
     btnBorrar.classList.add("btn-tabla-borrar");
-    btnEdit.classList.add("btn-tabla-borrar");
-    tdboton.appendChild(btnBorrar);
+    btnEdit.classList.add("btn-tabla-editar");
     tdboton.appendChild(btnEdit);
+    tdboton.appendChild(btnBorrar);
 
     tr.appendChild(td1);
     tr.appendChild(td2);
@@ -431,7 +427,12 @@ document.addEventListener("DOMContentLoaded", function () {
     tr.appendChild(td4);
     tr.appendChild(tdboton);
 
-    //AGREGA RESALTADO A LAS OFERTAS
+    aplicarResaltadoOferta(tr, producto);
+  }
+
+
+  //AGREGA RESALTADO A LAS OFERTAS
+  function aplicarResaltadoOferta(tr, producto){
     if (producto.precio <= 500) {
       tr.classList.add("intermitente");
       tr.classList.add(colores[colores.length - 1]);
@@ -468,17 +469,25 @@ document.addEventListener("DOMContentLoaded", function () {
   // OCULTAR EL FORMULARIO DEL EDIT Y MOSTRAR EL DE AGREGAR
   function addEventCancel(btncancel, btnconf) {
     btncancel.addEventListener("click", function () {
-      mostrarFormAgregar();
-      formedit.removeChild(btnconf);
-      formedit.removeChild(btncancel);
+      event.preventDefault();
+      btnconf.remove();
+      btncancel.remove();
+      document.getElementById("btn-agregar-tabla").classList.remove("oculto");
+      document.getElementById("btn-agregar-varios-tabla").classList.remove("oculto");
+      document.getElementById("btn-vaciar-tabla").classList.remove("oculto");
       limpiarCamposFormulario();
     })
   }
+
+
   // AGREGA UN ADDEVENTLISTENER AL BOTON CONFIRMAR EL CUAL PERMITE
   // EDITAR UN DATO DE LA API Y REFLEJARLO EN LA TABLA DE LA WEB
   function addEventConf(btncancel, btnconf, id) {
     btnconf.addEventListener("click", function () {
-      let nuevoproducto = crearProducto(editNombreProducto.value, editDescripcionProducto.value, editTamanioProducto.value, editPrecioProducto.value);
+      event.preventDefault();
+      
+      let nuevoproducto = crearProducto(nombreProducto.value, descripcionProducto.value, tamanioProducto.value, precioProducto.value);
+      
       fetch(baseURL + groupID + "/" + collectionID + "/" + id, {
         "method": "PUT",
         "mode": "cors",
@@ -491,21 +500,19 @@ document.addEventListener("DOMContentLoaded", function () {
           } else if (response.ok) {
             editarEnTabla(nuevoproducto, id);
             editarEnJsonLocal(nuevoproducto, id);
+            
           }
-          mostrarFormAgregar();
-          formedit.removeChild(btnconf);
-          formedit.removeChild(btncancel);
+          btnconf.remove();
+          btncancel.remove();
+          document.getElementById("btn-agregar-tabla").classList.remove("oculto");
+          document.getElementById("btn-agregar-varios-tabla").classList.remove("oculto");
+          document.getElementById("btn-vaciar-tabla").classList.remove("oculto");
           limpiarCamposFormulario();
         })
         .catch(e => {
           console.log(e);
         })
     })
-    //  SI EL BOTON YA EXISTE NO LO CREO
-    if (formedit.getElementsByClassName("btn-form-productos").length == 0) {
-      formedit.appendChild(btnconf);
-      formedit.appendChild(btncancel);
-    }
   }
 
   function editarEnJsonLocal(nuevoproducto, id) {
@@ -540,16 +547,24 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
   }
+
+  
   // CREA EL BOTON CONFIRMAR Y CANCELAR DEL FORMULARIO Y LLAMA FUNCIONES
   // PARA ASIGNARLE EVENTOS
   function permitirEditar(id) {
     let posicion = buscarId(id);
     if (posicion != -1) {
-      editNombreProducto.value = productosLocal[posicion].thing.nombre;
-      editDescripcionProducto.value = productosLocal[posicion].thing.descripcion;
-      editTamanioProducto.value = productosLocal[posicion].thing.tamanio;
-      editPrecioProducto.value = productosLocal[posicion].thing.precio;
+      nombreProducto.value = productosLocal[posicion].thing.nombre;
+      descripcionProducto.value = productosLocal[posicion].thing.descripcion;
+      tamanioProducto.value = productosLocal[posicion].thing.tamanio;
+      precioProducto.value = productosLocal[posicion].thing.precio;
     }
+
+    let formProducto = document.querySelector('.formulario-agregar-producto');
+
+    document.getElementById("btn-agregar-tabla").classList.add("oculto");
+    document.getElementById("btn-agregar-varios-tabla").classList.add("oculto");
+    document.getElementById("btn-vaciar-tabla").classList.add("oculto");
 
     let btnConfEdicion = document.createElement("button");
     let btnCancelEdicion = document.createElement("button");
@@ -558,24 +573,12 @@ document.addEventListener("DOMContentLoaded", function () {
     btnCancelEdicion.innerText = "Cancelar Edicion";
     btnCancelEdicion.classList.add("btn-form-productos");
 
-    mostrarformEditar();
-
-    addEventCancel(btnCancelEdicion, btnConfEdicion);
+    formProducto.appendChild(btnConfEdicion);
+    formProducto.appendChild(btnCancelEdicion);
+  
 
     addEventConf(btnCancelEdicion, btnConfEdicion, id);
-
-  }
-
-  // OCULTA EL FORM AGREGRAR Y MUESTRA EL DE EDITAR
-  function mostrarformEditar() {
-    formagregar.classList.add("oculto");
-    formedit.classList.remove("oculto");
-  }
-
-  // OCULTA EL FORM DE EDITAR Y MUESTRA EL DE AGREGAR
-  function mostrarFormAgregar() {
-    formagregar.classList.remove("oculto");
-    formedit.classList.add("oculto");
+    addEventCancel(btnCancelEdicion, btnConfEdicion);
   }
 
 
@@ -641,26 +644,34 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function filtrar() {
-
+    document.querySelector('.btn-cancelar-filtro').classList.remove('oculto');
     ocultarTabla();
-    for (let elem of productosLocal) {
-      comprobarColumnas(elem);
-    }
+    comprobarColumnas();    
   }
 
-  function comprobarColumnas(elem){
-    let inputminuscula = inputFiltro.value.toLowerCase();
-    let nombreminuscula = elem.thing.nombre.toLowerCase();
-    let descripcionminuscula=elem.thing.descripcion.toLowerCase();
-    let tamaniominuscula= elem.thing.tamanio.toLowerCase();
-    
-    if ((nombreminuscula.includes(inputminuscula))||
-    (descripcionminuscula.includes(inputminuscula))||
-    (tamaniominuscula.includes(inputminuscula))||
-    (elem.thing.precio == inputFiltro.value)) {
-      document.getElementById(elem.id).classList.remove("oculto");
+  function comprobarColumnas(){    
+    let existeProducto = false;
+
+    for (let elem of productosLocal){
+      let inputminuscula = inputFiltro.value.toLowerCase();
+      let nombreminuscula = elem.thing.nombre.toLowerCase();
+      let descripcionminuscula=elem.thing.descripcion.toLowerCase();
+      let tamaniominuscula= elem.thing.tamanio.toLowerCase();
+
+      if ((nombreminuscula.includes(inputminuscula))||
+      (descripcionminuscula.includes(inputminuscula))||
+      (tamaniominuscula.includes(inputminuscula))||
+      (elem.thing.precio == inputFiltro.value)) {
+        document.getElementById(elem.id).classList.remove("oculto");
+        existeProducto = true;
+      } 
     }
 
+    if(!existeProducto){
+      document.querySelector('.no-coincidencias').classList.remove('oculto');
+      cantidadProductos = 0;
+      mostrarInformacionOfertas(cantidadProductos);
+    }
   }
 
   function ocultarTabla() {
@@ -676,9 +687,7 @@ document.addEventListener("DOMContentLoaded", function () {
       elem.classList.remove("oculto");
     }
     inputFiltro.value="";
+    document.querySelector('.btn-cancelar-filtro').classList.add('oculto');
+    document.querySelector('.no-coincidencias').classList.add('oculto');
   }
-
-
-
-
 });
