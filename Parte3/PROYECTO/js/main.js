@@ -475,6 +475,7 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("btn-agregar-tabla").classList.remove("oculto");
       document.getElementById("btn-agregar-varios-tabla").classList.remove("oculto");
       document.getElementById("btn-vaciar-tabla").classList.remove("oculto");
+      document.getElementById("js-titulo-formulario").innerHTML= "Agregar Productos";
       limpiarCamposFormulario();
     })
   }
@@ -507,6 +508,7 @@ document.addEventListener("DOMContentLoaded", function () {
           document.getElementById("btn-agregar-tabla").classList.remove("oculto");
           document.getElementById("btn-agregar-varios-tabla").classList.remove("oculto");
           document.getElementById("btn-vaciar-tabla").classList.remove("oculto");
+          document.getElementById("js-titulo-formulario").innerHTML= "Agregar Productos";
           limpiarCamposFormulario();
         })
         .catch(e => {
@@ -565,6 +567,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("btn-agregar-tabla").classList.add("oculto");
     document.getElementById("btn-agregar-varios-tabla").classList.add("oculto");
     document.getElementById("btn-vaciar-tabla").classList.add("oculto");
+    document.getElementById("js-titulo-formulario").innerHTML= "Editar Producto";
 
     if (!estanCreados(formProducto)) {
       let btnConfEdicion = document.createElement("button");
