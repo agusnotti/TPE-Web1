@@ -521,9 +521,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function editarEnJsonLocal(nuevoproducto, id) {
     let posicion = buscarId(id);
-
     if (posicion != -1) {
-      let prod = crearProductoLocal(id,nuevoproducto.nombre,nuevoproducto.descripcion,nuevoproducto.tamanio,nuevoproducto.precio);
+      let prod = crearProductoLocal(id,nuevoproducto.thing.nombre,nuevoproducto.thing.descripcion,nuevoproducto.thing.tamanio,nuevoproducto.thing.precio);
       
       productosLocal[posicion] = prod;
     }
