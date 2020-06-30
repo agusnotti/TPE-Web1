@@ -477,6 +477,8 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("btn-vaciar-tabla").classList.remove("oculto");
       document.getElementById("js-titulo-formulario").innerHTML= "Agregar Productos";
       limpiarCamposFormulario();
+
+      document.querySelectorAll('.btn-tabla-borrar').forEach(elem => { elem.disabled = false});
     })
   }
 
@@ -510,10 +512,12 @@ document.addEventListener("DOMContentLoaded", function () {
           document.getElementById("btn-vaciar-tabla").classList.remove("oculto");
           document.getElementById("js-titulo-formulario").innerHTML= "Agregar Productos";
           limpiarCamposFormulario();
+          document.querySelectorAll('.btn-tabla-borrar').forEach(elem => { elem.disabled = false});
         })
         .catch(e => {
           console.log(e);
         })
+
     })
   }
 
@@ -583,12 +587,13 @@ document.addEventListener("DOMContentLoaded", function () {
       addEventConf(btnCancelEdicion, btnConfEdicion, id);
       addEventCancel(btnCancelEdicion, btnConfEdicion);
     }
+
+    document.querySelectorAll('.btn-tabla-borrar').forEach(elem => { elem.disabled = true});
   }
 
   function estanCreados(formProducto) {
     let cantidad = formProducto.querySelectorAll(".btn-form-productos");
     if (cantidad.length == 1) {
-      console.log(cantidad);
       return false;
     } else {
       return true;
