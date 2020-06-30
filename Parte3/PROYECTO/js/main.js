@@ -45,8 +45,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function processText(t) {
-
-
     document.querySelector("#use-ajax").innerHTML = t;
     addEvents();
 
@@ -57,9 +55,10 @@ document.addEventListener("DOMContentLoaded", function () {
     if (document.getElementById("nombre-tabla")) {
       //si encuentra en la pagina este elemento....
       addEventsTabla();
+      
+      
+      
     }
-    
-    
   }
 
   function addEvents() {
@@ -322,22 +321,30 @@ document.addEventListener("DOMContentLoaded", function () {
     //setTimeout(window.location.reload.bind(window.location),3000);
 
     setInterval(resaltado, 80); // CAMBIA COLORES EN UN INTERVALO
-
+    
     //LLAMADA A LA FUNCION PARA OBTENER DATOS
     getDatos();
 
     //ASIGNA EVENTO A BOTON 'AGREGAR PRODUCTO'
     document.getElementById("btn-agregar-tabla").addEventListener("click", agregarProductoATabla);
 
-    
+    // VACIAR TABLA AL APRETAR EL BOTON 'VACIAR TABLA'
+    document.getElementById("btn-vaciar-tabla" ).addEventListener("click",vaciarTabla);
 
     // //AGRAGAR VARIOS PRODUCTOS AL APRETAR EL BOTON 'AGREGAR VARIOS'
     document.getElementById("btn-agregar-varios-tabla").addEventListener("click", agregarVariosTabla);
 
     document.getElementById("js-filter").addEventListener("click", filtrar);
     document.querySelector(".btn-cancelar-filtro").addEventListener("click", cancelarFiltros);
+
+    setInterval(autoactualizar(), 3000);
   }
 
+  function autoactualizar(){
+    table.innerHTML = "";    
+    productosLocal = [];
+    getDatos();
+  }
 
   //CARGA LA TABLA AL APRETAR EL BOTON 'AGREGAR PRODUCTO'
   function agregarProductoATabla(event) {
@@ -360,6 +367,12 @@ document.addEventListener("DOMContentLoaded", function () {
       let nuevoproducto = crearProducto(tablacompleta[randomnombre].nombre, tablacompleta[randomnombre].descripcion, tablacompleta[randomtamanio].tamanio, tablacompleta[randomprecio].precio)
 
       postDatos(nuevoproducto);
+    }
+  }
+
+  function  vaciarTabla() {
+    for(let i = 0; i < productosLocal.length; i++) {
+      deleteDatos(productosLocal[i].id);
     }
   }
 
@@ -566,12 +579,14 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("btn-agregar-tabla").classList.add("oculto");
     document.getElementById("btn-agregar-varios-tabla").classList.add("oculto");
     document.getElementById("js-titulo-formulario").innerHTML = "Editar Producto";
+    document.getElementById("btn-vaciar-tabla").classList.add("oculto");
   }
 
   function modificarFormParaAgregar() {
     document.getElementById("btn-agregar-tabla").classList.remove("oculto");
     document.getElementById("btn-agregar-varios-tabla").classList.remove("oculto");
     document.getElementById("js-titulo-formulario").innerHTML = "Agregar Productos";
+    document.getElementById("btn-vaciar-tabla").classList.remove("oculto");
   }
 
   // CREA LOS BOTONES DE CONFIRMAR EDICION Y CANCELAR EDICION Y LOS AGREGA DENTRO DEL FORM
