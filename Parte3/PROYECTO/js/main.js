@@ -265,13 +265,13 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         cantidadProductos = json.productos.length;
         mostrarInformacionOfertas(cantidadProductos);
-
+        filtrar();
       })
       .catch(function (e) {
         console.log(e);
       });
   }
-
+ 
   // LLAMADA AJAX POST DATOS
   function postDatos(producto) {
     fetch(baseURL + groupID + "/" + collectionID,
@@ -289,13 +289,13 @@ document.addEventListener("DOMContentLoaded", function () {
         return r.json();
       })
       .then(function (json) {
-
         let prod = crearProductoLocal(json.information._id,json.information.thing.nombre,json.information.thing.descripcion,json.information.thing.tamanio,json.information.thing.precio);
         productosLocal.push(prod);
         crearFilaTabla(prod.thing, prod.id);
         cantidadProductos++;
         mostrarInformacionOfertas(cantidadProductos);
         limpiarCamposFormulario();
+        filtrar();
       })
       .catch(function (e) {
         console.log(e);
@@ -337,7 +337,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("js-filter").addEventListener("click", filtrar);
     document.querySelector(".btn-cancelar-filtro").addEventListener("click", cancelarFiltros);
 
-    setInterval(autoactualizar(), 3000);
+    setInterval(autoactualizar, 10000);
   }
 
   function autoactualizar(){
@@ -508,6 +508,7 @@ document.addEventListener("DOMContentLoaded", function () {
           } else if (response.ok) {
             editarEnTabla(nuevoproducto, id);
             editarEnJsonLocal(nuevoproducto, id);
+            filtrar();
           }
           btnconf.remove();
           btncancel.remove();
