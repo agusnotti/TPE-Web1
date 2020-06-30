@@ -299,7 +299,6 @@ document.addEventListener("DOMContentLoaded", function () {
         cantidadProductos++;
         mostrarInformacionOfertas(cantidadProductos);
         limpiarCamposFormulario();
-        sizearreglolocalactual++;
       })
       .catch(function (e) {
         console.log(e);
