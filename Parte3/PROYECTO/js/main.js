@@ -225,7 +225,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-  function crearProductoLocal(elem) {
+  function crearProductoLocal(id,nombre, descripcion, tamanio, precio) {
     let objetoJsonLocal = {
       "id": "",
       "thing": {
@@ -235,11 +235,11 @@ document.addEventListener("DOMContentLoaded", function () {
         "precio": ""
       }
     }
-    objetoJsonLocal.id = elem._id;
-    objetoJsonLocal.thing.nombre = elem.thing.nombre;
-    objetoJsonLocal.thing.descripcion = elem.thing.descripcion;
-    objetoJsonLocal.thing.tamanio = elem.thing.tamanio;
-    objetoJsonLocal.thing.precio = elem.thing.precio;
+    objetoJsonLocal.id = id;
+    objetoJsonLocal.thing.nombre = nombre;
+    objetoJsonLocal.thing.descripcion = descripcion;
+    objetoJsonLocal.thing.tamanio = tamanio;
+    objetoJsonLocal.thing.precio = precio;
 
     return objetoJsonLocal;
   }
@@ -261,7 +261,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .then(function (json) {
         for (let elem of json.productos) {
           if (elem.thing != null) {
-            let prod = crearProductoLocal(elem);
+            let prod = crearProductoLocal(elem._id,elem.thing.nombre,elem.thing.descripcion,elem.thing.tamanio,elem.thing.precio);
             productosLocal.push(prod);
             crearFilaTabla(prod.thing, prod.id);
           }
@@ -293,7 +293,7 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .then(function (json) {
 
-        let prod = crearProductoLocal(json.information);
+        let prod = crearProductoLocal(json.information._id,json.information.thing.nombre,json.information.thing.descripcion,json.information.thing.tamanio,json.information.thing.precio);
         productosLocal.push(prod);
         crearFilaTabla(prod.thing, prod.id);
         cantidadProductos++;
@@ -523,16 +523,8 @@ document.addEventListener("DOMContentLoaded", function () {
     let posicion = buscarId(id);
 
     if (posicion != -1) {
-
-      let prod = {
-        "id": id,
-        "thing": {
-          "nombre": nuevoproducto.thing.nombre,
-          "descripcion": nuevoproducto.thing.descripcion,
-          "tamanio": nuevoproducto.thing.tamanio,
-          "precio": nuevoproducto.thing.precio
-        }
-      }
+      let prod = crearProductoLocal(id,nuevoproducto.nombre,nuevoproducto.descripcion,nuevoproducto.tamanio,nuevoproducto.precio);
+      
       productosLocal[posicion] = prod;
     }
 
