@@ -179,7 +179,7 @@ document.addEventListener("DOMContentLoaded", function () {
     "color-resaltado-5",
   ];
 
-  //ARREGLO DE PRODUCTOS
+  //ARREGLO DE PRODUCTOS LOCAL
   let productosLocal = [];
 
   // CREA EL ARREGLO PARA CARGAR PRODUCTOS RANDOM
@@ -223,9 +223,7 @@ document.addEventListener("DOMContentLoaded", function () {
   ];
 
 
-
-
-  function crearProductoLocal(id,nombre, descripcion, tamanio, precio) {
+  function crearProductoLocal(elem) {
     let objetoJsonLocal = {
       "id": "",
       "thing": {
@@ -235,11 +233,11 @@ document.addEventListener("DOMContentLoaded", function () {
         "precio": ""
       }
     }
-    objetoJsonLocal.id = id;
-    objetoJsonLocal.thing.nombre = nombre;
-    objetoJsonLocal.thing.descripcion = descripcion;
-    objetoJsonLocal.thing.tamanio = tamanio;
-    objetoJsonLocal.thing.precio = precio;
+    objetoJsonLocal.id = elem._id;
+    objetoJsonLocal.thing.nombre = elem.thing.nombre;
+    objetoJsonLocal.thing.descripcion = elem.thing.descripcion;
+    objetoJsonLocal.thing.tamanio = elem.thing.tamanio;
+    objetoJsonLocal.thing.precio = elem.thing.precio;
 
     return objetoJsonLocal;
   }
@@ -261,7 +259,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .then(function (json) {
         for (let elem of json.productos) {
           if (elem.thing != null) {
-            let prod = crearProductoLocal(elem._id,elem.thing.nombre,elem.thing.descripcion,elem.thing.tamanio,elem.thing.precio);
+            let prod = crearProductoLocal(elem);
             productosLocal.push(prod);
             crearFilaTabla(prod.thing, prod.id);
           }
@@ -293,12 +291,13 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .then(function (json) {
 
-        let prod = crearProductoLocal(json.information._id,json.information.thing.nombre,json.information.thing.descripcion,json.information.thing.tamanio,json.information.thing.precio);
+        let prod = crearProductoLocal(json.information);
         productosLocal.push(prod);
         crearFilaTabla(prod.thing, prod.id);
         cantidadProductos++;
         mostrarInformacionOfertas(cantidadProductos);
         limpiarCamposFormulario();
+        sizearreglolocalactual++;
       })
       .catch(function (e) {
         console.log(e);
@@ -331,9 +330,7 @@ document.addEventListener("DOMContentLoaded", function () {
     //ASIGNA EVENTO A BOTON 'AGREGAR PRODUCTO'
     document.getElementById("btn-agregar-tabla").addEventListener("click", agregarProductoATabla);
 
-    //VACIAR TABLA AL APRETAR EL BOTON 'VACIAR TABLA'
-    document.getElementById("btn-vaciar-tabla").addEventListener("click", vaciarTabla);
-
+    
 
     // //AGRAGAR VARIOS PRODUCTOS AL APRETAR EL BOTON 'AGREGAR VARIOS'
     document.getElementById("btn-agregar-varios-tabla").addEventListener("click", agregarVariosTabla);
@@ -342,12 +339,6 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector(".btn-cancelar-filtro").addEventListener("click", cancelarFiltros);
   }
 
-
-  function vaciarTabla() {
-    for (let i = 0; i < productosLocal.length; i++) {
-      deleteDatos(productosLocal[i].id);
-    }
-  }
 
   //CARGA LA TABLA AL APRETAR EL BOTON 'AGREGAR PRODUCTO'
   function agregarProductoATabla(event) {
@@ -358,7 +349,7 @@ document.addEventListener("DOMContentLoaded", function () {
     postDatos(nuevoproducto);
   }
 
-
+  //CARGA LA TABLA AL APRETAR EL BOTON 'AGREGAR VARIOS'
   function agregarVariosTabla() {
     let random = Math.round(Math.random() * 2 + 2);
 
@@ -400,6 +391,8 @@ document.addEventListener("DOMContentLoaded", function () {
     tamanioProducto.value = "";
     precioProducto.value = "";
   }
+
+
 
   function cargarContenidoFilas(tr, producto) {
     let td1 = document.createElement("td");
@@ -451,29 +444,27 @@ document.addEventListener("DOMContentLoaded", function () {
     table.appendChild(tr);
   }
 
-
  
+  //ASIGNA EVENTO BOTON BORRAR FILA
   function addEventDelete(btn) {
-    //ASIGNA EVENTO BOTON BORRAR FILA
     btn.addEventListener("click", function (event) {
       let id = this.parentNode.parentNode.id;
       deleteDatos(id);
     });
   }
 
+
+  //ASIGNA EVENTO BOTON BORRAR FILA
   function addEventsEdit(btn) {
     btn.addEventListener("click", function (event) {
       let id = this.parentNode.parentNode.id;
 
       permitirEditar(id);
     })
-  }
-
-  
+  }  
 
 
-  //AGREGA UN ADDEVENTLISTENER AL BOTON CANCELAR EDICION PARA
-  // OCULTAR EL FORMULARIO DEL EDIT Y MOSTRAR EL DE AGREGAR
+  //AGREGA EVENTO AL BOTON CANCELAR EDICION
   function addEventCancel(btncancel, btnconf) {
     btncancel.addEventListener("click", function () {
       event.preventDefault();
@@ -486,8 +477,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
 
-  // AGREGA UN ADDEVENTLISTENER AL BOTON CONFIRMAR EL CUAL PERMITE
-  // EDITAR UN DATO DE LA API Y REFLEJARLO EN LA TABLA DE LA WEB
+  // AGREGA EVENTO AL BOTON CONFIRMAR EL CUAL PERMITE EDITAR UN DATO DE LA API Y REFLEJARLO EN LA TABLA DE LA WEB
   function addEventConf(btncancel, btnconf, id) {
     btnconf.addEventListener("click", function () {
       event.preventDefault();
@@ -512,6 +502,8 @@ document.addEventListener("DOMContentLoaded", function () {
           modificarFormParaAgregar();
           limpiarCamposFormulario();
           document.querySelectorAll('.btn-tabla-borrar').forEach(elem => { elem.disabled = false});
+          
+          
         })
         .catch(e => {
           console.log(e);
@@ -521,9 +513,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function editarEnJsonLocal(nuevoproducto, id) {
     let posicion = buscarId(id);
+
     if (posicion != -1) {
-      let prod = crearProductoLocal(id,nuevoproducto.thing.nombre,nuevoproducto.thing.descripcion,nuevoproducto.thing.tamanio,nuevoproducto.thing.precio);
-      
+
+      let prod = {
+        "id": id,
+        "thing": {
+          "nombre": nuevoproducto.thing.nombre,
+          "descripcion": nuevoproducto.thing.descripcion,
+          "tamanio": nuevoproducto.thing.tamanio,
+          "precio": nuevoproducto.thing.precio
+        }
+      }
       productosLocal[posicion] = prod;
     }
 
@@ -573,14 +574,12 @@ document.addEventListener("DOMContentLoaded", function () {
   function modificarFormParaEditar() {
     document.getElementById("btn-agregar-tabla").classList.add("oculto");
     document.getElementById("btn-agregar-varios-tabla").classList.add("oculto");
-    document.getElementById("btn-vaciar-tabla").classList.add("oculto");
     document.getElementById("js-titulo-formulario").innerHTML = "Editar Producto";
   }
 
   function modificarFormParaAgregar() {
     document.getElementById("btn-agregar-tabla").classList.remove("oculto");
     document.getElementById("btn-agregar-varios-tabla").classList.remove("oculto");
-    document.getElementById("btn-vaciar-tabla").classList.remove("oculto");
     document.getElementById("js-titulo-formulario").innerHTML = "Agregar Productos";
   }
 
