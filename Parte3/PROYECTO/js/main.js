@@ -482,6 +482,7 @@ document.addEventListener("DOMContentLoaded", function () {
       btncancel.remove();
       modificarFormParaAgregar();
       limpiarCamposFormulario();
+      document.querySelectorAll('.btn-tabla-borrar').forEach(elem => { elem.disabled = false});
     })
   }
 
@@ -511,6 +512,7 @@ document.addEventListener("DOMContentLoaded", function () {
           btncancel.remove();
           modificarFormParaAgregar();
           limpiarCamposFormulario();
+          document.querySelectorAll('.btn-tabla-borrar').forEach(elem => { elem.disabled = false});
         })
         .catch(e => {
           console.log(e);
@@ -574,6 +576,8 @@ document.addEventListener("DOMContentLoaded", function () {
       formProducto.lastChild.remove();
       crearBotonesEdicion(formProducto, id);
     }
+
+    document.querySelectorAll('.btn-tabla-borrar').forEach(elem => { elem.disabled = true});
   }
   //MODIFICA EL FORMULARIO PARA EDITAR
   function modificarFormParaEditar() {
