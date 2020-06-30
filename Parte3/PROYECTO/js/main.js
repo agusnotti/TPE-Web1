@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let mensajeCargando = "Loading...";
     let mensajeError = "Error - Failed URL!";
     let mensajeErrorConexion = "Connection error";
-
+    
     let pMensaje = document.createElement("p");
 
     pMensaje.innerHTML = mensajeCargando;
@@ -45,6 +45,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function processText(t) {
+
+
     document.querySelector("#use-ajax").innerHTML = t;
     addEvents();
 
@@ -56,6 +58,8 @@ document.addEventListener("DOMContentLoaded", function () {
       //si encuentra en la pagina este elemento....
       addEventsTabla();
     }
+    
+    
   }
 
   function addEvents() {
@@ -164,8 +168,6 @@ document.addEventListener("DOMContentLoaded", function () {
   let tamanioProducto;
   let precioProducto;
   let table;
-  let formagregar;
-  let formedit;
   let inputFiltro;
   let cantidadProductos = 0;
   let cantcolores = 0;
@@ -297,6 +299,7 @@ document.addEventListener("DOMContentLoaded", function () {
         cantidadProductos++;
         mostrarInformacionOfertas(cantidadProductos);
         limpiarCamposFormulario();
+        sizearreglolocalactual++;
       })
       .catch(function (e) {
         console.log(e);
@@ -319,6 +322,7 @@ document.addEventListener("DOMContentLoaded", function () {
     editPrecioProducto = document.getElementById("js-edit-precio-tabla");
     table = document.getElementById("body-tabla");
     inputFiltro = document.getElementById("js-input-filter");
+    //setTimeout(window.location.reload.bind(window.location),3000);
 
     setInterval(resaltado, 80); // CAMBIA COLORES EN UN INTERVALO
 
@@ -449,6 +453,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
 
+ 
   function addEventDelete(btn) {
     //ASIGNA EVENTO BOTON BORRAR FILA
     btn.addEventListener("click", function (event) {
@@ -465,6 +470,9 @@ document.addEventListener("DOMContentLoaded", function () {
     })
   }
 
+  
+
+
   //AGREGA UN ADDEVENTLISTENER AL BOTON CANCELAR EDICION PARA
   // OCULTAR EL FORMULARIO DEL EDIT Y MOSTRAR EL DE AGREGAR
   function addEventCancel(btncancel, btnconf) {
@@ -472,10 +480,7 @@ document.addEventListener("DOMContentLoaded", function () {
       event.preventDefault();
       btnconf.remove();
       btncancel.remove();
-      document.getElementById("btn-agregar-tabla").classList.remove("oculto");
-      document.getElementById("btn-agregar-varios-tabla").classList.remove("oculto");
-      document.getElementById("btn-vaciar-tabla").classList.remove("oculto");
-      document.getElementById("js-titulo-formulario").innerHTML= "Agregar Productos";
+      modificarFormParaAgregar();
       limpiarCamposFormulario();
     })
   }
@@ -501,14 +506,10 @@ document.addEventListener("DOMContentLoaded", function () {
           } else if (response.ok) {
             editarEnTabla(nuevoproducto, id);
             editarEnJsonLocal(nuevoproducto, id);
-
           }
           btnconf.remove();
           btncancel.remove();
-          document.getElementById("btn-agregar-tabla").classList.remove("oculto");
-          document.getElementById("btn-agregar-varios-tabla").classList.remove("oculto");
-          document.getElementById("btn-vaciar-tabla").classList.remove("oculto");
-          document.getElementById("js-titulo-formulario").innerHTML= "Agregar Productos";
+          modificarFormParaAgregar();
           limpiarCamposFormulario();
         })
         .catch(e => {
@@ -564,31 +565,51 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let formProducto = document.querySelector('.formulario-agregar-producto');
 
+    modificarFormParaEditar();
+
+    if (!estanCreados(formProducto)) {
+      crearBotonesEdicion(formProducto, id);
+    } else {
+      formProducto.lastChild.remove();
+      formProducto.lastChild.remove();
+      crearBotonesEdicion(formProducto, id);
+    }
+  }
+  //MODIFICA EL FORMULARIO PARA EDITAR
+  function modificarFormParaEditar() {
     document.getElementById("btn-agregar-tabla").classList.add("oculto");
     document.getElementById("btn-agregar-varios-tabla").classList.add("oculto");
     document.getElementById("btn-vaciar-tabla").classList.add("oculto");
-    document.getElementById("js-titulo-formulario").innerHTML= "Editar Producto";
-
-    if (!estanCreados(formProducto)) {
-      let btnConfEdicion = document.createElement("button");
-      let btnCancelEdicion = document.createElement("button");
-      btnConfEdicion.innerText = "Confirmar Edición";
-      btnConfEdicion.classList.add("btn-form-productos");
-      btnCancelEdicion.innerText = "Cancelar Edicion";
-      btnCancelEdicion.classList.add("btn-form-productos");
-
-      formProducto.appendChild(btnConfEdicion);
-      formProducto.appendChild(btnCancelEdicion);
-
-      addEventConf(btnCancelEdicion, btnConfEdicion, id);
-      addEventCancel(btnCancelEdicion, btnConfEdicion);
-    }
+    document.getElementById("js-titulo-formulario").innerHTML = "Editar Producto";
   }
 
+  function modificarFormParaAgregar() {
+    document.getElementById("btn-agregar-tabla").classList.remove("oculto");
+    document.getElementById("btn-agregar-varios-tabla").classList.remove("oculto");
+    document.getElementById("btn-vaciar-tabla").classList.remove("oculto");
+    document.getElementById("js-titulo-formulario").innerHTML = "Agregar Productos";
+  }
+
+  // CREA LOS BOTONES DE CONFIRMAR EDICION Y CANCELAR EDICION Y LOS AGREGA DENTRO DEL FORM
+  function crearBotonesEdicion(formProducto, id) {
+    event.preventDefault();
+    let btnConfEdicion = document.createElement("button");
+    let btnCancelEdicion = document.createElement("button");
+    btnConfEdicion.innerText = "Confirmar Edición";
+    btnConfEdicion.classList.add("btn-form-productos");
+    btnCancelEdicion.innerText = "Cancelar Edicion";
+    btnCancelEdicion.classList.add("btn-form-productos");
+
+    formProducto.appendChild(btnConfEdicion);
+    formProducto.appendChild(btnCancelEdicion);
+
+    addEventConf(btnCancelEdicion, btnConfEdicion, id);
+    addEventCancel(btnCancelEdicion, btnConfEdicion);
+  }
+  // COMPRUEBA QUE LOS BOTONES DE CONFIRMAR EDICION Y CANCELAR EDICION ESTEN CREADOS
   function estanCreados(formProducto) {
     let cantidad = formProducto.querySelectorAll(".btn-form-productos");
     if (cantidad.length == 1) {
-      console.log(cantidad);
       return false;
     } else {
       return true;
