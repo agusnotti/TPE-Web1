@@ -424,7 +424,7 @@ document.addEventListener("DOMContentLoaded", function () {
     td4.innerText = "$ " + producto.precio;
 
     btnEdit.innerHTML = '<i class="fas fa-edit"></i>';
-    btnBorrar.innerHTML = '<i class="fas fa-times"></i>';
+    btnBorrar.innerHTML = '<i class="far fa-trash-alt"></i>';
     btnBorrar.classList.add("btn-tabla-borrar");
     btnEdit.classList.add("btn-tabla-editar");
     tdboton.appendChild(btnEdit);
