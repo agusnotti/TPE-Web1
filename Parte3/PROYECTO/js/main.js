@@ -338,6 +338,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector(".btn-cancelar-filtro").addEventListener("click", cancelarFiltros);
 
     setInterval(autoactualizar, 10000);
+    setInterval(filtrar,250);
   }
 
   function autoactualizar(){
