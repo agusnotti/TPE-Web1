@@ -229,28 +229,49 @@ document.addEventListener("DOMContentLoaded", function () {
       precio: "400",
     },
   ];
+  //ASIGNA EVENTOS DE LA TABLA
+  function addEventsTabla() {
 
+    // ASIGNACIONES DE VARIABLES
+    formagregar = document.getElementById("js-form-agregar");
+    formedit = document.getElementById("js-form-edit");
+    nombreProducto = document.getElementById("nombre-tabla");
+    descripcionProducto = document.getElementById("descripcion-tabla");
+    tamanioProducto = document.getElementById("tamaño-tabla");
+    precioProducto = document.getElementById("precio-tabla");
+    editNombreProducto = document.getElementById("js-edit-nombre-tabla");
+    editDescripcionProducto = document.getElementById("js-edit-descripcion-tabla");
+    editTamanioProducto = document.getElementById("js-edit-tamaño-tabla");
+    editPrecioProducto = document.getElementById("js-edit-precio-tabla");
+    table = document.getElementById("body-tabla");
 
-  function crearProductoLocal(id, nombre, descripcion, tamanio, precio) {
-    let objetoJsonLocal = {
-      "id": "",
-      "thing": {
-        "nombre": "",
-        "descripcion": "",
-        "tamanio": "",
-        "precio": ""
-      }
-    }
-    objetoJsonLocal.id = id;
-    objetoJsonLocal.thing.nombre = nombre;
-    objetoJsonLocal.thing.descripcion = descripcion;
-    objetoJsonLocal.thing.tamanio = tamanio;
-    objetoJsonLocal.thing.precio = precio;
+    inputFiltro = document.getElementById("js-input-filter") // CAMBIA COLORES EN UN INTERVALO
 
-    return objetoJsonLocal;
+    //LLAMADA A LA FUNCION PARA OBTENER DATOS
+    getDatos();
+
+    //ASIGNA EVENTO A BOTON 'AGREGAR PRODUCTO'
+    document.getElementById("btn-agregar-tabla").addEventListener("click", agregarProductoATabla);
+
+    // VACIAR TABLA AL APRETAR EL BOTON 'VACIAR TABLA'
+    document.getElementById("btn-vaciar-tabla").addEventListener("click", vaciarTabla);
+
+    // //AGRAGAR VARIOS PRODUCTOS AL APRETAR EL BOTON 'AGREGAR VARIOS'
+    document.getElementById("btn-agregar-varios-tabla").addEventListener("click", agregarVariosTabla);
+
+    //INICIALIZACION DE INTERVALOS
+    intervaloResaltado = setInterval(resaltado, 80);
+    intervaloActualizar = setInterval(autoactualizar, 5000);
+    intervaloFiltrar = setInterval(filtrar, 250);
+
+  }
+  //Hace un getDatos cada X segundos, donde X es el valor elegido en el setInterval
+
+  function autoactualizar() {
+    getDatos();
   }
 
-
+  //-------------------------------------------------GET---------------------------------------------//
   // LLAMADA AJAX GET DATOS
   function getDatos() {
     fetch(baseURL + groupID + "/" + collectionID,
@@ -262,7 +283,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!r.ok) {
           console.log("ERROR!!");
         }
-        productosLocal=[];
+        productosLocal = [];
         return r.json();
       })
       .then(function (json) {
@@ -270,7 +291,6 @@ document.addEventListener("DOMContentLoaded", function () {
           if (elem.thing != null) {
             let prod = crearProductoLocal(elem._id, elem.thing.nombre, elem.thing.descripcion, elem.thing.tamanio, elem.thing.precio);
             productosLocal.push(prod);
-           // crearFilaTabla(prod.thing, prod.id);
           }
         }
         cargarTabla();
@@ -282,13 +302,9 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(e);
       });
   }
+    //-----------------------------------------------FIN GET--------------------------------------------//
 
-  function cargarTabla(){
-    table.innerHTML="";
-    for(let elem of productosLocal){
-      crearFilaTabla(elem.thing,elem.id);
-    }
-  }
+  //--------------------------------------------------POST------------------------------------------------//
 
   // LLAMADA AJAX POST DATOS
   function postDatos(producto) {
@@ -318,50 +334,34 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(e);
       });
   }
+  //-----------------------------------------------FIN POST------------------------------------------------//
 
-
-
-  //ASIGNA EVENTOS DE LA TABLA
-  function addEventsTabla() {
-    formagregar = document.getElementById("js-form-agregar");
-    formedit = document.getElementById("js-form-edit");
-    nombreProducto = document.getElementById("nombre-tabla");
-    descripcionProducto = document.getElementById("descripcion-tabla");
-    tamanioProducto = document.getElementById("tamaño-tabla");
-    precioProducto = document.getElementById("precio-tabla");
-    editNombreProducto = document.getElementById("js-edit-nombre-tabla");
-    editDescripcionProducto = document.getElementById("js-edit-descripcion-tabla");
-    editTamanioProducto = document.getElementById("js-edit-tamaño-tabla");
-    editPrecioProducto = document.getElementById("js-edit-precio-tabla");
-    table = document.getElementById("body-tabla");
-    intervaloResaltado = setInterval(resaltado, 80);
-    inputFiltro= document.getElementById("js-input-filter") // CAMBIA COLORES EN UN INTERVALO
-   
-
-
-
-    //LLAMADA A LA FUNCION PARA OBTENER DATOS
-    getDatos();
-
-    //ASIGNA EVENTO A BOTON 'AGREGAR PRODUCTO'
-    document.getElementById("btn-agregar-tabla").addEventListener("click", agregarProductoATabla);
-
-    // VACIAR TABLA AL APRETAR EL BOTON 'VACIAR TABLA'
-    document.getElementById("btn-vaciar-tabla").addEventListener("click", vaciarTabla);
-
-    // //AGRAGAR VARIOS PRODUCTOS AL APRETAR EL BOTON 'AGREGAR VARIOS'
-    document.getElementById("btn-agregar-varios-tabla").addEventListener("click", agregarVariosTabla);
- 
-     intervaloActualizar = setInterval(autoactualizar, 5000);
-      intervaloFiltrar = setInterval(filtrar, 250);
-
+  //-----------------------------------------------DELETE--------------------------------------------------//
+  //LLAMADA AJAX DELETE
+  function deleteDatos(id) {
+    fetch(baseURL + groupID + "/" + collectionID + "/" + id, {
+      method: "DELETE",
+      "mode": "cors"
+    })
+      .then(function (r) {
+        if (r.ok) {
+          let fila = document.getElementById(id);
+          fila.remove();
+          let posicion = buscarId(id);
+          productosLocal.splice(posicion, 1);
+          cantidadProductos--;
+          mostrarInformacionOfertas(cantidadProductos);
+        }
+      })
+      .catch(function (e) {
+        console.log(e);
+      });
   }
+  //----------------------------------------------FIN DELETE--------------------------------------------------//
 
-  function autoactualizar() {
-    getDatos();
-  }
 
-  //CARGA LA TABLA AL APRETAR EL BOTON 'AGREGAR PRODUCTO'
+  //-------------------------------------------METODOS AGREGAR-------------------------------------------------//
+  //--------AGREGAR 1 ELEMENTO A LA TABLA--------//
   function agregarProductoATabla(event) {
     event.preventDefault();
 
@@ -370,7 +370,7 @@ document.addEventListener("DOMContentLoaded", function () {
     postDatos(nuevoproducto);
   }
 
-  //CARGA LA TABLA AL APRETAR EL BOTON 'AGREGAR VARIOS'
+  //------ AGREGA 3 ELEMENTOS A LA TABLA-----//
   function agregarVariosTabla() {
     let random = Math.round(Math.random() * 2 + 2);
 
@@ -383,43 +383,19 @@ document.addEventListener("DOMContentLoaded", function () {
       postDatos(nuevoproducto);
     }
   }
+   //-------------------------------------------FIN METODOS AGREGAR----------------------------------------------//
 
-  function vaciarTabla() {
-    for (let i = 0; i < productosLocal.length; i++) {
-      deleteDatos(productosLocal[i].id);
-    }
+
+  //--------------------------------------------CREACION TABLA--------------------------------//
+
+  // FUNCION PARA CREAR FILA LA TABLA DE TABLA
+  function crearFilaTabla(producto, id) {
+    let tr = document.createElement("tr");
+    tr.id = id;
+    cargarContenidoFilas(tr, producto);
+    table.appendChild(tr);
   }
-
-  //CREA PRODUCTO ASIGNANDO VALORES INGRESADOS POR USUARIO
-  function crearProducto(nombre, descripcion, tamanio, precio) {
-    let producto = {
-      "thing": {
-        "nombre": "",
-        "descripcion": "",
-        "tamanio": "",
-        "precio": "",
-      },
-    };
-
-    producto.thing.nombre = nombre;
-    producto.thing.descripcion = descripcion;
-    producto.thing.tamanio = tamanio;
-    producto.thing.precio = precio;
-
-    return producto;
-  }
-
-
-  //FUNCION PARA LIMPIAR LOS INPUTS DEL FORMULARIO DE PRODUCTOS
-  function limpiarCamposFormulario() {
-    nombreProducto.value = "";
-    descripcion = descripcionProducto.value = "";
-    tamanioProducto.value = "";
-    precioProducto.value = "";
-  }
-
-
-
+  // CREA LOS TDS Y TODO SU CONTENIDO DE CADA FILA
   function cargarContenidoFilas(tr, producto) {
     let td1 = document.createElement("td");
     let td2 = document.createElement("td");
@@ -453,24 +429,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
 
-  //AGREGA RESALTADO A LAS OFERTAS
-  function aplicarResaltadoOferta(tr, producto) {
-    if (producto.precio <= 500) {
-      tr.classList.add("intermitente");
-      tr.classList.add(colores[colores.length - 1]);
-    }
-  }
-
-
-  // FUNCION PARA CREAR FILA LA TABLA DE TABLA
-  function crearFilaTabla(producto, id) {
-    let tr = document.createElement("tr");
-    tr.id = id;
-    cargarContenidoFilas(tr, producto);
-    table.appendChild(tr);
-  }
-
-
   //ASIGNA EVENTO BOTON BORRAR FILA
   function addEventDelete(btn) {
     btn.addEventListener("click", function (event) {
@@ -480,7 +438,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
 
-  //ASIGNA EVENTO BOTON BORRAR FILA
+  //ASIGNA EVENTO BOTON EDITAR FILA
   function addEventsEdit(btn) {
     btn.addEventListener("click", function (event) {
       let id = this.parentNode.parentNode.id;
@@ -488,86 +446,29 @@ document.addEventListener("DOMContentLoaded", function () {
       permitirEditar(id);
     })
   }
+  //------------------------------------------FIN CREACION TABLA--------------------------------//
 
-
-  //AGREGA EVENTO AL BOTON CANCELAR EDICION
-  function addEventCancel(btncancel, btnconf) {
-    btncancel.addEventListener("click", function () {
-      event.preventDefault();
-      btnconf.remove();
-      btncancel.remove();
-      modificarFormParaAgregar();
-      limpiarCamposFormulario();
-      document.querySelectorAll('.btn-tabla-borrar').forEach(elem => { elem.disabled = false });
-    })
-  }
-
-
-  // AGREGA EVENTO AL BOTON CONFIRMAR EL CUAL PERMITE EDITAR UN DATO DE LA API Y REFLEJARLO EN LA TABLA DE LA WEB
-  function addEventConf(btncancel, btnconf, id) {
-    btnconf.addEventListener("click", function () {
-      event.preventDefault();
-
-      let nuevoproducto = crearProducto(nombreProducto.value, descripcionProducto.value, tamanioProducto.value, precioProducto.value);
-
-      fetch(baseURL + groupID + "/" + collectionID + "/" + id, {
-        "method": "PUT",
-        "mode": "cors",
-        "headers": { "Content-Type": "application/json" },
-        "body": JSON.stringify(nuevoproducto)
-      })
-        .then(response => {
-          if (!response.ok) {
-            console.log("ERROR- No se pudo editar el dato");
-          } else if (response.ok) {
-            editarEnTabla(nuevoproducto, id);
-            editarEnJsonLocal(nuevoproducto, id);
-            
-             // filtrar();
-            
-          }
-          btnconf.remove();
-          btncancel.remove();
-          modificarFormParaAgregar();
-          limpiarCamposFormulario();
-          document.querySelectorAll('.btn-tabla-borrar').forEach(elem => { elem.disabled = false });
-
-
-        })
-        .catch(e => {
-          console.log(e);
-        })
-    })
-  }
-
-  function editarEnJsonLocal(nuevoproducto, id) {
-    let posicion = buscarId(id);
-
-    if (posicion != -1) {
-
-      let prod = crearProductoLocal(id, nuevoproducto.thing.nombre, nuevoproducto.thing.descripcion, nuevoproducto.thing.tamanio, nuevoproducto.thing.precio);
-      productosLocal[posicion] = prod;
-    }
-
-  }
-  // BUSCA UN ID EN EL ARREGLO DE PRODUCTOS LOCAL
-  function buscarId(id) {
-    let i = 0;
-    while (i < productosLocal.length) {
-      if (productosLocal[i].id === id) {
-        return i;
-      } else {
-        i++;
-        if (i == productosLocal.length) {
-          return -1;
-        }
-      }
+  //-----------------------------------------DIBUJAR Y VACIAR TABLA-----------------------------------------//
+  // CARGA LA TABLA DESDE EL ARREGLO LOCAL
+  function cargarTabla() {
+    table.innerHTML = "";
+    for (let elem of productosLocal) {
+      crearFilaTabla(elem.thing, elem.id);
     }
   }
 
+  //VACIA LA TABLA,API, y ARREGLO LOCAL 
+  function vaciarTabla() {
+    for (let i = 0; i < productosLocal.length; i++) {
+      deleteDatos(productosLocal[i].id);
+    }
+  }
+//-------------------------------------------FIN DIBUJAR Y VACIAR TABLA--------------------------------------//
 
-  // CREA EL BOTON CONFIRMAR Y CANCELAR DEL FORMULARIO Y LLAMA FUNCIONES
-  // PARA ASIGNARLE EVENTOS
+
+//---------------------------------------------------EDITADO DE FILAS-------------------------------------------//
+
+  // BUSCA EL ID QUE SE DESEA EDITAR Y SI EXISTE LE PERMITE AL USUARIO EDITAR EN EL FORMULARIO
   function permitirEditar(id) {
     let posicion = buscarId(id);
     if (posicion != -1) {
@@ -598,7 +499,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("js-titulo-formulario").innerHTML = "Editar Producto";
     document.getElementById("btn-vaciar-tabla").classList.add("oculto");
   }
-
+  //MODIFICA EL FORMULARIO PARA AGREGAR
   function modificarFormParaAgregar() {
     document.getElementById("btn-agregar-tabla").classList.remove("oculto");
     document.getElementById("btn-agregar-varios-tabla").classList.remove("oculto");
@@ -645,27 +546,132 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  //LLAMADA AJAX DELETE
-  function deleteDatos(id) {
-    fetch(baseURL + groupID + "/" + collectionID + "/" + id, {
-      method: "DELETE",
-      "mode": "cors"
-    })
-      .then(function (r) {
-        if (r.ok) {
-          let fila = document.getElementById(id);
-          fila.remove();
-          let posicion = buscarId(id);
-          productosLocal.splice(posicion, 1);
-          cantidadProductos--;
-          mostrarInformacionOfertas(cantidadProductos);
-        }
+
+  //-------PUT(Dentro del eventlistener)--------//   
+  // AGREGA EVENTO AL BOTON CONFIRMAR EL CUAL PERMITE EDITAR UN DATO DE LA API Y REFLEJARLO EN LA TABLA DE LA WEB
+  function addEventConf(btncancel, btnconf, id) {
+    btnconf.addEventListener("click", function () {
+      event.preventDefault();
+
+      let nuevoproducto = crearProducto(nombreProducto.value, descripcionProducto.value, tamanioProducto.value, precioProducto.value);
+
+      fetch(baseURL + groupID + "/" + collectionID + "/" + id, {
+        "method": "PUT",
+        "mode": "cors",
+        "headers": { "Content-Type": "application/json" },
+        "body": JSON.stringify(nuevoproducto)
       })
-      .catch(function (e) {
-        console.log(e);
-      });
+        .then(response => {
+          if (!response.ok) {
+            console.log("ERROR- No se pudo editar el dato");
+          } else if (response.ok) {
+            editarEnTabla(nuevoproducto, id);
+            editarEnJsonLocal(nuevoproducto, id);
+          }
+          btnconf.remove();
+          btncancel.remove();
+          modificarFormParaAgregar();
+          limpiarCamposFormulario();
+          document.querySelectorAll('.btn-tabla-borrar').forEach(elem => { elem.disabled = false });
+
+
+        })
+        .catch(e => {
+          console.log(e);
+        })
+    })
   }
 
+  //AGREGA EVENTO AL BOTON CANCELAR EDICION
+  function addEventCancel(btncancel, btnconf) {
+    btncancel.addEventListener("click", function () {
+      event.preventDefault();
+      btnconf.remove();
+      btncancel.remove();
+      modificarFormParaAgregar();
+      limpiarCamposFormulario();
+      document.querySelectorAll('.btn-tabla-borrar').forEach(elem => { elem.disabled = false });
+    })
+  }
+
+  // MODIFICA EL ARREGLO LOCAL CON EL NUEVO CONTENIDO EDITADO
+  function editarEnJsonLocal(nuevoproducto, id) {
+    let posicion = buscarId(id);
+
+    if (posicion != -1) {
+
+      let prod = crearProductoLocal(id, nuevoproducto.thing.nombre, nuevoproducto.thing.descripcion, nuevoproducto.thing.tamanio, nuevoproducto.thing.precio);
+      productosLocal[posicion] = prod;
+    }
+
+  }
+  // BUSCA UN ID EN EL ARREGLO DE PRODUCTOS LOCAL
+  function buscarId(id) {
+    let i = 0;
+    while (i < productosLocal.length) {
+      if (productosLocal[i].id === id) {
+        return i;
+      } else {
+        i++;
+        if (i == productosLocal.length) {
+          return -1;
+        }
+      }
+    }
+  }
+
+  //--------------------------------------------------FIN EDITADO DE FILAS-------------------------------------//
+
+  //------------------------------------------------CREADORAS DE OBJETOS JSON----------------------------------//
+  // DEVUELVE UNA VARIABLE CARGADA LISTA PARA AGREGAR AL ARREGLO LOCAL
+  function crearProductoLocal(id, nombre, descripcion, tamanio, precio) {
+    let objetoJsonLocal = {
+      "id": "",
+      "thing": {
+        "nombre": "",
+        "descripcion": "",
+        "tamanio": "",
+        "precio": ""
+      }
+    }
+    objetoJsonLocal.id = id;
+    objetoJsonLocal.thing.nombre = nombre;
+    objetoJsonLocal.thing.descripcion = descripcion;
+    objetoJsonLocal.thing.tamanio = tamanio;
+    objetoJsonLocal.thing.precio = precio;
+
+    return objetoJsonLocal;
+  }
+
+  // DEVUELVE UNA VARIABLE CARGADA LISTA PARA AGREGAR A LA API
+  function crearProducto(nombre, descripcion, tamanio, precio) {
+    let producto = {
+      "thing": {
+        "nombre": "",
+        "descripcion": "",
+        "tamanio": "",
+        "precio": "",
+      },
+    };
+
+    producto.thing.nombre = nombre;
+    producto.thing.descripcion = descripcion;
+    producto.thing.tamanio = tamanio;
+    producto.thing.precio = precio;
+
+    return producto;
+  }
+  //--------------------------------------------FIN CREADORAS DE OBJETOS JSON-----------------------------------//
+
+
+  //-----------------------------------------------------DETALLES----------------------------------------------//
+  //FUNCION PARA LIMPIAR LOS INPUTS DEL FORMULARIO DE PRODUCTOS
+  function limpiarCamposFormulario() {
+    nombreProducto.value = "";
+    descripcion = descripcionProducto.value = "";
+    tamanioProducto.value = "";
+    precioProducto.value = "";
+  }
 
   // PARRAFO INFORMACION OFERTAS
   function mostrarInformacionOfertas(cantidadProductos) {
@@ -676,6 +682,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  //AGREGA RESALTADO A LAS OFERTAS
+  function aplicarResaltadoOferta(tr, producto) {
+    if (producto.precio <= 500) {
+      tr.classList.add("intermitente");
+      tr.classList.add(colores[colores.length - 1]);
+    }
+  }
 
   //FUNCION PARA RESALTAR LAS OFERTA
   function resaltado() {
@@ -693,11 +706,14 @@ document.addEventListener("DOMContentLoaded", function () {
     cantcolores = (cantcolores + 1) % colores.length;
   }
 
+  //-----------------------------------------------------FIN DETALLES--------------------------------------------//
+
+  //-----------------------------------------------------FILTRADO----------------------------------------------//
   function filtrar() {
-    if(inputFiltro.value != ""){
-    ocultarTabla();
-    comprobarColumnas();
-    }else{
+    if (inputFiltro.value != "") {
+      ocultarTabla();
+      comprobarColumnas();
+    } else {
       cancelarFiltros();
     }
   }
@@ -739,4 +755,6 @@ document.addEventListener("DOMContentLoaded", function () {
       elem.classList.remove("oculto");
     }
   }
+
+  //-------------------------------------------------------FIN FILTRADO---------------------------------------//
 });
