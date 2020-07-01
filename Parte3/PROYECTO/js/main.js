@@ -349,7 +349,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     
           
-     /*intervaloActualizar = setInterval(autoactualizar, 10000);*/
+     intervaloActualizar = setInterval(autoactualizar, 5000);
        intervaloFiltrar = setInterval(filtrar, 250);
 
   }
