@@ -327,8 +327,8 @@ document.addEventListener("DOMContentLoaded", function () {
     editTamanioProducto = document.getElementById("js-edit-tamaño-tabla");
     editPrecioProducto = document.getElementById("js-edit-precio-tabla");
     table = document.getElementById("body-tabla");
-    inputFiltro = document.getElementById("js-input-filter");
-    intervaloResaltado = setInterval(resaltado, 80); // CAMBIA COLORES EN UN INTERVALO
+    intervaloResaltado = setInterval(resaltado, 80);
+    inputFiltro= document.getElementById("js-input-filter") // CAMBIA COLORES EN UN INTERVALO
     //setTimeout(window.location.reload.bind(window.location),3000);
 
 
@@ -345,12 +345,11 @@ document.addEventListener("DOMContentLoaded", function () {
     // //AGRAGAR VARIOS PRODUCTOS AL APRETAR EL BOTON 'AGREGAR VARIOS'
     document.getElementById("btn-agregar-varios-tabla").addEventListener("click", agregarVariosTabla);
 
-    document.getElementById("js-filter").addEventListener("click", filtrar);
-    document.querySelector(".btn-cancelar-filtro").addEventListener("click", cancelarFiltros);
+    
 
     
           
-      intervaloActualizar = setInterval(autoactualizar, 10000);
+     /*intervaloActualizar = setInterval(autoactualizar, 10000);*/
        intervaloFiltrar = setInterval(filtrar, 250);
 
   }
@@ -695,7 +694,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function filtrar() {
     if(inputFiltro.value != ""){
-    document.querySelector('.btn-cancelar-filtro').classList.remove('oculto');
     ocultarTabla();
     comprobarColumnas();
     }
@@ -716,13 +714,12 @@ document.addEventListener("DOMContentLoaded", function () {
         (elem.thing.precio == inputFiltro.value)) {
         document.getElementById(elem.id).classList.remove("oculto");
         existeProducto = true;
+        document.querySelector(".ofertas").classList.remove("oculto");
       }
     }
 
     if (!existeProducto) {
-      document.querySelector('.no-coincidencias').classList.remove('oculto');
-      cantidadProductos = 0;
-      mostrarInformacionOfertas(cantidadProductos);
+      document.querySelector(".ofertas").classList.add("oculto");
     }
   }
 
@@ -739,7 +736,5 @@ document.addEventListener("DOMContentLoaded", function () {
       elem.classList.remove("oculto");
     }
     inputFiltro.value = "";
-    document.querySelector('.btn-cancelar-filtro').classList.add('oculto');
-    document.querySelector('.no-coincidencias').classList.add('oculto');
   }
 });
