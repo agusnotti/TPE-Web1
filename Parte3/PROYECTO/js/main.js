@@ -262,6 +262,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!r.ok) {
           console.log("ERROR!!");
         }
+        productosLocal=[];
         return r.json();
       })
       .then(function (json) {
@@ -269,9 +270,10 @@ document.addEventListener("DOMContentLoaded", function () {
           if (elem.thing != null) {
             let prod = crearProductoLocal(elem._id, elem.thing.nombre, elem.thing.descripcion, elem.thing.tamanio, elem.thing.precio);
             productosLocal.push(prod);
-            crearFilaTabla(prod.thing, prod.id);
+           // crearFilaTabla(prod.thing, prod.id);
           }
         }
+        cargarTabla();
         cantidadProductos = json.productos.length;
         mostrarInformacionOfertas(cantidadProductos);
         filtrar();
@@ -279,6 +281,13 @@ document.addEventListener("DOMContentLoaded", function () {
       .catch(function (e) {
         console.log(e);
       });
+  }
+
+  function cargarTabla(){
+    table.innerHTML="";
+    for(let elem of productosLocal){
+      crearFilaTabla(elem.thing,elem.id);
+    }
   }
 
   // LLAMADA AJAX POST DATOS
@@ -304,8 +313,6 @@ document.addEventListener("DOMContentLoaded", function () {
         cantidadProductos++;
         mostrarInformacionOfertas(cantidadProductos);
         limpiarCamposFormulario();
-          filtrar();
-        
       })
       .catch(function (e) {
         console.log(e);
@@ -344,19 +351,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // //AGRAGAR VARIOS PRODUCTOS AL APRETAR EL BOTON 'AGREGAR VARIOS'
     document.getElementById("btn-agregar-varios-tabla").addEventListener("click", agregarVariosTabla);
-
-    
-
-    
-          
+ 
      intervaloActualizar = setInterval(autoactualizar, 5000);
-       intervaloFiltrar = setInterval(filtrar, 250);
+      intervaloFiltrar = setInterval(filtrar, 250);
 
   }
 
   function autoactualizar() {
-    table.innerHTML = "";
-    productosLocal = [];
     getDatos();
   }
 
@@ -522,7 +523,7 @@ document.addEventListener("DOMContentLoaded", function () {
             editarEnTabla(nuevoproducto, id);
             editarEnJsonLocal(nuevoproducto, id);
             
-              filtrar();
+             // filtrar();
             
           }
           btnconf.remove();
