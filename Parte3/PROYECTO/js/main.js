@@ -231,7 +231,7 @@ document.addEventListener("DOMContentLoaded", function () {
   ];
   //ASIGNA EVENTOS DE LA TABLA
   function addEventsTabla() {
-
+    productosLocal = [];
     // ASIGNACIONES DE VARIABLES
     formagregar = document.getElementById("js-form-agregar");
     formedit = document.getElementById("js-form-edit");
@@ -283,20 +283,23 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!r.ok) {
           console.log("ERROR!!");
         }
-        productosLocal = [];
+        
         return r.json();
       })
       .then(function (json) {
-        for (let elem of json.productos) {
-          if (elem.thing != null) {
-            let prod = crearProductoLocal(elem._id, elem.thing.nombre, elem.thing.descripcion, elem.thing.tamanio, elem.thing.precio);
-            productosLocal.push(prod);
+        if(productosLocal.length != json.productos.length){
+          productosLocal = [];
+          for (let elem of json.productos) {
+            if (elem.thing != null) {
+              let prod = crearProductoLocal(elem._id, elem.thing.nombre, elem.thing.descripcion, elem.thing.tamanio, elem.thing.precio);
+              productosLocal.push(prod);
+            }
           }
+          cargarTabla();
+          cantidadProductos = json.productos.length;
+          mostrarInformacionOfertas(cantidadProductos);
+          filtrar();
         }
-        cargarTabla();
-        cantidadProductos = json.productos.length;
-        mostrarInformacionOfertas(cantidadProductos);
-        filtrar();
       })
       .catch(function (e) {
         console.log(e);
