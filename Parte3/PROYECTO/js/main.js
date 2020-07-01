@@ -329,7 +329,7 @@ document.addEventListener("DOMContentLoaded", function () {
     table = document.getElementById("body-tabla");
     intervaloResaltado = setInterval(resaltado, 80);
     inputFiltro= document.getElementById("js-input-filter") // CAMBIA COLORES EN UN INTERVALO
-    //setTimeout(window.location.reload.bind(window.location),3000);
+   
 
 
 
@@ -696,6 +696,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if(inputFiltro.value != ""){
     ocultarTabla();
     comprobarColumnas();
+    }else{
+      cancelarFiltros();
     }
   }
 
@@ -735,6 +737,5 @@ document.addEventListener("DOMContentLoaded", function () {
     for (let elem of trs) {
       elem.classList.remove("oculto");
     }
-    inputFiltro.value = "";
   }
 });
