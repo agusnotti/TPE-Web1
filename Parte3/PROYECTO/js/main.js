@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let mensajeCargando = "Loading...";
     let mensajeError = "Error - Failed URL!";
     let mensajeErrorConexion = "Connection error";
-    
+
     let pMensaje = document.createElement("p");
 
     pMensaje.innerHTML = mensajeCargando;
@@ -25,6 +25,9 @@ document.addEventListener("DOMContentLoaded", function () {
     fetch(url)
       .then(function (response) {
         if (response.ok) {
+          clearInterval(intervaloActualizar);
+          clearInterval(intervaloFiltrar);
+          clearInterval(intervaloResaltado);
           response.text().then(processText);
         } else {
           pMensaje.innerHTML = mensajeError;
@@ -55,13 +58,14 @@ document.addEventListener("DOMContentLoaded", function () {
     if (document.getElementById("nombre-tabla")) {
       //si encuentra en la pagina este elemento....
       addEventsTabla();
-      
-      
-      
+
+
+
     }
   }
 
   function addEvents() {
+
     btnsBreadcrumb = document.querySelectorAll("ul.breadcrumb > li > a");
     btnsCategorias = document.querySelectorAll(".container-imagenes a");
     btnsProductos = document.querySelectorAll(".container-imagenes a");
@@ -74,6 +78,10 @@ document.addEventListener("DOMContentLoaded", function () {
   let input;
   let captcha;
   let inputUsuario;
+  let intervaloActualizar;
+  let intervaloFiltrar;
+  let intervaloResaltado;
+
 
   function addEventsHome() {
     document
@@ -118,6 +126,8 @@ document.addEventListener("DOMContentLoaded", function () {
     captcha = document.querySelector("#captcha-codigo");
     captcha.innerHTML = Math.round(Math.random() * 9000 + 1000);
     inputUsuario = document.querySelector("#input-captcha");
+
+
   }
 
   function toggleFiltros() {
@@ -161,7 +171,6 @@ document.addEventListener("DOMContentLoaded", function () {
   let baseURL = "https://web-unicen.herokuapp.com/api/groups/";
   let groupID = "044-Aceto-Notti";
   let collectionID = "productos";
-
   let nombreProducto;
   let descripcionProducto;
   let tamanioProducto;
@@ -222,7 +231,7 @@ document.addEventListener("DOMContentLoaded", function () {
   ];
 
 
-  function crearProductoLocal(id,nombre,descripcion,tamanio,precio) {
+  function crearProductoLocal(id, nombre, descripcion, tamanio, precio) {
     let objetoJsonLocal = {
       "id": "",
       "thing": {
@@ -258,7 +267,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .then(function (json) {
         for (let elem of json.productos) {
           if (elem.thing != null) {
-            let prod = crearProductoLocal(elem._id,elem.thing.nombre,elem.thing.descripcion,elem.thing.tamanio,elem.thing.precio);
+            let prod = crearProductoLocal(elem._id, elem.thing.nombre, elem.thing.descripcion, elem.thing.tamanio, elem.thing.precio);
             productosLocal.push(prod);
             crearFilaTabla(prod.thing, prod.id);
           }
@@ -271,7 +280,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(e);
       });
   }
- 
+
   // LLAMADA AJAX POST DATOS
   function postDatos(producto) {
     fetch(baseURL + groupID + "/" + collectionID,
@@ -289,13 +298,14 @@ document.addEventListener("DOMContentLoaded", function () {
         return r.json();
       })
       .then(function (json) {
-        let prod = crearProductoLocal(json.information._id,json.information.thing.nombre,json.information.thing.descripcion,json.information.thing.tamanio,json.information.thing.precio);
+        let prod = crearProductoLocal(json.information._id, json.information.thing.nombre, json.information.thing.descripcion, json.information.thing.tamanio, json.information.thing.precio);
         productosLocal.push(prod);
         crearFilaTabla(prod.thing, prod.id);
         cantidadProductos++;
         mostrarInformacionOfertas(cantidadProductos);
         limpiarCamposFormulario();
-        filtrar();
+          filtrar();
+        
       })
       .catch(function (e) {
         console.log(e);
@@ -318,10 +328,11 @@ document.addEventListener("DOMContentLoaded", function () {
     editPrecioProducto = document.getElementById("js-edit-precio-tabla");
     table = document.getElementById("body-tabla");
     inputFiltro = document.getElementById("js-input-filter");
+    intervaloResaltado = setInterval(resaltado, 80); // CAMBIA COLORES EN UN INTERVALO
     //setTimeout(window.location.reload.bind(window.location),3000);
 
-    setInterval(resaltado, 80); // CAMBIA COLORES EN UN INTERVALO
-    
+
+
     //LLAMADA A LA FUNCION PARA OBTENER DATOS
     getDatos();
 
@@ -329,7 +340,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("btn-agregar-tabla").addEventListener("click", agregarProductoATabla);
 
     // VACIAR TABLA AL APRETAR EL BOTON 'VACIAR TABLA'
-    document.getElementById("btn-vaciar-tabla" ).addEventListener("click",vaciarTabla);
+    document.getElementById("btn-vaciar-tabla").addEventListener("click", vaciarTabla);
 
     // //AGRAGAR VARIOS PRODUCTOS AL APRETAR EL BOTON 'AGREGAR VARIOS'
     document.getElementById("btn-agregar-varios-tabla").addEventListener("click", agregarVariosTabla);
@@ -337,12 +348,15 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("js-filter").addEventListener("click", filtrar);
     document.querySelector(".btn-cancelar-filtro").addEventListener("click", cancelarFiltros);
 
-    setInterval(autoactualizar, 10000);
-    setInterval(filtrar,250);
+    
+          
+      intervaloActualizar = setInterval(autoactualizar, 10000);
+       intervaloFiltrar = setInterval(filtrar, 250);
+
   }
 
-  function autoactualizar(){
-    table.innerHTML = "";    
+  function autoactualizar() {
+    table.innerHTML = "";
     productosLocal = [];
     getDatos();
   }
@@ -364,15 +378,14 @@ document.addEventListener("DOMContentLoaded", function () {
       let randomnombre = Math.round(Math.random() * 5);
       let randomtamanio = Math.round(Math.random() * 5);
       let randomprecio = Math.round(Math.random() * 5);
-
       let nuevoproducto = crearProducto(tablacompleta[randomnombre].nombre, tablacompleta[randomnombre].descripcion, tablacompleta[randomtamanio].tamanio, tablacompleta[randomprecio].precio)
 
       postDatos(nuevoproducto);
     }
   }
 
-  function  vaciarTabla() {
-    for(let i = 0; i < productosLocal.length; i++) {
+  function vaciarTabla() {
+    for (let i = 0; i < productosLocal.length; i++) {
       deleteDatos(productosLocal[i].id);
     }
   }
@@ -457,7 +470,7 @@ document.addEventListener("DOMContentLoaded", function () {
     table.appendChild(tr);
   }
 
- 
+
   //ASIGNA EVENTO BOTON BORRAR FILA
   function addEventDelete(btn) {
     btn.addEventListener("click", function (event) {
@@ -474,7 +487,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       permitirEditar(id);
     })
-  }  
+  }
 
 
   //AGREGA EVENTO AL BOTON CANCELAR EDICION
@@ -485,7 +498,7 @@ document.addEventListener("DOMContentLoaded", function () {
       btncancel.remove();
       modificarFormParaAgregar();
       limpiarCamposFormulario();
-      document.querySelectorAll('.btn-tabla-borrar').forEach(elem => { elem.disabled = false});
+      document.querySelectorAll('.btn-tabla-borrar').forEach(elem => { elem.disabled = false });
     })
   }
 
@@ -509,15 +522,17 @@ document.addEventListener("DOMContentLoaded", function () {
           } else if (response.ok) {
             editarEnTabla(nuevoproducto, id);
             editarEnJsonLocal(nuevoproducto, id);
-            filtrar();
+            
+              filtrar();
+            
           }
           btnconf.remove();
           btncancel.remove();
           modificarFormParaAgregar();
           limpiarCamposFormulario();
-          document.querySelectorAll('.btn-tabla-borrar').forEach(elem => { elem.disabled = false});
-          
-          
+          document.querySelectorAll('.btn-tabla-borrar').forEach(elem => { elem.disabled = false });
+
+
         })
         .catch(e => {
           console.log(e);
@@ -530,7 +545,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (posicion != -1) {
 
-      let prod = crearProductoLocal(id,nuevoproducto.thing.nombre,nuevoproducto.thing.descripcion,nuevoproducto.thing.tamanio,nuevoproducto.thing.precio);
+      let prod = crearProductoLocal(id, nuevoproducto.thing.nombre, nuevoproducto.thing.descripcion, nuevoproducto.thing.tamanio, nuevoproducto.thing.precio);
       productosLocal[posicion] = prod;
     }
 
@@ -574,7 +589,7 @@ document.addEventListener("DOMContentLoaded", function () {
       crearBotonesEdicion(formProducto, id);
     }
 
-    document.querySelectorAll('.btn-tabla-borrar').forEach(elem => { elem.disabled = true});
+    document.querySelectorAll('.btn-tabla-borrar').forEach(elem => { elem.disabled = true });
   }
   //MODIFICA EL FORMULARIO PARA EDITAR
   function modificarFormParaEditar() {
@@ -640,8 +655,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (r.ok) {
           let fila = document.getElementById(id);
           fila.remove();
-          let posicion=buscarId(id);
-          productosLocal.splice(posicion,1);
+          let posicion = buscarId(id);
+          productosLocal.splice(posicion, 1);
           cantidadProductos--;
           mostrarInformacionOfertas(cantidadProductos);
         }
@@ -679,9 +694,11 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function filtrar() {
+    if(inputFiltro.value != ""){
     document.querySelector('.btn-cancelar-filtro').classList.remove('oculto');
     ocultarTabla();
     comprobarColumnas();
+    }
   }
 
   function comprobarColumnas() {
