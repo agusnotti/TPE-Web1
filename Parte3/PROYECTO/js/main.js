@@ -261,7 +261,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //INICIALIZACION DE INTERVALOS
     intervaloResaltado = setInterval(resaltado, 80);
-    intervaloActualizar = setInterval(autoactualizar, 5000);
+    intervaloActualizar = setInterval(autoactualizar, 1000);
     intervaloFiltrar = setInterval(filtrar, 250);
 
   }
@@ -287,8 +287,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return r.json();
       })
       .then(function (json) {
-        let iguales = false;
-        iguales=compararApiconLocal(json);
+        let iguales = compararApiconLocal(json);
         if (!iguales) {
           productosLocal = [];
           for (let elem of json.productos) {
@@ -311,16 +310,13 @@ document.addEventListener("DOMContentLoaded", function () {
   function compararApiconLocal(json){
     if (productosLocal.length == json.productos.length) {
       let i = 0;
-      iguales = true;
+      let iguales = false;
       while ((i < json.productos.length) && (iguales == true)) {
         if (json.productos[i].thing != productosLocal[i].thing) {
-          return false;
-        } else {
-          i++;
-          if(i==json.productos.length){
-            return true;
-          }
+          iguales = true;
         }
+        i++;
+        return iguales;
       }
     }
   }
