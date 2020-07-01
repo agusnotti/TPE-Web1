@@ -261,7 +261,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //INICIALIZACION DE INTERVALOS
     intervaloResaltado = setInterval(resaltado, 80);
-    intervaloActualizar = setInterval(autoactualizar, 1000);
+    intervaloActualizar = setInterval(autoactualizar, 2000);
     intervaloFiltrar = setInterval(filtrar, 250);
 
   }
@@ -509,6 +509,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     document.querySelectorAll('.btn-tabla-borrar').forEach(elem => { elem.disabled = true });
+    document.getElementById("btn-agregar-tabla").disabled = true;
   }
   //MODIFICA EL FORMULARIO PARA EDITAR
   function modificarFormParaEditar() {
@@ -591,8 +592,7 @@ document.addEventListener("DOMContentLoaded", function () {
           modificarFormParaAgregar();
           limpiarCamposFormulario();
           document.querySelectorAll('.btn-tabla-borrar').forEach(elem => { elem.disabled = false });
-
-
+          document.getElementById("btn-agregar-tabla").disabled = false;
         })
         .catch(e => {
           console.log(e);
@@ -609,6 +609,7 @@ document.addEventListener("DOMContentLoaded", function () {
       modificarFormParaAgregar();
       limpiarCamposFormulario();
       document.querySelectorAll('.btn-tabla-borrar').forEach(elem => { elem.disabled = false });
+      document.getElementById("btn-agregar-tabla").disabled = false;
     })
   }
 
