@@ -287,7 +287,8 @@ document.addEventListener("DOMContentLoaded", function () {
         return r.json();
       })
       .then(function (json) {
-        let iguales = compararApiconLocal(json);
+        let iguales = false;
+        iguales = compararApiconLocal (json) ;
         if (!iguales) {
           productosLocal = [];
           for (let elem of json.productos) {
@@ -308,39 +309,21 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   // COMPARA EL LARGO Y CONTENIDO DEL JSON DE LA API CON EL ARREGLO LOCAL
   function compararApiconLocal(json){
-    let iguales = false;
     if (productosLocal.length == json.productos.length) {
-      iguales = true;
-      let i = 0;       
-      while ((i < json.productos.length) && iguales) {
-        let producto = getProductoById(json.productos[i]._id);
-
-        if(producto){
-          if((json.productos[i].nombre != productosLocal[i].nombre) 
-          || (json.productos[i].descripcion != productosLocal[i].descripcion)
-          || (json.productos[i].tamanio != productosLocal[i].tamanio) 
-          || (json.productos[i].precio != productosLocal[i].precio)){
-            iguales = false;
-          } 
+      let i = 0;
+      let iguales = true;
+      while ((i < json.productos.length) && (iguales == true)) {
+        if (json.productos[i].thing != productosLocal[i].thing) {
+          return false;
         } else {
-          iguales= false;
+          i++;
+          if(i == json.productos.length){
+            return true;
+          }
         }
-        i++;
       }
     }
-    return iguales;;
   }
-
-  function getProductoById(id) {
-    let producto = null;
-    productosLocal.forEach(element => { 
-      if(element.id == id){
-        producto = element;
-      }
-    });
-    return producto;
-  }
-
   //-----------------------------------------------FIN GET--------------------------------------------//
 
   //--------------------------------------------------POST------------------------------------------------//
