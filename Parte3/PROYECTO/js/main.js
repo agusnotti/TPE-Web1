@@ -308,19 +308,39 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   // COMPARA EL LARGO Y CONTENIDO DEL JSON DE LA API CON EL ARREGLO LOCAL
   function compararApiconLocal(json){
+    let iguales = false;
     if (productosLocal.length == json.productos.length) {
-      let i = 0;
-      let iguales = false;
-      while (i < json.productos.length) {
-        if ((json.productos[i].thing.nombre === productosLocal[i].thing.nombre)|| (json.productos[i].thing.descripcion === productosLocal[i].thing.descripcion)
-        ||(json.productos[i].thing.tamanio === productosLocal[i].thing.tamanio)|| (json.productos[i].thing.precio === productosLocal[i].thing.precio)) {
-          iguales = true;
+      iguales = true;
+      let i = 0;       
+      while ((i < json.productos.length) && iguales) {
+        let producto = getProductoById(json.productos[i]._id);
+
+        if(producto){
+          if((json.productos[i].nombre != productosLocal[i].nombre) 
+          || (json.productos[i].descripcion != productosLocal[i].descripcion)
+          || (json.productos[i].tamanio != productosLocal[i].tamanio) 
+          || (json.productos[i].precio != productosLocal[i].precio)){
+            iguales = false;
+          } 
+        } else {
+          iguales= false;
         }
         i++;
-        return iguales;
       }
     }
+    return iguales;;
   }
+
+  function getProductoById(id) {
+    let producto = null;
+    productosLocal.forEach(element => { 
+      if(element.id == id){
+        producto = element;
+      }
+    });
+    return producto;
+  }
+
   //-----------------------------------------------FIN GET--------------------------------------------//
 
   //--------------------------------------------------POST------------------------------------------------//
@@ -511,7 +531,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.querySelectorAll('.btn-tabla-borrar').forEach(elem => { elem.disabled = true });
     document.getElementById("btn-agregar-tabla").disabled = true;
-    
   }
   //MODIFICA EL FORMULARIO PARA EDITAR
   function modificarFormParaEditar() {
@@ -595,7 +614,6 @@ document.addEventListener("DOMContentLoaded", function () {
           limpiarCamposFormulario();
           document.querySelectorAll('.btn-tabla-borrar').forEach(elem => { elem.disabled = false });
           document.getElementById("btn-agregar-tabla").disabled = false;
-          
         })
         .catch(e => {
           console.log(e);
@@ -613,7 +631,6 @@ document.addEventListener("DOMContentLoaded", function () {
       limpiarCamposFormulario();
       document.querySelectorAll('.btn-tabla-borrar').forEach(elem => { elem.disabled = false });
       document.getElementById("btn-agregar-tabla").disabled = false;
-      
     })
   }
 
