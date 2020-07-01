@@ -283,11 +283,13 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!r.ok) {
           console.log("ERROR!!");
         }
-        
+
         return r.json();
       })
       .then(function (json) {
-        if(productosLocal.length != json.productos.length){
+        let iguales = false;
+        iguales=compararApiconLocal(json);
+        if (!iguales) {
           productosLocal = [];
           for (let elem of json.productos) {
             if (elem.thing != null) {
@@ -305,7 +307,24 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(e);
       });
   }
-    //-----------------------------------------------FIN GET--------------------------------------------//
+  // COMPARA EL LARGO Y CONTENIDO DEL JSON DE LA API CON EL ARREGLO LOCAL
+  function compararApiconLocal(json){
+    if (productosLocal.length == json.productos.length) {
+      let i = 0;
+      iguales = true;
+      while ((i < json.productos.length) && (iguales == true)) {
+        if (json.productos[i].thing != productosLocal[i].thing) {
+          return false;
+        } else {
+          i++;
+          if(i==json.productos.length){
+            return true;
+          }
+        }
+      }
+    }
+  }
+  //-----------------------------------------------FIN GET--------------------------------------------//
 
   //--------------------------------------------------POST------------------------------------------------//
 
@@ -386,7 +405,7 @@ document.addEventListener("DOMContentLoaded", function () {
       postDatos(nuevoproducto);
     }
   }
-   //-------------------------------------------FIN METODOS AGREGAR----------------------------------------------//
+  //-------------------------------------------FIN METODOS AGREGAR----------------------------------------------//
 
 
   //--------------------------------------------CREACION TABLA--------------------------------//
@@ -466,10 +485,10 @@ document.addEventListener("DOMContentLoaded", function () {
       deleteDatos(productosLocal[i].id);
     }
   }
-//-------------------------------------------FIN DIBUJAR Y VACIAR TABLA--------------------------------------//
+  //-------------------------------------------FIN DIBUJAR Y VACIAR TABLA--------------------------------------//
 
 
-//---------------------------------------------------EDITADO DE FILAS-------------------------------------------//
+  //---------------------------------------------------EDITADO DE FILAS-------------------------------------------//
 
   // BUSCA EL ID QUE SE DESEA EDITAR Y SI EXISTE LE PERMITE AL USUARIO EDITAR EN EL FORMULARIO
   function permitirEditar(id) {
