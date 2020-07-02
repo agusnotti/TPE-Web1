@@ -440,7 +440,7 @@ document.addEventListener("DOMContentLoaded", function () {
     btnEdit.classList.add("btn-tabla-editar");
     tdboton.appendChild(btnEdit);
     tdboton.appendChild(btnBorrar);
-
+   
     tr.appendChild(td1);
     tr.appendChild(td2);
     tr.appendChild(td3);
@@ -457,6 +457,10 @@ document.addEventListener("DOMContentLoaded", function () {
       let id = this.parentNode.parentNode.id;
       deleteDatos(id);
     });
+    titulo = document.getElementById("js-titulo-formulario").innerHTML;
+    if (titulo == "Editar Producto"){
+      btn.disabled= true;
+    }
   }
 
 
@@ -512,8 +516,7 @@ document.addEventListener("DOMContentLoaded", function () {
       crearBotonesEdicion(formProducto, id);
     }
 
-    document.querySelectorAll('.btn-tabla-borrar').forEach(elem => { elem.disabled = true });
-    document.getElementById("btn-agregar-tabla").disabled = true;
+    
   }
   //MODIFICA EL FORMULARIO PARA EDITAR
   function modificarFormParaEditar() {
@@ -545,6 +548,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     addEventConf(btnCancelEdicion, btnConfEdicion, id);
     addEventCancel(btnCancelEdicion, btnConfEdicion);
+    document.getElementById("btn-agregar-tabla").disabled = true;
   }
   // COMPRUEBA QUE LOS BOTONES DE CONFIRMAR EDICION Y CANCELAR EDICION ESTEN CREADOS
   function estanCreados(formProducto) {
@@ -595,8 +599,8 @@ document.addEventListener("DOMContentLoaded", function () {
           btncancel.remove();
           modificarFormParaAgregar();
           limpiarCamposFormulario();
-          document.querySelectorAll('.btn-tabla-borrar').forEach(elem => { elem.disabled = false });
           document.getElementById("btn-agregar-tabla").disabled = false;
+          document.querySelectorAll(".btn-tabla-borrar").forEach(elem => {elem.disabled= true});
         })
         .catch(e => {
           console.log(e);
@@ -612,8 +616,8 @@ document.addEventListener("DOMContentLoaded", function () {
       btncancel.remove();
       modificarFormParaAgregar();
       limpiarCamposFormulario();
-      document.querySelectorAll('.btn-tabla-borrar').forEach(elem => { elem.disabled = false });
       document.getElementById("btn-agregar-tabla").disabled = false;
+      document.querySelectorAll(".btn-tabla-borrar").forEach(elem => {elem.disabled= true});
     })
   }
 
