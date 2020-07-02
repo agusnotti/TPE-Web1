@@ -261,7 +261,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //INICIALIZACION DE INTERVALOS
     intervaloResaltado = setInterval(resaltado, 80);
-    intervaloActualizar = setInterval(autoactualizar, 2000);
+    intervaloActualizar = setInterval(autoactualizar, 5000);
     intervaloFiltrar = setInterval(filtrar, 250);
 
   }
@@ -600,7 +600,8 @@ document.addEventListener("DOMContentLoaded", function () {
           modificarFormParaAgregar();
           limpiarCamposFormulario();
           document.getElementById("btn-agregar-tabla").disabled = false;
-          document.querySelectorAll(".btn-tabla-borrar").forEach(elem => {elem.disabled= true});
+          document.getElementById(id).getElementsByClassName("btn-tabla-borrar").disabled=false;
+          //document.querySelectorAll(".btn-tabla-borrar").forEach(elem => {elem.disabled= false});
         })
         .catch(e => {
           console.log(e);
@@ -617,7 +618,7 @@ document.addEventListener("DOMContentLoaded", function () {
       modificarFormParaAgregar();
       limpiarCamposFormulario();
       document.getElementById("btn-agregar-tabla").disabled = false;
-      document.querySelectorAll(".btn-tabla-borrar").forEach(elem => {elem.disabled= true});
+      document.getElementById(id).getElementsByClassName("btn-tabla-borrar").disabled=false;
     })
   }
 
