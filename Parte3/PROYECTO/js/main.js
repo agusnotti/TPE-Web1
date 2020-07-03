@@ -1,5 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
-  /*--------------------------------------------  PARTIAL RENDER ------------------------------*/
+
+  /*-------------------------------------------------------------------------------------------*/
+  /*-------------------------------------------------------------------------------------------*/
+  /*-----------------------------------------  PARTIAL RENDER ---------------------------------*/
+  /*-------------------------------------------------------------------------------------------*/
+  /*-------------------------------------------------------------------------------------------*/
+
 
   let container = document.querySelector("#use-ajax");
 
@@ -11,6 +17,13 @@ document.addEventListener("DOMContentLoaded", function () {
   addEvents();
 
   callAjax("html/home.html");
+
+  function renderPage(event) {
+    event.preventDefault();
+    let url = this.getAttribute("href"); // this --> hace referencia al elemento al que le asigno el evento
+
+    callAjax(url);
+  }
 
   function callAjax(url) {
     let mensajeCargando = "Loading...";
@@ -29,10 +42,18 @@ document.addEventListener("DOMContentLoaded", function () {
           clearInterval(intervaloFiltrar);
           clearInterval(intervaloResaltado);
           response.text().then(processText);
+
+          console.log("partial render");
+          console.log(response);
+          
         } else {
           pMensaje.innerHTML = mensajeError;
           container.appendChild(pMensaje);
         }
+
+        console.log("GET primer then");
+        console.log(response);
+        
       })
       .catch(function (response) {
         pMensaje.innerHTML = mensajeErrorConexion;
@@ -40,12 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
-  function renderPage(event) {
-    event.preventDefault();
-    let url = this.getAttribute("href"); // this --> hace referencia al elemento al que le asigno el evento
-
-    callAjax(url);
-  }
+    
 
   function processText(t) {
     document.querySelector("#use-ajax").innerHTML = t;
@@ -58,14 +74,11 @@ document.addEventListener("DOMContentLoaded", function () {
     if (document.getElementById("nombre-tabla")) {
       //si encuentra en la pagina este elemento....
       addEventsTabla();
-
-
-
     }
   }
 
+  //ASIGNA EVENTOS PARA RENDERIZAR CADA HTML PARTIAL
   function addEvents() {
-
     btnsBreadcrumb = document.querySelectorAll("ul.breadcrumb > li > a");
     btnsCategorias = document.querySelectorAll(".container-imagenes a");
     btnsProductos = document.querySelectorAll(".container-imagenes a");
@@ -74,7 +87,11 @@ document.addEventListener("DOMContentLoaded", function () {
     btnsProductos.forEach((e) => e.addEventListener("click", renderPage));
   }
 
-  // ------------------------------------     HOME HTML    ------------------------------------------
+  /*-------------------------------------------------------------------------------------------*/
+  /*-------------------------------------------------------------------------------------------*/
+  /*------------------------------------ FUNCIONALIDAD HOME  ----------------------------------*/
+  /*-------------------------------------------------------------------------------------------*/
+  /*-------------------------------------------------------------------------------------------*/
   let input;
   let captcha;
   let inputUsuario;
@@ -84,36 +101,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
   function addEventsHome() {
-    document
-      .getElementById("formulario-contacto")
-      .addEventListener("submit", validar);
-    document
-      .getElementById("nombreformulario")
-      .addEventListener("keydown", bloquearEspacio);
-    document
-      .getElementById("apellidoformulario")
-      .addEventListener("keydown", bloquearEspacio);
-    document
-      .getElementById("codAreaformulario")
-      .addEventListener("keydown", bloquearEspacio);
-    document
-      .getElementById("telefonoformulario")
-      .addEventListener("keydown", bloquearEspacio);
-    document
-      .getElementById("correoformulario")
-      .addEventListener("keydown", bloquearEspacio);
-    document
-      .querySelector(".btn-filtros-mobile")
-      .addEventListener("click", toggleFiltros);
-    document
-      .querySelector(".btn-aplicar-filtros")
-      .addEventListener("click", toggleFiltros);
-    document
-      .querySelector(".ver-mas")
-      .addEventListener("click", mostrarInformacion);
-    document
-      .querySelector(".ver-menos")
-      .addEventListener("click", mostrarInformacion);
+    document.getElementById("formulario-contacto").addEventListener("submit", validar);
+    document.getElementById("nombreformulario").addEventListener("keydown", bloquearEspacio);
+    document.getElementById("apellidoformulario").addEventListener("keydown", bloquearEspacio);
+    document.getElementById("codAreaformulario").addEventListener("keydown", bloquearEspacio);
+    document.getElementById("telefonoformulario").addEventListener("keydown", bloquearEspacio);
+    document.getElementById("correoformulario").addEventListener("keydown", bloquearEspacio);
+    document.querySelector(".btn-filtros-mobile").addEventListener("click", toggleFiltros);
+    document.querySelector(".btn-aplicar-filtros").addEventListener("click", toggleFiltros);
+    document.querySelector(".ver-mas").addEventListener("click", mostrarInformacion);
+    document.querySelector(".ver-menos").addEventListener("click", mostrarInformacion);
 
     // Captcha Limitado a 4 valores
     input = document.getElementById("input-captcha");
@@ -166,7 +163,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  //-------------------------------     FUNCIONALIDAD TABLA     --------------------------------------
+  /*-------------------------------------------------------------------------------------------*/
+  /*-------------------------------------------------------------------------------------------*/
+  /*------------------------------------ FUNCIONALIDAD TABLA   --------------------------------*/
+  /*-------------------------------------------------------------------------------------------*/
+  /*-------------------------------------------------------------------------------------------*/
 
   let baseURL = "https://web-unicen.herokuapp.com/api/groups/";
   let groupID = "044-Aceto-Notti";
@@ -245,7 +246,7 @@ document.addEventListener("DOMContentLoaded", function () {
     editPrecioProducto = document.getElementById("js-edit-precio-tabla");
     table = document.getElementById("body-tabla");
 
-    inputFiltro = document.getElementById("js-input-filter") // CAMBIA COLORES EN UN INTERVALO
+    inputFiltro = document.getElementById("js-input-filter") 
 
     //LLAMADA A LA FUNCION PARA OBTENER DATOS
     getDatos();
@@ -284,9 +285,16 @@ document.addEventListener("DOMContentLoaded", function () {
           console.log("ERROR!!");
         }
 
+        console.log("GET primer then");
+        console.log(r);
+
         return r.json();
       })
       .then(function (json) {
+
+        console.log("GET segundo then");
+        console.log(json.productos);
+
         let iguales = false;
         iguales = compararApiconLocal (json) ;
         if (!iguales) {
@@ -308,12 +316,13 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
   // COMPARA EL LARGO Y CONTENIDO DEL JSON DE LA API CON EL ARREGLO LOCAL
+  // A MEJORAR
   function compararApiconLocal(json){
     if (productosLocal.length == json.productos.length) {
       let i = 0;
       let iguales = true;
       while ((i < json.productos.length) && (iguales == true)) {
-        if (json.productos[i].thing != productosLocal[i].thing) {
+        if (json.productos[i].thing != productosLocal[i].thing) {  //===> la comparacion hay que hacerla valor por valor
           return false;
         } else {
           i++;
@@ -342,9 +351,17 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!r.ok) {
           console.log("ERROR!!");
         }
+
+        console.log("POST primer then");
+        console.log(r);
+
         return r.json();
       })
       .then(function (json) {
+
+        console.log("POST segundo then");
+        console.log(json);
+
         let prod = crearProductoLocal(json.information._id, json.information.thing.nombre, json.information.thing.descripcion, json.information.thing.tamanio, json.information.thing.precio);
         productosLocal.push(prod);
         crearFilaTabla(prod.thing, prod.id);
@@ -374,7 +391,17 @@ document.addEventListener("DOMContentLoaded", function () {
           cantidadProductos--;
           mostrarInformacionOfertas(cantidadProductos);
         }
+        /**  -------- NO ESTA EN EL ENTREGADO --------- */
+        console.log("DELETE primer then");
+        console.log(r);
+        
+        return r.json(); 
       })
+      .then(r => {
+        console.log("DELETE segundo then");
+        console.log(r);
+      })
+/**  -------- NO ESTA EN EL ENTREGADO --------- */
       .catch(function (e) {
         console.log(e);
       });
@@ -589,6 +616,9 @@ document.addEventListener("DOMContentLoaded", function () {
         "body": JSON.stringify(nuevoproducto)
       })
         .then(response => {
+          console.log("PUT primer then");
+          console.log(response);
+
           if (!response.ok) {
             console.log("ERROR- No se pudo editar el dato");
           } else if (response.ok) {
@@ -602,7 +632,18 @@ document.addEventListener("DOMContentLoaded", function () {
           document.getElementById("btn-agregar-tabla").disabled = false;
           document.getElementById(id).getElementsByClassName("btn-tabla-borrar").disabled=false;
           //document.querySelectorAll(".btn-tabla-borrar").forEach(elem => {elem.disabled= false});
+
+          console.log("PUT primer then");
+          console.log(response);
+
+/**  -------- NO ESTA EN EL ENTREGADO --------- */
+          return response.json(); 
         })
+        .then(response => {
+          console.log("PUT segundo then");
+          console.log(response);
+        })
+/**  -------- NO ESTA EN EL ENTREGADO --------- */
         .catch(e => {
           console.log(e);
         })
